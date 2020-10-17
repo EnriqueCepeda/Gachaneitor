@@ -1,0 +1,18 @@
+RECETA ::= receta '{' NOMBRE INGREDIENTES '}''
+NOMBRE ::= nombre '"' IDENT_NOMBRES '"'
+
+TIEMPO ::= DIGITO {DIGITO} UNIDAD_TIEMPO
+TEMPERATURA ::= DIGITO {DIGITO} UNIDAD_TEMP
+VELOCIDAD ::= velocidad DIGITO_VELOCIDAD
+
+UNIDAD_PESO ::= mg. | g. | kg. | ml. | l. 
+UNIDAD_TEMP ::= ºC. | ºF.
+UNIDAD_TIEMPO ::= h. | min. | seg.
+
+IDENT_NOMBRES ::= MAYUS {MINUS| ' '}
+MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | Ñ | O | P | Q | R | S | T | U | V | W | X | Y | Z
+MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z 
+
+DIGITO_VELOCIDAD ::=  1 | 2 |3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+DIGITO ::= 0 | DIGITO_VELOCIDAD
+

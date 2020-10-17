@@ -1,0 +1,30 @@
+receta {
+    nombre "Puré"
+    descripcion "Esta es una receta mu rica que consiste en cocinarse un purecico puta madre. Que rico un 10"
+    tiempo {
+        total 20 min. # Comprobar con suma de tiempos parciales (Opcional)
+        preparacion 5 min. # No hace falta comprobar, porque son verbos de persona
+    }
+    ingredientes {
+        2.0 ud. Calabaza
+        0.5 ud. Calabacín
+        500 ml. Agua
+        500 gr. Quesitos
+        200 ml. Leche
+        Un cacho Mantequilla
+        1/4 teaspoon Pimienta
+        Sal al gusto
+    }    
+    pasos {
+        - pelar calabacín, calabaza 
+        - pelar calabaza
+        - añadir agua 
+        - añadir calabacín
+        - añadir leche, mantequilla y pimienta
+        - cocinar 25 minutos      
+    }
+
+
+
+}
+
