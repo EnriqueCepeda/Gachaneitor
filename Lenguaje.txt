@@ -6,14 +6,14 @@ receta {
         preparacion 5 min. # No hace falta comprobar, porque son verbos de persona
     }
     ingredientes {
-        2.0 ud. Calabaza
-        0.5 ud. Calabacín
-        500 ml. Agua
-        500 gr. Quesitos
-        200 ml. Leche
-        Un cacho Mantequilla
-        1/4 teaspoon Pimienta
-        Sal al gusto
+        2 ud Calabaza
+        5 ud Calabacín
+        500 ml Agua
+        500 gr Quesitos
+        200 ml Leche
+        1 kg Mantequilla
+        Pimienta
+        Sal
     }    
     pasos {
         - pelar calabacín, calabaza 
@@ -23,8 +23,5 @@ receta {
         - añadir leche, mantequilla y pimienta
         - cocinar 25 minutos      
     }
-
-
-
 }
 

@@ -1,17 +1,14 @@
-RECETA ::= receta '{' NOMBRE INGREDIENTES PASOS '}''
+RECETA ::= receta '{' NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS '}'
 
 NOMBRE ::= nombre '"' IDENT_NOMBRES '"'
+DESCRIPCION ::= descripcion '"' CADENA '"'
+TIEMPO_RECETA ::= tiempo '{' total TIEMPO preparacion TIEMPO '}' 
 
 INGREDIENTES ::= INGREDIENTE {INGREDIENTE} 
-
-(* Seguramente haya que hacer análisis semántico entre
-INGREDIENTES Y PASOS, tanto para los ingredientes 
-como para las cantidades*)
-
 INGREDIENTE ::= IDENT_NOMBRES ':' CANTIDAD
 
 PASOS ::= pasos '{' PASO '}'
-PASO ::= (PASO_MOV | PASO_COC | PASO_PER) { (PASO_MOV | PASO_COC | PASO_PER) }
+PASO ::= - (PASO_MOV | PASO_COC | PASO_PER) { PASO_MOV | PASO_COC | PASO_PER }
 PASO_MOV ::= VERBO_MOV INGREDIENTE TIEMPO VELOCIDAD
 PASO_COC ::= VERBO_COC INGREDIENTE TIEMPO TEMPERATURA
 PASO_PER ::= VERBO_PER INGREDIENTE 
@@ -20,21 +17,26 @@ VERBO_MOV ::= Licuar | Triturar | Moler | Batir | Dejar Reposar | Amasar | Mezcl
 VERBO_COC ::= Cocinar al vapor | Escalfar | Hervir | Guisar | Sofreir 
 VERBO_PER ::= Pelar | Añadir | Trocear | Moler
 
-
-CANTIDAD ::= (DOUBLE | NUMERO) UNIDAD_CANTIDAD
+CANTIDAD ::= NUMERO UNIDAD_CANTIDAD
 TIEMPO ::= NUMERO UNIDAD_TIEMPO
 TEMPERATURA ::= NUMERO UNIDAD_TEMP
 VELOCIDAD ::= velocidad DIGITO_VELOCIDAD
 
-UNIDAD_CANTIDAD ::= mg. | g. | kg. | ml. | l. 
-UNIDAD_TEMP ::= ºC. | ºF.
-UNIDAD_TIEMPO ::= h. | min. | seg.
+UNIDAD_CANTIDAD ::= mg | g | kg | ml | l  | ud
+UNIDAD_TEMP ::= ºC | ºF
+UNIDAD_TIEMPO ::= h | min | seg
+
 
 IDENT_NOMBRES ::= MAYUS {MINUS| ' '}
 MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | Ñ | O | P | Q | R | S | T | U | V | W | X | Y | Z
 MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z 
 
-DIGITO_VELOCIDAD ::=  0 | 1 | 2 |3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
-DIGITO ::= 0 | 1 | 2 |3 | 4 | 5 | 6 | 7 | 8 | 9 
-NUMERO ::= DIGITO{DIGITO}
-DOUBLE ::= NUMERO "." NUMERO
+DIGITO_INICIAL ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
+DIGITO_VELOCIDAD ::=  DIGITO_INICIAL | 10
+NUMERO ::= DIGITO_INICIAL { DIGITO_INICIAL | 0 }
+
+COMENTARIO ::= /* CADENA */
+ESPACIOS ::= \r | \t | \n
+OTROS_CARACTERES ::= , | ')' | '(' | '{' | '}' | - | _
+
+CADENA ::= {MAYUS | MINUS | NUMERO | ESPACIOS | OTROS_CARACTERES}
