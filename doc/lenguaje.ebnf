@@ -1,21 +1,21 @@
+INICIO ::= RECETA {RECETA}
 RECETA ::= receta '{' NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS '}'
-
-NOMBRE ::= nombre '"' IDENT_NOMBRES '"'
-DESCRIPCION ::= descripcion '"' CADENA '"'
+NOMBRE ::= [nombre] '"' CADENA '"'
+DESCRIPCION ::= [descripcion] “[“ CADENA “]”
 TIEMPO_RECETA ::= tiempo '{' total TIEMPO preparacion TIEMPO '}' 
 
-INGREDIENTES ::= INGREDIENTE {INGREDIENTE} 
+INGREDIENTES ::= INGREDIENTE {; INGREDIENTE} 
 INGREDIENTE ::= IDENT_NOMBRES ':' CANTIDAD
 
 PASOS ::= pasos '{' PASO '}'
 PASO ::= - (PASO_MOV | PASO_COC | PASO_PER) { PASO_MOV | PASO_COC | PASO_PER }
-PASO_MOV ::= VERBO_MOV INGREDIENTE TIEMPO VELOCIDAD
-PASO_COC ::= VERBO_COC INGREDIENTE TIEMPO TEMPERATURA
-PASO_PER ::= VERBO_PER INGREDIENTE 
+PASO_MOV ::= VERBO_MOV INGREDIENTES TIEMPO VELOCIDAD
+PASO_COC ::= VERBO_COC INGREDIENTES TIEMPO TEMPERATURA
+PASO_PER ::= VERBO_PER INGREDIENTES 
 
-VERBO_MOV ::= Licuar | Triturar | Moler | Batir | Dejar Reposar | Amasar | Mezclar 
-VERBO_COC ::= Cocinar al vapor | Escalfar | Hervir | Guisar | Sofreir 
-VERBO_PER ::= Pelar | Añadir | Trocear | Moler
+VERBO_MOV ::= licuar | triturar | moler | batir | dejar reposar | amasar | mezclar 
+VERBO_COC ::= cocinar al vapor | escalfar | hervir | guisar | sofreir 
+VERBO_PER ::= pelar| trocear | moler
 
 CANTIDAD ::= NUMERO UNIDAD_CANTIDAD
 TIEMPO ::= NUMERO UNIDAD_TIEMPO
@@ -25,18 +25,14 @@ VELOCIDAD ::= velocidad DIGITO_VELOCIDAD
 UNIDAD_CANTIDAD ::= mg | g | kg | ml | l  | ud
 UNIDAD_TEMP ::= ºC | ºF
 UNIDAD_TIEMPO ::= h | min | seg
+IDENT_NOMBRES ::= MAYUS {MINUS | “ “ }
 
-
-IDENT_NOMBRES ::= MAYUS {MINUS| ' '}
 MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | Ñ | O | P | Q | R | S | T | U | V | W | X | Y | Z
 MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z 
-
 DIGITO_INICIAL ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
 DIGITO_VELOCIDAD ::=  DIGITO_INICIAL | 10
 NUMERO ::= DIGITO_INICIAL { DIGITO_INICIAL | 0 }
-
-COMENTARIO ::= /* CADENA */
-ESPACIOS ::= \r | \t | \n
+COMENTARIO ::= /* {CADENA | ESPACIOS} */
+TABS ::= \r | \t | \n 
 OTROS_CARACTERES ::= , | ')' | '(' | '{' | '}' | - | _
-
-CADENA ::= {MAYUS | MINUS | NUMERO | ESPACIOS | OTROS_CARACTERES}
+CADENA ::= {MAYUS | MINUS | NUMERO | TABS | ‘ ‘ | OTROS_CARACTERES}
