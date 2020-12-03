@@ -75,7 +75,6 @@ preparacion {System.out.println("Token preparacion encontrado en linea: " + (yyl
 pasos {System.out.println("Token pasos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 ingredientes {System.out.println("Token ingredientes encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 
-tiempo {System.out.println("Token tiempo encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 temperatura {System.out.println("Token temperatura encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 {blanco} | {nl} | {tab}  {}
@@ -109,7 +108,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
   {nl} {/*Ignoramos los saltos de línea de los comentarios*/}
   .  {/*Ignoramos el contenido de los comentarios*/}
 }
-[:uppercase:][:jletter:]*
+
 <IDENTIFICADOR> {
   {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
   \" {yybegin(YYINITIAL);}
