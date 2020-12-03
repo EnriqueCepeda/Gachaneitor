@@ -1,7 +1,7 @@
 INICIO ::= RECETA {RECETA}
 RECETA ::= receta '{' NOMBRE DESCRIPCION TIEMPO_RECETA DEF_INGREDIENTES PASOS '}'
 NOMBRE ::= [nombre] '"' CADENA '"'
-DESCRIPCION ::= [descripcion] “[“ CADENA “]”
+DESCRIPCION ::= [descripcion] '[' CADENA ']'
 TIEMPO_RECETA ::= tiempo '{' total TIEMPO preparacion TIEMPO '}' 
 
 DEF_INGREDIENTES ::= ingredientes '{' INGREDIENTES '}'
@@ -14,7 +14,7 @@ PASO_MOV ::= VERBO_MOV INGREDIENTES TIEMPO VELOCIDAD
 PASO_COC ::= VERBO_COC INGREDIENTES TIEMPO TEMPERATURA
 PASO_PER ::= VERBO_PER INGREDIENTES 
 
-VERBO_MOV ::= licuar | triturar | moler | batir | dejar reposar | amasar | mezclar 
+VERBO_MOV ::= licuar | triturar | batir | dejar reposar | amasar | mezclar 
 VERBO_COC ::= cocinar al vapor | escalfar | hervir | guisar | sofreir 
 VERBO_PER ::= pelar| trocear | moler
 
