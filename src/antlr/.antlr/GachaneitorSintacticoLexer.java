@@ -1,4 +1,4 @@
-// Generated from c:\Users\elena\OneDrive - Universidad de Castilla-La Mancha\Universidad\4_primerCuatri\ProcesadoresLenguajes\Gachaneitor\src\antlr\GachaneitorSintactico.g4 by ANTLR 4.8
+// Generated from c:\Users\elena\OneDrive - Universidad de Castilla-La Mancha\Universidad\4_primerCuatri\ProcesadoresLenguajes\Gachaneitor\src\antlr\Gachaneitor.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -103,7 +103,7 @@ public class GachaneitorSintacticoLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "GachaneitorSintactico.g4"; }
+	public String getGrammarFileName() { return "Gachaneitor.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

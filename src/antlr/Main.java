@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        GachaneitorSintacticoLexer lexer = new GachaneitorSintacticoLexer(CharStreams.fromFileName("input/Lenguaje.txt"));
-        GachaneitorSintacticoParser parser = new GachaneitorSintacticoParser(new CommonTokenStream(lexer));
+        GachaneitorLexer lexer = new GachaneitorLexer(CharStreams.fromFileName("input/Lenguaje.txt"));
+        GachaneitorParser parser = new GachaneitorParser(new CommonTokenStream(lexer));
         ParseTree tree = parser.inicio();
         System.out.println(tree.toStringTree(parser));
     }
