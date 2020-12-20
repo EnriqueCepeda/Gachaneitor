@@ -1,0 +1,52 @@
+/* ----------------------Seccion de declaraciones package e imports--------------------*/
+
+import java_cup.runtime.*;
+
+/* ----------------------Seccion componentes de codigo de usuario --------------------*/
+
+
+/* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
+
+terminal Integer numero, digito_velocidad;
+terminal String ident_nombres, contenido_descripcion, cadena, unidad_cantidad, unidad_temp, unidad_tiempo,
+verbo_mov, verbo_coc, verbo_per;
+terminal receta, descripcion, nombre, tiempo, total, preparacion, dospuntos, puntoycoma, guion, pasos,
+ingredientes, temperatura, velocidad, llave_abierta, llave_cerrada, comilla;
+
+non terminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES;
+INGREDIENTE_LISTA, INGREDIENTE, PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO,
+TEMPERATURA, VELOCIDAD;
+
+
+/* -------------Declaracion de precedencias -----------*/
+
+
+
+/* --------------Declaracion de la gramatica -----------*/
+
+
+
+
+
+/*
+inicio : receta (receta)*;
+receta : RECETA LLAVE_ABIERTA nombre descripcion tiempo_receta ingredientes pasos LLAVE_CERRADA;
+nombre :  NOMBRE? COMILLA IDENT_NOMBRES COMILLA;
+descripcion : DESCRIPCION? CONTENIDO_DESCRIPCION;
+tiempo_receta : TIEMPO LLAVE_ABIERTA TOTAL tiempo PREPARACION tiempo LLAVE_CERRADA;
+
+ingredientes : INGREDIENTES LLAVE_ABIERTA (ingrediente PUNTOYCOMA)+ LLAVE_CERRADA;
+ingrediente_lista : ingrediente(PUNTOYCOMA ingrediente)+;
+ingrediente : COMILLA IDENT_NOMBRES COMILLA DOSPUNTOS cantidad;
+pasos : PASOS LLAVE_ABIERTA (paso)+ LLAVE_CERRADA;
+paso : paso_mov | paso_coc | paso_per;
+
+paso_mov : GUION VERBO_MOV ingrediente_lista tiempo velocidad;
+paso_coc : GUION VERBO_COC ingrediente_lista tiempo temperatura; 
+paso_per : GUION VERBO_PER ingrediente_lista; 
+
+cantidad : NUMERO UNIDAD_CANTIDAD;
+tiempo : NUMERO UNIDAD_TIEMPO;
+temperatura : TEMPERATURA NUMERO UNIDAD_TEMP;
+velocidad : VELOCIDAD DIGITO_VELOCIDAD;
+*/

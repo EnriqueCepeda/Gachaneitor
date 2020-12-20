@@ -28,8 +28,6 @@ VERBO_PER : 'pelar' | 'trocear' | 'moler';
 OTROS_CARACTERES : ',' | ')' | '(' | '_' | '.' ;
 LLAVE_ABIERTA : '{';
 LLAVE_CERRADA : '}';
-CORCHETE_ABIERTO : '[';
-CORCHETE_CERRADO : ']';
 COMILLA : '"';
 
 NUMERO : [1-9][0-9]*;
@@ -40,7 +38,10 @@ CADENA : ([A-Z] | [a-z] | [0-9] | OTROS_CARACTERES | TILDES | 'ñ'| 'Á')+;
 
 TILDES : 'á' | 'é' | 'í' | 'ó' | 'ú' | 'É' | 'Í' | 'Ó' | 'Ú';
 
-CONTENIDO_DESCRIPCION : '['(CADENA | ' ')*']';
+CONTENIDO_DESCRIPCION : CORCHETE_ABIERTO (CADENA | ' ')* CORCHETE_CERRADO ;
+
+CORCHETE_ABIERTO : '[' ;
+CORCHETE_CERRADO : ']' ;
 
 /*Skips*/ 
 COMMENT : '/*' .*? '*/' -> skip; // saltar los comentarios de varias líneas

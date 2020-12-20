@@ -24,21 +24,35 @@ class Utility{
 
 %%
 %class analex 
-%standalone
 
 /* Indicar funcionamiento autonomo */
-
+%standalone
 
 %line
 %column
 %unicode
 
 /* Habilitar la compatibilidad con el interfaz CUP para el generador sintáctico */
- 
+%cup
 
 %state COMENTARIO
 %state DESCRIPCION
 %state IDENTIFICADOR
+
+/*--DECLARACIONES --*/ 
+
+%{ /* Principio Declaraciones */
+
+/* Crear un nuevo objeto java_cup.runtime.Symbol con informacion sobre
+   el token actual sin valor */
+ private Symbol symbol(int type) {
+
+   return new Symbol(type,yyline,yycolumn);
+ 
+ }/* Fin symbol */
+
+
+%} /* Fin Declaraciones */
 
 
 /* Declaraciones de macros NL(nueva linea) BLANCO(espacio en blanco) y TAB(tabulador) */
@@ -53,8 +67,8 @@ verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
 unidad_tiempo = h | min | seg
 unidad_temperatura = ºC | ºF
-cadena = ([:jletterdigit:] | {nl} | {blanco} | é | \. )*
-ident = ( [:jletter:] | {blanco} | é )+
+cadena = ([:jletterdigit:] | {nl} | {blanco} | \. )*
+ident = ( [:jletter:] | {blanco} )+
 
 
 %%
@@ -93,10 +107,10 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 {unidad_tiempo} {System.out.println("Token unidad_tiempo <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 {unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 
-\" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+\" {System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
  yybegin(IDENTIFICADOR);} 
 
-\/\*  {yybegin(COMENTARIO); System.out.println("Token Comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
+\/\*  {yybegin(COMENTARIO); System.out.println("Comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
 
 
 }/* fin YYinitial */

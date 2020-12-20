@@ -61,9 +61,9 @@ hs_err_pid*
 src/antlr/Gachaneitor.interp
 src/antlr/Gachaneitor.tokens
 src/antlr/GachaneitorBaseListener.java
-antlr/GachaneitorLexer.interp
-antlr/GachaneitorLexer.java
-antlr/GachaneitorLexer.tokens
-antlr/GachaneitorListener.java
-antlr/GachaneitorParser.java
+src/antlr/GachaneitorLexer.interp
+src/antlr/GachaneitorLexer.java
+src/antlr/GachaneitorLexer.tokens
+src/antlr/GachaneitorListener.java
+src/antlr/GachaneitorParser.java
 

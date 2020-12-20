@@ -20,8 +20,8 @@ public class GachaneitorParser extends Parser {
 		PUNTOYCOMA=8, GUION=9, PASOS=10, INGREDIENTES=11, TEMPERATURA=12, VELOCIDAD=13, 
 		UNIDAD_CANTIDAD=14, UNIDAD_TEMP=15, UNIDAD_TIEMPO=16, VERBO_MOV=17, VERBO_COC=18, 
 		VERBO_PER=19, OTROS_CARACTERES=20, LLAVE_ABIERTA=21, LLAVE_CERRADA=22, 
-		CORCHETE_ABIERTO=23, CORCHETE_CERRADO=24, COMILLA=25, NUMERO=26, DIGITO_VELOCIDAD=27, 
-		IDENT_NOMBRES=28, CADENA=29, CONTENIDO_DESCRIPCION=30, COMMENT=31, WS=32;
+		COMILLA=23, NUMERO=24, DIGITO_VELOCIDAD=25, IDENT_NOMBRES=26, CADENA=27, 
+		TILDES=28, CONTENIDO_DESCRIPCION=29, COMMENT=30, WS=31;
 	public static final int
 		RULE_inicio = 0, RULE_receta = 1, RULE_nombre = 2, RULE_descripcion = 3, 
 		RULE_tiempo_receta = 4, RULE_ingredientes = 5, RULE_ingrediente_lista = 6, 
@@ -42,7 +42,7 @@ public class GachaneitorParser extends Parser {
 			null, "'receta'", "'nombre'", "'descripcion'", "'tiempo'", "'total'", 
 			"'preparacion'", "':'", "';'", "'-'", "'pasos'", "'ingredientes'", "'temperatura'", 
 			"'velocidad'", null, null, null, null, null, null, null, "'{'", "'}'", 
-			"'['", "']'", "'\"'"
+			"'\"'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -52,8 +52,8 @@ public class GachaneitorParser extends Parser {
 			"DOSPUNTOS", "PUNTOYCOMA", "GUION", "PASOS", "INGREDIENTES", "TEMPERATURA", 
 			"VELOCIDAD", "UNIDAD_CANTIDAD", "UNIDAD_TEMP", "UNIDAD_TIEMPO", "VERBO_MOV", 
 			"VERBO_COC", "VERBO_PER", "OTROS_CARACTERES", "LLAVE_ABIERTA", "LLAVE_CERRADA", 
-			"CORCHETE_ABIERTO", "CORCHETE_CERRADO", "COMILLA", "NUMERO", "DIGITO_VELOCIDAD", 
-			"IDENT_NOMBRES", "CADENA", "CONTENIDO_DESCRIPCION", "COMMENT", "WS"
+			"COMILLA", "NUMERO", "DIGITO_VELOCIDAD", "IDENT_NOMBRES", "CADENA", "TILDES", 
+			"CONTENIDO_DESCRIPCION", "COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -895,7 +895,7 @@ public class GachaneitorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\"\u008c\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u008c\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\7\2\'\n\2\f\2\16\2*\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
@@ -912,22 +912,22 @@ public class GachaneitorParser extends Parser {
 		"\2\2\2(&\3\2\2\2()\3\2\2\2)\3\3\2\2\2*(\3\2\2\2+,\7\3\2\2,-\7\27\2\2-"+
 		".\5\6\4\2./\5\b\5\2/\60\5\n\6\2\60\61\5\f\7\2\61\62\5\22\n\2\62\63\7\30"+
 		"\2\2\63\5\3\2\2\2\64\66\7\4\2\2\65\64\3\2\2\2\65\66\3\2\2\2\66\67\3\2"+
-		"\2\2\678\7\33\2\289\7\36\2\29:\7\33\2\2:\7\3\2\2\2;=\7\5\2\2<;\3\2\2\2"+
-		"<=\3\2\2\2=>\3\2\2\2>?\7 \2\2?\t\3\2\2\2@A\7\6\2\2AB\7\27\2\2BC\7\7\2"+
-		"\2CD\5\36\20\2DE\7\b\2\2EF\5\36\20\2FG\7\30\2\2G\13\3\2\2\2HI\7\r\2\2"+
-		"IM\7\27\2\2JK\5\20\t\2KL\7\n\2\2LN\3\2\2\2MJ\3\2\2\2NO\3\2\2\2OM\3\2\2"+
-		"\2OP\3\2\2\2PQ\3\2\2\2QR\7\30\2\2R\r\3\2\2\2SV\5\20\t\2TU\7\n\2\2UW\5"+
-		"\20\t\2VT\3\2\2\2WX\3\2\2\2XV\3\2\2\2XY\3\2\2\2Y\17\3\2\2\2Z[\7\33\2\2"+
-		"[\\\7\36\2\2\\]\7\33\2\2]^\7\t\2\2^_\5\34\17\2_\21\3\2\2\2`a\7\f\2\2a"+
-		"c\7\27\2\2bd\5\24\13\2cb\3\2\2\2de\3\2\2\2ec\3\2\2\2ef\3\2\2\2fg\3\2\2"+
-		"\2gh\7\30\2\2h\23\3\2\2\2im\5\26\f\2jm\5\30\r\2km\5\32\16\2li\3\2\2\2"+
-		"lj\3\2\2\2lk\3\2\2\2m\25\3\2\2\2no\7\13\2\2op\7\23\2\2pq\5\16\b\2qr\5"+
-		"\36\20\2rs\5\"\22\2s\27\3\2\2\2tu\7\13\2\2uv\7\24\2\2vw\5\16\b\2wx\5\36"+
-		"\20\2xy\5 \21\2y\31\3\2\2\2z{\7\13\2\2{|\7\25\2\2|}\5\16\b\2}\33\3\2\2"+
-		"\2~\177\7\34\2\2\177\u0080\7\20\2\2\u0080\35\3\2\2\2\u0081\u0082\7\34"+
-		"\2\2\u0082\u0083\7\22\2\2\u0083\37\3\2\2\2\u0084\u0085\7\16\2\2\u0085"+
-		"\u0086\7\34\2\2\u0086\u0087\7\21\2\2\u0087!\3\2\2\2\u0088\u0089\7\17\2"+
-		"\2\u0089\u008a\7\35\2\2\u008a#\3\2\2\2\t(\65<OXel";
+		"\2\2\678\7\31\2\289\7\34\2\29:\7\31\2\2:\7\3\2\2\2;=\7\5\2\2<;\3\2\2\2"+
+		"<=\3\2\2\2=>\3\2\2\2>?\7\37\2\2?\t\3\2\2\2@A\7\6\2\2AB\7\27\2\2BC\7\7"+
+		"\2\2CD\5\36\20\2DE\7\b\2\2EF\5\36\20\2FG\7\30\2\2G\13\3\2\2\2HI\7\r\2"+
+		"\2IM\7\27\2\2JK\5\20\t\2KL\7\n\2\2LN\3\2\2\2MJ\3\2\2\2NO\3\2\2\2OM\3\2"+
+		"\2\2OP\3\2\2\2PQ\3\2\2\2QR\7\30\2\2R\r\3\2\2\2SV\5\20\t\2TU\7\n\2\2UW"+
+		"\5\20\t\2VT\3\2\2\2WX\3\2\2\2XV\3\2\2\2XY\3\2\2\2Y\17\3\2\2\2Z[\7\31\2"+
+		"\2[\\\7\34\2\2\\]\7\31\2\2]^\7\t\2\2^_\5\34\17\2_\21\3\2\2\2`a\7\f\2\2"+
+		"ac\7\27\2\2bd\5\24\13\2cb\3\2\2\2de\3\2\2\2ec\3\2\2\2ef\3\2\2\2fg\3\2"+
+		"\2\2gh\7\30\2\2h\23\3\2\2\2im\5\26\f\2jm\5\30\r\2km\5\32\16\2li\3\2\2"+
+		"\2lj\3\2\2\2lk\3\2\2\2m\25\3\2\2\2no\7\13\2\2op\7\23\2\2pq\5\16\b\2qr"+
+		"\5\36\20\2rs\5\"\22\2s\27\3\2\2\2tu\7\13\2\2uv\7\24\2\2vw\5\16\b\2wx\5"+
+		"\36\20\2xy\5 \21\2y\31\3\2\2\2z{\7\13\2\2{|\7\25\2\2|}\5\16\b\2}\33\3"+
+		"\2\2\2~\177\7\32\2\2\177\u0080\7\20\2\2\u0080\35\3\2\2\2\u0081\u0082\7"+
+		"\32\2\2\u0082\u0083\7\22\2\2\u0083\37\3\2\2\2\u0084\u0085\7\16\2\2\u0085"+
+		"\u0086\7\32\2\2\u0086\u0087\7\21\2\2\u0087!\3\2\2\2\u0088\u0089\7\17\2"+
+		"\2\u0089\u008a\7\33\2\2\u008a#\3\2\2\2\t(\65<OXel";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
