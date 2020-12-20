@@ -1,4 +1,5 @@
 import java.io.*;
+import java.io.FileInputStream;
 
 class Main {
 
@@ -7,7 +8,8 @@ class Main {
 
       if (args.length > 0) {
          try {
-            lector = new FileReader(args[0]);
+            lector = new InputStreamReader(new FileInputStream(args[0]), "UTF8");
+            System.out.println(((InputStreamReader) lector).getEncoding());
          } catch (IOException exc) {
             System.err.println("imposible abrir archivo '" + args[0] + "'");
             System.err.println("causa: " + exc.getMessage());

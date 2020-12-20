@@ -1,4 +1,4 @@
-// Generated from c:\Users\elena\OneDrive - Universidad de Castilla-La Mancha\Universidad\4_primerCuatri\ProcesadoresLenguajes\Gachaneitor\src\antlr\GachaneitorLexico.g4 by ANTLR 4.8
+// Generated from Gachaneitor.g4 by ANTLR 4.9
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -9,8 +9,8 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GachaneitorLexico extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
+public class GachaneitorLexer extends Lexer {
+	static { RuntimeMetaData.checkVersion("4.9", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -99,13 +99,13 @@ public class GachaneitorLexico extends Lexer {
 	}
 
 
-	public GachaneitorLexico(CharStream input) {
+	public GachaneitorLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "GachaneitorLexico.g4"; }
+	public String getGrammarFileName() { return "Gachaneitor.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

@@ -7,21 +7,21 @@ receta {
     }
     
     ingredientes {
-        "calabaza": 2 ud; 
-        "calabacín": 5 ud;
-        "vasito de agua": 500 ml;
-        "quesitos": 500 g;
-        "leche": 200 ml;
-        "mantequilla": 1 kg;
-        "pimienta": 5 mg;
-        "sal": 20 mg;
+        "Calabaza": 2 ud; 
+        "Calabacín": 5 ud;
+        "Vasito de agua": 500 ml;
+        "Quesitos": 500 g;
+        "Leche": 200 ml;
+        "Mantequilla": 1 kg;
+        "Pimienta": 5 mg;
+        "Sal": 20 mg;
     }
 
     pasos {
-        - pelar "calabacín": 5 ud; "calabaza": 2 ud
-        - trocear "calabacín": 5 ud; "calabaza": 2 ud
-        - sofreir "calabacín": 5 ud; "calabaza": 2 ud temperatura 20ºC
-        - triturar "calabacín": 5 ud; "calabaza": 2 ud 
+        - pelar "Calabacín": 5 ud; "Calabaza": 2 ud 
+        - trocear "Calabacín": 5 ud; "Calabaza": 2 ud
+        - sofreir "Calabacín": 5 ud; "Calabaza": 2 ud 20 min temperatura 20ºC
+        - triturar "Calabacín": 5 ud; "Calabaza": 2 ud 10 min velocidad 02
     }
 }
 

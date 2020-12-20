@@ -48,13 +48,13 @@ nl = [\n | \r | \t \r\n]
 blanco = " "
 tab = \t
 verbo_mov = licuar | triturar | moler | batir | dejar reposar | amasar | mezclar
-verbo_coc = cocinaralvapor | escalfar | hervir | guisar | sofreir
+verbo_coc = "cocinar al vapor" | escalfar | hervir | guisar | sofreir
 verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
 unidad_tiempo = h | min | seg
 unidad_temperatura = ºC | ºF
-cadena = ([:jletterdigit:] | {nl} | {blanco} | \. )*
-ident = ( [:jletter:] | {blanco} )+
+cadena = ([:jletterdigit:] | {nl} | {blanco} | é | \. )*
+ident = ( [:jletter:] | {blanco} | é )+
 
 
 %%
@@ -87,11 +87,14 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 {verbo_per} {System.out.println("Token verbo_per <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 
 [1-9][:digit:]* {System.out.println("Token numero <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+0[1-9]* {System.out.println("Token digito_velocidad <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+
 {unidad_cantidad} {System.out.println("Token unidad_cantidad <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 {unidad_tiempo} {System.out.println("Token unidad_tiempo <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 {unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 
-\" {yybegin(IDENTIFICADOR);} 
+\" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+ yybegin(IDENTIFICADOR);} 
 
 \/\*  {yybegin(COMENTARIO); System.out.println("Token Comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
 
@@ -111,6 +114,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 
 <IDENTIFICADOR> {
   {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-  \" {yybegin(YYINITIAL);}
+  \" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+    yybegin(YYINITIAL);}
 
 }

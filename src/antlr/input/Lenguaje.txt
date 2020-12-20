@@ -1,5 +1,5 @@
 receta {
-    nombre "Pure"
+    nombre "Puré"
     descripcion [Esta es una receta mu rica. Que rico un 10]
     tiempo {
         total 20 min /* Comprobar con suma de tiempos parciales (Opcional) */
@@ -8,7 +8,7 @@ receta {
     
     ingredientes {
         "Calabaza": 2 ud; 
-        "Calabacin": 5 ud;
+        "Calabacín": 5 ud;
         "Vasito de agua": 500 ml;
         "Quesitos": 500 g;
         "Leche": 200 ml;
@@ -18,10 +18,10 @@ receta {
     }
 
     pasos {
-        - pelar "Calabacin": 5 ud; "Calabaza": 2 ud 
-        - trocear "Calabacin": 5 ud; "Calabaza": 2 ud
-        - sofreir "Calabacin": 5 ud; "Calabaza": 2 ud 20 min temperatura 20ºC
-        - triturar "Calabacin": 5 ud; "Calabaza": 2 ud 10 min velocidad 02
+        - pelar "Calabacín": 5 ud; "Calabaza": 2 ud 
+        - trocear "Calabacín": 5 ud; "Calabaza": 2 ud
+        - sofreir "Calabacín": 5 ud; "Calabaza": 2 ud 20 min temperatura 20ºC
+        - triturar "Calabacín": 5 ud; "Calabaza": 2 ud 10 min velocidad 02
     }
 }
 

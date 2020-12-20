@@ -4,7 +4,6 @@ lexer grammar GachaneitorLexico;
  * Lexer Rules
  */
 
-
 RECETA : 'receta';
 NOMBRE : 'nombre';
 DESCRIPCION : 'descripcion';
@@ -36,12 +35,12 @@ COMILLA : '"';
 NUMERO : [1-9][0-9]*;
 DIGITO_VELOCIDAD : '0'[1-9]; 
 
-IDENT_NOMBRES : [A-Z]([a-z] | ' ')*; 
-//CADENA : ([A-Z] | [a-z] | [0-9] | OTROS_CARACTERES )+;
+IDENT_NOMBRES : [A-Z]([a-z] | ' ' | TILDES | 'ñ' | 'Á')*; 
+CADENA : ([A-Z] | [a-z] | [0-9] | OTROS_CARACTERES | TILDES | 'ñ'| 'Á')+;
+
+TILDES : 'á' | 'é' | 'í' | 'ó' | 'ú' | 'É' | 'Í' | 'Ó' | 'Ú';
 
 CONTENIDO_DESCRIPCION : '['(CADENA | ' ')*']';
-
-
 
 /*Skips*/ 
 COMMENT : '/*' .*? '*/' -> skip; // saltar los comentarios de varias líneas
