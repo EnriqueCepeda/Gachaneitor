@@ -58,4 +58,12 @@ hs_err_pid*
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
+src/antlr/Gachaneitor.interp
+src/antlr/Gachaneitor.tokens
+src/antlr/GachaneitorBaseListener.java
+antlr/GachaneitorLexer.interp
+antlr/GachaneitorLexer.java
+antlr/GachaneitorLexer.tokens
+antlr/GachaneitorListener.java
+antlr/GachaneitorParser.java
 
