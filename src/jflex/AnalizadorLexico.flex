@@ -49,7 +49,11 @@ class Utility{
 
    return new Symbol(type,yyline,yycolumn);
  
- }/* Fin symbol */
+ }
+private Symbol symbol(int type,Object value){ 
+	return new Symbol(type,yyline,yycolumn,value); 
+}
+/* Fin symbol */
 
 
 %} /* Fin Declaraciones */
@@ -74,41 +78,65 @@ ident = ( [:jletter:] | {blanco} )+
 %%
 /* ------------------------Seccion de reglas y acciones ----------------------*/
 <YYINITIAL> {
-\{ {System.out.println("Token { encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-\} {System.out.println("Token } encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+\{ {System.out.println("Token { encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.llave_abierta);}
+\} {System.out.println("Token } encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  return symbol(sym.llave_cerrada);}
 
-receta {System.out.println("Token receta encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-nombre {System.out.println("Token nombre encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-descripcion {System.out.println("Token descripcion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-tiempo {System.out.println("Token tiempo encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-total {System.out.println("Token total encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-preparacion {System.out.println("Token preparacion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-: {System.out.println("Token ':' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-; {System.out.println("Token ';' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-- {System.out.println("Token '-' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-pasos {System.out.println("Token pasos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-ingredientes {System.out.println("Token ingredientes encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+receta {System.out.println("Token receta encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.receta);}
+nombre {System.out.println("Token nombre encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  return symbol(sym.nombre);}
+descripcion {System.out.println("Token descripcion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  return symbol(sym.descripcion);}
+tiempo {System.out.println("Token tiempo encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  return symbol(sym.tiempo);}
+total {System.out.println("Token total encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  return symbol(sym.total);}
+preparacion {System.out.println("Token preparacion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.preparacion);}
+: {System.out.println("Token ':' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.dospuntos);}
+; {System.out.println("Token ';' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.puntoycoma);}
+- {System.out.println("Token '-' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.guion);}
+pasos {System.out.println("Token pasos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.pasos);}
+ingredientes {System.out.println("Token ingredientes encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.ingredientes)}
 
-temperatura {System.out.println("Token temperatura encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+temperatura {System.out.println("Token temperatura encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.temperatura);}
+velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.velocidad);}
+
 {blanco} | {nl} | {tab}  {}
 
 \[  {System.out.println("Token '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     yybegin(DESCRIPCION);}
 
-{verbo_mov} {System.out.println("Token verbo_mov <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-{verbo_coc} {System.out.println("Token verbo_coc <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-{verbo_per} {System.out.println("Token verbo_per <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+{verbo_mov} {System.out.println("Token verbo_mov <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.verbo_mov, new String(yytext()));}
+{verbo_coc} {System.out.println("Token verbo_coc <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.verbo_coc, new String(yytext()));}
+{verbo_per} {System.out.println("Token verbo_per <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.verbo_per, new String(yytext()));}
 
-[1-9][:digit:]* {System.out.println("Token numero <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-0[1-9]* {System.out.println("Token digito_velocidad <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+[1-9][:digit:]* {System.out.println("Token numero <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.numero, new Integer(yytext()));}
+0[1-9]* {System.out.println("Token digito_velocidad <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.digito_velocidad, new Integer(yytext()));}
 
-{unidad_cantidad} {System.out.println("Token unidad_cantidad <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-{unidad_tiempo} {System.out.println("Token unidad_tiempo <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-{unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+{unidad_cantidad} {System.out.println("Token unidad_cantidad <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.unidad_cantidad, new String(yytext()));}
+{unidad_tiempo} {System.out.println("Token unidad_tiempo <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.unidad_tiempo, new String(yytext()));}
+{unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.unidad_temp, new String(yytext()));}
 
-\" {System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
- yybegin(IDENTIFICADOR);} 
+\" {System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.comillas), yybegin(IDENTIFICADOR); yybegin(IDENTIFICADOR);} 
 
 \/\*  {yybegin(COMENTARIO); System.out.println("Comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
 
@@ -117,7 +145,8 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 
 <DESCRIPCION> {
 \] {yybegin(YYINITIAL);}
-{cadena}  {System.out.println("Token cadena <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
+{cadena}  {System.out.println("Token cadena <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  return symbol(sym.contenido_descripcion, new String(yytext()));}
 }
 
 <COMENTARIO> {
@@ -129,6 +158,6 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 <IDENTIFICADOR> {
   {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
   \" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
-    yybegin(YYINITIAL);}
+    return symbol(sym.comillas); yybegin(YYINITIAL);}
 
 }
