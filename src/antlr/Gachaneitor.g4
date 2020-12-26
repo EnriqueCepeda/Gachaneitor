@@ -4,13 +4,13 @@ import GachaneitorLexico;
 
 inicio : receta (receta)*;
 receta : RECETA LLAVE_ABIERTA nombre descripcion tiempo_receta ingredientes pasos LLAVE_CERRADA;
-nombre :  NOMBRE? COMILLA IDENT_NOMBRES COMILLA;
+nombre :  NOMBRE? COMILLA IDENT_NOMBRE COMILLA;
 descripcion : DESCRIPCION? CONTENIDO_DESCRIPCION;
 tiempo_receta : TIEMPO LLAVE_ABIERTA TOTAL tiempo PREPARACION tiempo LLAVE_CERRADA;
 
-ingredientes : INGREDIENTES LLAVE_ABIERTA (ingrediente PUNTOYCOMA)+ LLAVE_CERRADA;
-ingrediente_lista : ingrediente(PUNTOYCOMA ingrediente)+;
-ingrediente : COMILLA IDENT_NOMBRES COMILLA DOSPUNTOS cantidad;
+ingredientes : INGREDIENTES LLAVE_ABIERTA ingrediente_lista LLAVE_CERRADA;
+ingrediente_lista : (ingrediente PUNTOYCOMA)+ ;
+ingrediente : COMILLA IDENT_NOMBRE COMILLA DOSPUNTOS cantidad;
 pasos : PASOS LLAVE_ABIERTA (paso)+ LLAVE_CERRADA;
 paso : paso_mov | paso_coc | paso_per;
 

@@ -402,17 +402,10 @@ public class GachaneitorParser extends Parser {
 	public static class IngredientesContext extends ParserRuleContext {
 		public TerminalNode INGREDIENTES() { return getToken(GachaneitorParser.INGREDIENTES, 0); }
 		public TerminalNode LLAVE_ABIERTA() { return getToken(GachaneitorParser.LLAVE_ABIERTA, 0); }
+		public Ingrediente_listaContext ingrediente_lista() {
+			return getRuleContext(Ingrediente_listaContext.class,0);
+		}
 		public TerminalNode LLAVE_CERRADA() { return getToken(GachaneitorParser.LLAVE_CERRADA, 0); }
-		public List<IngredienteContext> ingrediente() {
-			return getRuleContexts(IngredienteContext.class);
-		}
-		public IngredienteContext ingrediente(int i) {
-			return getRuleContext(IngredienteContext.class,i);
-		}
-		public List<TerminalNode> PUNTOYCOMA() { return getTokens(GachaneitorParser.PUNTOYCOMA); }
-		public TerminalNode PUNTOYCOMA(int i) {
-			return getToken(GachaneitorParser.PUNTOYCOMA, i);
-		}
 		public IngredientesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -430,7 +423,6 @@ public class GachaneitorParser extends Parser {
 	public final IngredientesContext ingredientes() throws RecognitionException {
 		IngredientesContext _localctx = new IngredientesContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_ingredientes);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -438,23 +430,9 @@ public class GachaneitorParser extends Parser {
 			match(INGREDIENTES);
 			setState(71);
 			match(LLAVE_ABIERTA);
-			setState(75); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(72);
-				ingrediente();
-				setState(73);
-				match(PUNTOYCOMA);
-				}
-				}
-				setState(77); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==COMILLA );
-			setState(79);
+			setState(72);
+			ingrediente_lista();
+			setState(73);
 			match(LLAVE_CERRADA);
 			}
 		}
@@ -501,24 +479,22 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81);
-			ingrediente();
-			setState(84); 
+			setState(78); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(82);
-				match(PUNTOYCOMA);
-				setState(83);
+				setState(75);
 				ingrediente();
+				setState(76);
+				match(PUNTOYCOMA);
 				}
 				}
-				setState(86); 
+				setState(80); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==PUNTOYCOMA );
+			} while ( _la==COMILLA );
 			}
 		}
 		catch (RecognitionException re) {
@@ -562,15 +538,15 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88);
+			setState(82);
 			match(COMILLA);
-			setState(89);
+			setState(83);
 			match(IDENT_NOMBRES);
-			setState(90);
+			setState(84);
 			match(COMILLA);
-			setState(91);
+			setState(85);
 			match(DOSPUNTOS);
-			setState(92);
+			setState(86);
 			cantidad();
 			}
 		}
@@ -616,25 +592,25 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(94);
+			setState(88);
 			match(PASOS);
-			setState(95);
+			setState(89);
 			match(LLAVE_ABIERTA);
-			setState(97); 
+			setState(91); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(96);
+				setState(90);
 				paso();
 				}
 				}
-				setState(99); 
+				setState(93); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==GUION );
-			setState(101);
+			setState(95);
 			match(LLAVE_CERRADA);
 			}
 		}
@@ -677,27 +653,27 @@ public class GachaneitorParser extends Parser {
 		PasoContext _localctx = new PasoContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_paso);
 		try {
-			setState(106);
+			setState(100);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(103);
+				setState(97);
 				paso_mov();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(104);
+				setState(98);
 				paso_coc();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(105);
+				setState(99);
 				paso_per();
 				}
 				break;
@@ -746,15 +722,15 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(108);
+			setState(102);
 			match(GUION);
-			setState(109);
+			setState(103);
 			match(VERBO_MOV);
-			setState(110);
+			setState(104);
 			ingrediente_lista();
-			setState(111);
+			setState(105);
 			tiempo();
-			setState(112);
+			setState(106);
 			velocidad();
 			}
 		}
@@ -801,15 +777,15 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114);
+			setState(108);
 			match(GUION);
-			setState(115);
+			setState(109);
 			match(VERBO_COC);
-			setState(116);
+			setState(110);
 			ingrediente_lista();
-			setState(117);
+			setState(111);
 			tiempo();
-			setState(118);
+			setState(112);
 			temperatura();
 			}
 		}
@@ -850,11 +826,11 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(114);
 			match(GUION);
-			setState(121);
+			setState(115);
 			match(VERBO_PER);
-			setState(122);
+			setState(116);
 			ingrediente_lista();
 			}
 		}
@@ -892,9 +868,9 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124);
+			setState(118);
 			match(NUMERO);
-			setState(125);
+			setState(119);
 			match(UNIDAD_CANTIDAD);
 			}
 		}
@@ -932,9 +908,9 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(127);
+			setState(121);
 			match(NUMERO);
-			setState(128);
+			setState(122);
 			match(UNIDAD_TIEMPO);
 			}
 		}
@@ -973,11 +949,11 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130);
+			setState(124);
 			match(TEMPERATURA);
-			setState(131);
+			setState(125);
 			match(NUMERO);
-			setState(132);
+			setState(126);
 			match(UNIDAD_TEMP);
 			}
 		}
@@ -1015,9 +991,9 @@ public class GachaneitorParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134);
+			setState(128);
 			match(VELOCIDAD);
-			setState(135);
+			setState(129);
 			match(DIGITO_VELOCIDAD);
 			}
 		}
@@ -1033,39 +1009,37 @@ public class GachaneitorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u008c\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u0086\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\7\2\'\n\2\f\2\16\2*\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\4\5\4\66\n\4\3\4\3\4\3\4\3\4\3\5\5\5=\n\5\3\5\3\5\3\6\3\6\3\6\3\6\3"+
-		"\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\6\7N\n\7\r\7\16\7O\3\7\3\7\3\b\3\b"+
-		"\3\b\6\bW\n\b\r\b\16\bX\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\6\nd\n\n\r"+
-		"\n\16\ne\3\n\3\n\3\13\3\13\3\13\5\13m\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\r"+
-		"\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3\20"+
-		"\3\21\3\21\3\21\3\21\3\22\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24"+
-		"\26\30\32\34\36 \"\2\2\2\u0082\2$\3\2\2\2\4+\3\2\2\2\6\65\3\2\2\2\b<\3"+
-		"\2\2\2\n@\3\2\2\2\fH\3\2\2\2\16S\3\2\2\2\20Z\3\2\2\2\22`\3\2\2\2\24l\3"+
-		"\2\2\2\26n\3\2\2\2\30t\3\2\2\2\32z\3\2\2\2\34~\3\2\2\2\36\u0081\3\2\2"+
-		"\2 \u0084\3\2\2\2\"\u0088\3\2\2\2$(\5\4\3\2%\'\5\4\3\2&%\3\2\2\2\'*\3"+
-		"\2\2\2(&\3\2\2\2()\3\2\2\2)\3\3\2\2\2*(\3\2\2\2+,\7\3\2\2,-\7\27\2\2-"+
-		".\5\6\4\2./\5\b\5\2/\60\5\n\6\2\60\61\5\f\7\2\61\62\5\22\n\2\62\63\7\30"+
-		"\2\2\63\5\3\2\2\2\64\66\7\4\2\2\65\64\3\2\2\2\65\66\3\2\2\2\66\67\3\2"+
-		"\2\2\678\7\31\2\289\7\34\2\29:\7\31\2\2:\7\3\2\2\2;=\7\5\2\2<;\3\2\2\2"+
-		"<=\3\2\2\2=>\3\2\2\2>?\7\37\2\2?\t\3\2\2\2@A\7\6\2\2AB\7\27\2\2BC\7\7"+
-		"\2\2CD\5\36\20\2DE\7\b\2\2EF\5\36\20\2FG\7\30\2\2G\13\3\2\2\2HI\7\r\2"+
-		"\2IM\7\27\2\2JK\5\20\t\2KL\7\n\2\2LN\3\2\2\2MJ\3\2\2\2NO\3\2\2\2OM\3\2"+
-		"\2\2OP\3\2\2\2PQ\3\2\2\2QR\7\30\2\2R\r\3\2\2\2SV\5\20\t\2TU\7\n\2\2UW"+
-		"\5\20\t\2VT\3\2\2\2WX\3\2\2\2XV\3\2\2\2XY\3\2\2\2Y\17\3\2\2\2Z[\7\31\2"+
-		"\2[\\\7\34\2\2\\]\7\31\2\2]^\7\t\2\2^_\5\34\17\2_\21\3\2\2\2`a\7\f\2\2"+
-		"ac\7\27\2\2bd\5\24\13\2cb\3\2\2\2de\3\2\2\2ec\3\2\2\2ef\3\2\2\2fg\3\2"+
-		"\2\2gh\7\30\2\2h\23\3\2\2\2im\5\26\f\2jm\5\30\r\2km\5\32\16\2li\3\2\2"+
-		"\2lj\3\2\2\2lk\3\2\2\2m\25\3\2\2\2no\7\13\2\2op\7\23\2\2pq\5\16\b\2qr"+
-		"\5\36\20\2rs\5\"\22\2s\27\3\2\2\2tu\7\13\2\2uv\7\24\2\2vw\5\16\b\2wx\5"+
-		"\36\20\2xy\5 \21\2y\31\3\2\2\2z{\7\13\2\2{|\7\25\2\2|}\5\16\b\2}\33\3"+
-		"\2\2\2~\177\7\32\2\2\177\u0080\7\20\2\2\u0080\35\3\2\2\2\u0081\u0082\7"+
-		"\32\2\2\u0082\u0083\7\22\2\2\u0083\37\3\2\2\2\u0084\u0085\7\16\2\2\u0085"+
-		"\u0086\7\32\2\2\u0086\u0087\7\21\2\2\u0087!\3\2\2\2\u0088\u0089\7\17\2"+
-		"\2\u0089\u008a\7\33\2\2\u008a#\3\2\2\2\t(\65<OXel";
+		"\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\6\bQ\n\b\r\b\16\bR\3\t"+
+		"\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\6\n^\n\n\r\n\16\n_\3\n\3\n\3\13\3\13"+
+		"\3\13\5\13g\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\r\3\16"+
+		"\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\22"+
+		"\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\2\2"+
+		"{\2$\3\2\2\2\4+\3\2\2\2\6\65\3\2\2\2\b<\3\2\2\2\n@\3\2\2\2\fH\3\2\2\2"+
+		"\16P\3\2\2\2\20T\3\2\2\2\22Z\3\2\2\2\24f\3\2\2\2\26h\3\2\2\2\30n\3\2\2"+
+		"\2\32t\3\2\2\2\34x\3\2\2\2\36{\3\2\2\2 ~\3\2\2\2\"\u0082\3\2\2\2$(\5\4"+
+		"\3\2%\'\5\4\3\2&%\3\2\2\2\'*\3\2\2\2(&\3\2\2\2()\3\2\2\2)\3\3\2\2\2*("+
+		"\3\2\2\2+,\7\3\2\2,-\7\27\2\2-.\5\6\4\2./\5\b\5\2/\60\5\n\6\2\60\61\5"+
+		"\f\7\2\61\62\5\22\n\2\62\63\7\30\2\2\63\5\3\2\2\2\64\66\7\4\2\2\65\64"+
+		"\3\2\2\2\65\66\3\2\2\2\66\67\3\2\2\2\678\7\31\2\289\7\34\2\29:\7\31\2"+
+		"\2:\7\3\2\2\2;=\7\5\2\2<;\3\2\2\2<=\3\2\2\2=>\3\2\2\2>?\7\37\2\2?\t\3"+
+		"\2\2\2@A\7\6\2\2AB\7\27\2\2BC\7\7\2\2CD\5\36\20\2DE\7\b\2\2EF\5\36\20"+
+		"\2FG\7\30\2\2G\13\3\2\2\2HI\7\r\2\2IJ\7\27\2\2JK\5\16\b\2KL\7\30\2\2L"+
+		"\r\3\2\2\2MN\5\20\t\2NO\7\n\2\2OQ\3\2\2\2PM\3\2\2\2QR\3\2\2\2RP\3\2\2"+
+		"\2RS\3\2\2\2S\17\3\2\2\2TU\7\31\2\2UV\7\34\2\2VW\7\31\2\2WX\7\t\2\2XY"+
+		"\5\34\17\2Y\21\3\2\2\2Z[\7\f\2\2[]\7\27\2\2\\^\5\24\13\2]\\\3\2\2\2^_"+
+		"\3\2\2\2_]\3\2\2\2_`\3\2\2\2`a\3\2\2\2ab\7\30\2\2b\23\3\2\2\2cg\5\26\f"+
+		"\2dg\5\30\r\2eg\5\32\16\2fc\3\2\2\2fd\3\2\2\2fe\3\2\2\2g\25\3\2\2\2hi"+
+		"\7\13\2\2ij\7\23\2\2jk\5\16\b\2kl\5\36\20\2lm\5\"\22\2m\27\3\2\2\2no\7"+
+		"\13\2\2op\7\24\2\2pq\5\16\b\2qr\5\36\20\2rs\5 \21\2s\31\3\2\2\2tu\7\13"+
+		"\2\2uv\7\25\2\2vw\5\16\b\2w\33\3\2\2\2xy\7\32\2\2yz\7\20\2\2z\35\3\2\2"+
+		"\2{|\7\32\2\2|}\7\22\2\2}\37\3\2\2\2~\177\7\16\2\2\177\u0080\7\32\2\2"+
+		"\u0080\u0081\7\21\2\2\u0081!\3\2\2\2\u0082\u0083\7\17\2\2\u0083\u0084"+
+		"\7\33\2\2\u0084#\3\2\2\2\b(\65<R_f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

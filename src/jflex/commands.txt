@@ -1,0 +1,4 @@
+jflex AnalizadorLexico.flex --encoding utf-8
+java  java_cup.Main AnalizadorSintactico.cup
+javac *.java
+java -cp "C:\Program Files\java-cup-11b-runtime.jar" Main ../../doc/Lenguaje.txt

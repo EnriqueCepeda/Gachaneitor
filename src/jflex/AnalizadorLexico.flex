@@ -1,5 +1,6 @@
 //* --------------------------Seccion codigo-usuario ------------------------*/ 
 import java.io.*;
+import java_cup.runtime.*;
 
 class Utility{
 
@@ -16,7 +17,7 @@ class Utility{
     System.out.println("errorMsg[code]: "+ cadena + " en la línea: "+ line + " y columna: " + column);
   }
 
-  }
+}
 
 /* -----------------Seccion de opciones y declaraciones -----------------*/ 
 /*--OPCIONES --*/ 
@@ -45,6 +46,7 @@ class Utility{
 
 /* Crear un nuevo objeto java_cup.runtime.Symbol con informacion sobre
    el token actual sin valor */
+
  private Symbol symbol(int type) {
 
    return new Symbol(type,yyline,yycolumn);
@@ -104,7 +106,7 @@ preparacion {System.out.println("Token preparacion encontrado en linea: " + (yyl
 pasos {System.out.println("Token pasos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.pasos);}
 ingredientes {System.out.println("Token ingredientes encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
-  return symbol(sym.ingredientes)}
+  return symbol(sym.ingredientes);}
 
 temperatura {System.out.println("Token temperatura encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.temperatura);}
@@ -113,7 +115,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 
 {blanco} | {nl} | {tab}  {}
 
-\[  {System.out.println("Token '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+\[  {System.out.println("Caracter '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     yybegin(DESCRIPCION);}
 
 {verbo_mov} {System.out.println("Token verbo_mov <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
@@ -135,29 +137,30 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 {unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.unidad_temp, new String(yytext()));}
 
-\" {System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
-  return symbol(sym.comillas), yybegin(IDENTIFICADOR); yybegin(IDENTIFICADOR);} 
+\" {System.out.println("Caracter comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+   yybegin(IDENTIFICADOR); return symbol(sym.comilla);} 
 
-\/\*  {yybegin(COMENTARIO); System.out.println("Comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
+\/\*  {yybegin(COMENTARIO); System.out.println("Inicio comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
 
 
 }/* fin YYinitial */
 
 <DESCRIPCION> {
-\] {yybegin(YYINITIAL);}
+\] {System.out.println("Caracter ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
 {cadena}  {System.out.println("Token cadena <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.contenido_descripcion, new String(yytext()));}
 }
 
 <COMENTARIO> {
-  \*\/ {yybegin(YYINITIAL);}
+  \*\/ {yybegin(YYINITIAL);  System.out.println("Fin comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
   {nl} {/*Ignoramos los saltos de línea de los comentarios*/}
   .  {/*Ignoramos el contenido de los comentarios*/}
 }
 
 <IDENTIFICADOR> {
-  {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
-  \" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
-    return symbol(sym.comillas); yybegin(YYINITIAL);}
+  {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+    return symbol(sym.ident_nombre);}
+  \" {System.out.println("Caracter comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+     yybegin(YYINITIAL);return symbol(sym.comilla);}
 
 }
