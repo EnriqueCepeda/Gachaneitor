@@ -5,16 +5,23 @@ import java_cup.runtime.*;
 class Utility{
 
   private static final String errorMsg[] = {
-    "Unmatched end of comment punctuation", 
-    "Texto de ejemplo xd"
+    "Error: Símbolo de fin de comentario no emparejado", 
+    "Error: Símbolo de comienzo de comentario no emparejado",
+    "Error: Símbolo de fin de identificador no emparejado",
+    "Error: Símbolo de fin de descripción no emparejado", 
+    "Error: Símbolo de comienzo de descripción no emparejado",
+    "Error: Caracter ilegal "
   };
 
   public static final int E_ENDCOMMENT = 0; 
-  public static final int E_EJEMPLO = 1;
-
+  public static final int E_STARTCOMMENT = 1;
+  public static final int E_ENDIDENT = 2; 
+  public static final int E_ENDDESC = 3; 
+  public static final int E_STARTDESC = 4;
+  public static final int E_UNMATCHED = 5; 
 
   public static void error(int code, String cadena, int line, int column) {
-    System.out.println("errorMsg[code]: "+ cadena + " en la línea: "+ line + " y columna: " + column);
+    System.out.println(errorMsg[code] + cadena + " en la línea "+ line + " y columna " + column);
   }
 
 }
@@ -46,6 +53,7 @@ class Utility{
 
 /* Crear un nuevo objeto java_cup.runtime.Symbol con informacion sobre
    el token actual sin valor */
+ private int c_line, c_column;
 
  private Symbol symbol(int type) {
 
@@ -73,7 +81,7 @@ verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
 unidad_tiempo = h | min | seg
 unidad_temperatura = ºC | ºF
-cadena = ([:jletterdigit:] | {nl} | {blanco} | \. )*
+cadena = ([:jletterdigit:] | {nl} | {blanco} | \. )+
 ident = ( [:jletter:] | {blanco} )+
 
 
@@ -137,30 +145,37 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 {unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.unidad_temp, new String(yytext()));}
 
-\" {System.out.println("Caracter comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+\" {c_line=yyline+1; c_column=yycolumn+1; System.out.println("Caracter comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
    yybegin(IDENTIFICADOR); return symbol(sym.comilla);} 
 
-\/\*  {yybegin(COMENTARIO); System.out.println("Inicio comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));} 
+\/\*  {c_line=yyline+1; c_column=yycolumn+1; System.out.println("Inicio comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(COMENTARIO);} 
 
+\*\/	{/* Error */ Utility.error(Utility.E_ENDCOMMENT, "", (yyline+1), (yycolumn+1)); System.exit(1);}
+\]	{/* Error */ Utility.error(Utility.E_ENDDESC, "", (yyline+1), (yycolumn+1)); System.exit(1);}
+. {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}
 
 }/* fin YYinitial */
 
 <DESCRIPCION> {
-\] {System.out.println("Caracter ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
-{cadena}  {System.out.println("Token cadena <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  \] {System.out.println("Caracter ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
+  {cadena}  {System.out.println("Token contenido_descripcion <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.contenido_descripcion, new String(yytext()));}
+  <<EOF>> {/* Error */ Utility.error(Utility.E_STARTDESC,"", c_line, c_column); System.exit(1);}
+  . {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}
 }
 
 <COMENTARIO> {
   \*\/ {yybegin(YYINITIAL);  System.out.println("Fin comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
   {nl} {/*Ignoramos los saltos de línea de los comentarios*/}
+  <<EOF>> {/* Error */ Utility.error(Utility.E_STARTCOMMENT,"", c_line, c_column); System.exit(1);}
   .  {/*Ignoramos el contenido de los comentarios*/}
 }
 
 <IDENTIFICADOR> {
-  {ident} {System.out.println("Token IDENT <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
-    return symbol(sym.ident_nombre);}
   \" {System.out.println("Caracter comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
      yybegin(YYINITIAL);return symbol(sym.comilla);}
-
+  {ident} {System.out.println("Token ident <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+    return symbol(sym.ident_nombre);}
+  <<EOF>> {/* Error  */ Utility.error(Utility.E_ENDIDENT,"", c_line, c_column); System.exit(1);}
+  . {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}
 }

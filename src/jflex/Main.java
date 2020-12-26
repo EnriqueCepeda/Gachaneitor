@@ -12,7 +12,6 @@ class Main {
       if (args.length > 0) {
          try {
             lector = new InputStreamReader(new FileInputStream(args[0]), "UTF8");
-            System.out.println(((InputStreamReader) lector).getEncoding());
          } catch (IOException exc) {
             System.err.println("imposible abrir archivo '" + args[0] + "'");
             System.err.println("causa: " + exc.getMessage());
