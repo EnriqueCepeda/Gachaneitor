@@ -6,3 +6,8 @@ grun Gachaneitor inicio -tree ../../doc/Lenguaje.txt
 grun Gachaneitor inicio -gui ../../doc/Lenguaje.txt
 
 // inicio es el primer símbolo de la gramática 
+
+----------------------------------------------------------------------
+
+antlr4 -Dlanguage=Python3 -encoding utf-8 Gachaneitor.g4
+python3 main.py -i ../../doc/Lenguaje.txt

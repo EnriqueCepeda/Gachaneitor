@@ -166,7 +166,6 @@ LOWERCASE=[a-z]
 <YYINITIAL>"(" 					{System.out.println("Token <par_a> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.par_a);}
 <YYINITIAL>")" 					{System.out.println("Token <par_c> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.par_c);}
 <YYINITIAL>{DIGIT}				{System.out.println("Token <digito>, lexema <"+yytext()+">, encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.digito);}
-<YYINITIAL>{DIGIT}{DIGIT}+			{/* Error */ Utility.error(Utility.E_DIGIT,yytext(),(yyline+1),(yycolumn+1));}
 <YYINITIAL>","					{System.out.println("Token <coma> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.coma);}
 <YYINITIAL>{UPPERCASE}[a-zA-Z0-9_.]*		{System.out.println("Token <ident>, lexema <" +yytext()+ ">, encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.ident);}
 <YYINITIAL>"\""({UPPERCASE}|{LOWERCASE})*"\""	{System.out.println("Token <cadena>, lexema <" +yytext()+ ">, encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); return symbol(sym.cadena);}

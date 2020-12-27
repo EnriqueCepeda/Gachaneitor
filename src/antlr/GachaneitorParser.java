@@ -1,4 +1,7 @@
 // Generated from Gachaneitor.g4 by ANTLR 4.9
+
+
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -20,7 +23,7 @@ public class GachaneitorParser extends Parser {
 		PUNTOYCOMA=8, GUION=9, PASOS=10, INGREDIENTES=11, TEMPERATURA=12, VELOCIDAD=13, 
 		UNIDAD_CANTIDAD=14, UNIDAD_TEMP=15, UNIDAD_TIEMPO=16, VERBO_MOV=17, VERBO_COC=18, 
 		VERBO_PER=19, OTROS_CARACTERES=20, LLAVE_ABIERTA=21, LLAVE_CERRADA=22, 
-		COMILLA=23, NUMERO=24, DIGITO_VELOCIDAD=25, IDENT_NOMBRES=26, CADENA=27, 
+		COMILLA=23, NUMERO=24, DIGITO_VELOCIDAD=25, IDENT_NOMBRE=26, CADENA=27, 
 		TILDES=28, CONTENIDO_DESCRIPCION=29, CORCHETE_ABIERTO=30, CORCHETE_CERRADO=31, 
 		COMMENT=32, WS=33;
 	public static final int
@@ -53,7 +56,7 @@ public class GachaneitorParser extends Parser {
 			"DOSPUNTOS", "PUNTOYCOMA", "GUION", "PASOS", "INGREDIENTES", "TEMPERATURA", 
 			"VELOCIDAD", "UNIDAD_CANTIDAD", "UNIDAD_TEMP", "UNIDAD_TIEMPO", "VERBO_MOV", 
 			"VERBO_COC", "VERBO_PER", "OTROS_CARACTERES", "LLAVE_ABIERTA", "LLAVE_CERRADA", 
-			"COMILLA", "NUMERO", "DIGITO_VELOCIDAD", "IDENT_NOMBRES", "CADENA", "TILDES", 
+			"COMILLA", "NUMERO", "DIGITO_VELOCIDAD", "IDENT_NOMBRE", "CADENA", "TILDES", 
 			"CONTENIDO_DESCRIPCION", "CORCHETE_ABIERTO", "CORCHETE_CERRADO", "COMMENT", 
 			"WS"
 		};
@@ -239,7 +242,7 @@ public class GachaneitorParser extends Parser {
 		public TerminalNode COMILLA(int i) {
 			return getToken(GachaneitorParser.COMILLA, i);
 		}
-		public TerminalNode IDENT_NOMBRES() { return getToken(GachaneitorParser.IDENT_NOMBRES, 0); }
+		public TerminalNode IDENT_NOMBRE() { return getToken(GachaneitorParser.IDENT_NOMBRE, 0); }
 		public TerminalNode NOMBRE() { return getToken(GachaneitorParser.NOMBRE, 0); }
 		public NombreContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -275,7 +278,7 @@ public class GachaneitorParser extends Parser {
 			setState(53);
 			match(COMILLA);
 			setState(54);
-			match(IDENT_NOMBRES);
+			match(IDENT_NOMBRE);
 			setState(55);
 			match(COMILLA);
 			}
@@ -513,7 +516,7 @@ public class GachaneitorParser extends Parser {
 		public TerminalNode COMILLA(int i) {
 			return getToken(GachaneitorParser.COMILLA, i);
 		}
-		public TerminalNode IDENT_NOMBRES() { return getToken(GachaneitorParser.IDENT_NOMBRES, 0); }
+		public TerminalNode IDENT_NOMBRE() { return getToken(GachaneitorParser.IDENT_NOMBRE, 0); }
 		public TerminalNode DOSPUNTOS() { return getToken(GachaneitorParser.DOSPUNTOS, 0); }
 		public CantidadContext cantidad() {
 			return getRuleContext(CantidadContext.class,0);
@@ -541,7 +544,7 @@ public class GachaneitorParser extends Parser {
 			setState(82);
 			match(COMILLA);
 			setState(83);
-			match(IDENT_NOMBRES);
+			match(IDENT_NOMBRE);
 			setState(84);
 			match(COMILLA);
 			setState(85);

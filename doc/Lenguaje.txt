@@ -5,7 +5,7 @@ receta {
         total 20 min /* Comprobar con suma de tiempos parciales (Opcional) */
         preparacion 5 min /* No hace falta comprobar, porque son verbos de persona */
     }
-    
+
     ingredientes {
         "Calabaza": 2 ud; 
         "Calabacín": 5 ud;
@@ -24,4 +24,3 @@ receta {
         - triturar "Calabacín": 5 ud; "Calabaza": 2 ud; 10 min velocidad 02
     }
 }
-
