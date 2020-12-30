@@ -1,8 +1,9 @@
 [
     {
+        "_comment": "La primera lista es porque puede haber varias recetas, JSON no admite comentarios :(",
         "nombre": "Puré",
         "descripcion": "Esta es una receta mu rica. Que rico un 10",
-        "tiempo" : {
+        "tiempo": {
             "total": {
                 "cantidad": 20,
                 "unidad": "min"
@@ -12,80 +13,68 @@
                 "unidad": "min"
             }
         },
-        "ingredientes": [
-            {
-                "ingrediente": "Calabaza",
+        "ingredientes": {
+            "Calabaza": {
                 "cantidad": 2,
                 "unidad": "ud"
             },
-            {
-                "ingrediente": "Calabacín",
+            "Calabacín": {
                 "cantidad": 2,
                 "unidad": "ud"
             },
-            {
-                "ingrediente": "Vasito de agua",
+            "Vasito de agua": {
                 "cantidad": 500,
                 "unidad": "ml"
             },
-            {
-                "ingrediente": "Quesitos",
+            "Quesitos": {
                 "cantidad": 500,
                 "unidad": "g"
             },
-            {
-                "ingrediente": "Leche",
+            "Leche": {
                 "cantidad": 200,
                 "unidad": "ml"
             },
-            {
-                "ingrediente": "Mantequilla",
+            "Mantequilla": {
                 "cantidad": 1,
                 "unidad": "kg"
             },
-            {
-                "ingrediente": "Pimienta",
+            "Pimienta": {
                 "cantidad": 5,
                 "unidad": "mg"
             },
-            {
-                "ingrediente": "Sal",
+            "Sal": {
                 "cantidad": 20,
                 "unidad": "mg"
             }
-        ],
+        },
         "pasos": [
             {
                 "verbo": "pelar",
                 "tipo_verbo": "persona",
-                "ingredientes": [
-                    {
-                        "ingrediente": "Calabaza",
+                "ingredientes": {
+                    "Calabaza": {
                         "cantidad": 2,
                         "unidad": "ud"
                     },
-                    {
-                        "ingrediente": "Calabacín",
+                    "Calabacín": {
                         "cantidad": 2,
                         "unidad": "ud"
                     }
-                ]
+                }
             },
             {
                 "verbo": "trocear",
                 "tipo_verbo": "persona",
-                "ingredientes": [
-                    {
-                        "ingrediente": "Calabaza",
+                "ingredientes": {
+                    "Calabaza": {
                         "cantidad": 2,
                         "unidad": "ud"
                     },
-                    {
-                        "ingrediente": "Calabacín",
+                    "Calabacín": {
                         "cantidad": 2,
                         "unidad": "ud"
                     }
-                ]
+                }
             },
             {
                 "verbo": "sofreir",
@@ -98,18 +87,16 @@
                     "cantidad": 20,
                     "unidad": "ºC"
                 },
-                "ingredientes": [
-                    {
-                        "ingrediente": "Calabaza",
+                "ingredientes": {
+                    "Calabaza": {
                         "cantidad": 2,
                         "unidad": "ud"
                     },
-                    {
-                        "ingrediente": "Calabacín",
+                    "Calabacín": {
                         "cantidad": 2,
                         "unidad": "ud"
                     }
-                ]
+                }
             },
             {
                 "verbo": "triturar",
@@ -119,20 +106,17 @@
                     "unidad": "min"
                 },
                 "velocidad": 2,
-                "ingredientes": [
-                    {
-                        "ingrediente": "Calabaza",
+                "ingredientes": {
+                    "Calabaza": {
                         "cantidad": 2,
                         "unidad": "ud"
                     },
-                    {
-                        "ingrediente": "Calabacín",
+                    "Calabacín": {
                         "cantidad": 2,
                         "unidad": "ud"
                     }
-                ]
+                }
             }
         ]
-
     }
 ]

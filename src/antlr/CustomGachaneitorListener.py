@@ -66,26 +66,45 @@ class CustomGachaneitorListener(GachaneitorListener):
         self.receta_actual.tiempo["preparacion"]["unidad"] = str(ctx.tiempo(1).UNIDAD_TIEMPO())
     
     def enterIngredientes(self, ctx:GachaneitorParser.IngredientesContext):
-        #lista = ctx.ingrediente_lista().getText().split(";")
-        #print(lista)
-        lista = ctx.ingrediente_lista().getChildren()
-        #print(lista)
+        lista = ctx.ingrediente_lista().ingrediente()
         for ingrediente in lista:
-            #print(ingrediente.getText())
-            if ingrediente.getText() != ';':
-                nombre_ingrediente = str(ingrediente.IDENT_NOMBRE())
-                cantidad_ingrediente = int(str(ingrediente.cantidad().NUMERO()))
-                unidad_ingrediente = str(ingrediente.cantidad().UNIDAD_CANTIDAD())
-                ingrediente_dict = self.receta_actual.ingredientes.get(nombre_ingrediente, {})
-                if len(ingrediente_dict.keys()) > 0:
-                    print("Error: El ingrediente ya está metido")
-                    sys.exit(1)
-                else:
-                    self.receta_actual.ingredientes[nombre_ingrediente] = {}
-                    self.receta_actual.ingredientes[nombre_ingrediente]["cantidad"] = cantidad_ingrediente
-                    self.receta_actual.ingredientes[nombre_ingrediente]["unidad"] = unidad_ingrediente
-                    #print(self.receta_actual.ingredientes[nombre_ingrediente])
-    
+            nombre_ingrediente = str(ingrediente.IDENT_NOMBRE())
+            cantidad_ingrediente = int(str(ingrediente.cantidad().NUMERO()))
+            unidad_ingrediente = str(ingrediente.cantidad().UNIDAD_CANTIDAD())
+            ingrediente_dict = self.receta_actual.ingredientes.get(nombre_ingrediente, {})
+            if len(ingrediente_dict.keys()) > 0:
+                print("Error: El ingrediente ya está metido")
+                sys.exit(1)
+            else:
+                self.receta_actual.ingredientes[nombre_ingrediente] = {}
+                self.receta_actual.ingredientes[nombre_ingrediente]["cantidad"] = cantidad_ingrediente
+                self.receta_actual.ingredientes[nombre_ingrediente]["unidad"] = unidad_ingrediente
+
     def enterPasos(self, ctx:GachaneitorParser.PasosContext):
-        pass
+        lista = ctx.paso()
+        for paso in lista:
+            print(dir(paso))
+            print(paso.getText())
+            print(paso.paso_coc())
+            print(paso.paso_mov())
+            print(paso.paso_per())
+            
+            paso_dict = {}
+            paso_dict["tiempo"] = {}
+            if paso.paso_coc():
+                verbo_paso = str(paso.paso_coc().VERBO_COC())
+                paso_dict["tipo_persona"]="cocinar"
+                paso_dict["tiempo"]["cantidad"] = int(str(paso.paso_coc().tiempo().NUMERO())) 
+                paso_dict["tiempo"]["unidad"] = str(paso.paso_coc().tiempo().UNIDAD_TIEMPO())
+            elif paso.paso_mov():
+                verbo_paso = str(paso.paso_mov().VERBO_MOV())
+                paso_dict["tipo_persona"]="mover"
+                paso_dict["tiempo"]["cantidad"] = int(str(paso.paso_mov().tiempo().NUMERO())) 
+                paso_dict["tiempo"]["unidad"] = str(paso.paso_mov().tiempo().UNIDAD_TIEMPO())
+            else:
+                verbo_paso = str(paso.paso_per().VERBO_PER())
+                paso_dict["tipo_persona"]="persona"
+
+            paso_dict["verbo"]=verbo_paso
+            self.receta_actual.pasos.append(paso_dict)
     
