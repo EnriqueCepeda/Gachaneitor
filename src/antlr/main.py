@@ -21,10 +21,11 @@ def main(args):
     listener = CustomGachaneitorListener()
     walker = ParseTreeWalker()
 
-    try:
+    '''try:
         walker.walk(listener, tree)
     except Exception as e:
-        print(e)
+        print(e)'''
+    walker.walk(listener, tree)
 
 
 def build_argparser():
