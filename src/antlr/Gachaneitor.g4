@@ -1,9 +1,5 @@
 grammar Gachaneitor;
 
-@header {
-
-}
-
 import GachaneitorLexico;
 
 inicio : receta (receta)*;

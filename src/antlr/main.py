@@ -4,7 +4,7 @@ from antlr4 import *
 from GachaneitorLexer import GachaneitorLexer
 from GachaneitorParser import GachaneitorParser
 from GachaneitorErrorListener import GachaneitorErrorListener
-
+from CustomGachaneitorListener import CustomGachaneitorListener
  
 def main(args):
     input_stream = FileStream(args.input_file, encoding="utf-8")
@@ -18,6 +18,10 @@ def main(args):
     parser.addErrorListener(errorListener)'''
 
     tree = parser.inicio()
+
+    listener = CustomGachaneitorListener()
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
 
 
 def build_argparser():

@@ -1,0 +1,51 @@
+[
+    {
+        "nombre": "Puré",
+        "tiempo": {
+            "total": {
+                "cantidad": 20,
+                "unidad": "min"
+            },
+            "preparacion": {
+                "cantidad": 5,
+                "unidad": "min"
+            }
+        },
+        "descripcion": "Esta es una receta mu rica. Que rico un 10",
+        "ingredientes": {
+            "Calabaza": {
+                "cantidad": 2,
+                "unidad": "ud"
+            },
+            "Calabacín": {
+                "cantidad": 5,
+                "unidad": "ud"
+            },
+            "Vasito de agua": {
+                "cantidad": 500,
+                "unidad": "ml"
+            },
+            "Quesitos": {
+                "cantidad": 500,
+                "unidad": "g"
+            },
+            "Leche": {
+                "cantidad": 200,
+                "unidad": "ml"
+            },
+            "Mantequilla": {
+                "cantidad": 1,
+                "unidad": "kg"
+            },
+            "Pimienta": {
+                "cantidad": 5,
+                "unidad": "mg"
+            },
+            "Sal": {
+                "cantidad": 20,
+                "unidad": "mg"
+            }
+        },
+        "pasos": []
+    }
+]

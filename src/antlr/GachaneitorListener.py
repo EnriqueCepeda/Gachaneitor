@@ -5,9 +5,6 @@ if __name__ is not None and "." in __name__:
 else:
     from GachaneitorParser import GachaneitorParser
 
-
-
-
 # This class defines a complete listener for a parse tree produced by GachaneitorParser.
 class GachaneitorListener(ParseTreeListener):
 
