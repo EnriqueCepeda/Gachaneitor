@@ -19,7 +19,7 @@
                 "unidad": "ud"
             },
             "Calabacín": {
-                "cantidad": 2,
+                "cantidad": 5,
                 "unidad": "ud"
             },
             "Vasito de agua": {
@@ -57,7 +57,7 @@
                         "unidad": "ud"
                     },
                     "Calabacín": {
-                        "cantidad": 2,
+                        "cantidad": 5,
                         "unidad": "ud"
                     }
                 }
@@ -71,7 +71,7 @@
                         "unidad": "ud"
                     },
                     "Calabacín": {
-                        "cantidad": 2,
+                        "cantidad": 5,
                         "unidad": "ud"
                     }
                 }
@@ -93,7 +93,7 @@
                         "unidad": "ud"
                     },
                     "Calabacín": {
-                        "cantidad": 2,
+                        "cantidad": 5,
                         "unidad": "ud"
                     }
                 }
@@ -105,14 +105,14 @@
                     "cantidad": 10,
                     "unidad": "min"
                 },
-                "velocidad": 2,
+                "velocidad": "02",
                 "ingredientes": {
                     "Calabaza": {
                         "cantidad": 2,
                         "unidad": "ud"
                     },
                     "Calabacín": {
-                        "cantidad": 2,
+                        "cantidad": 5,
                         "unidad": "ud"
                     }
                 }

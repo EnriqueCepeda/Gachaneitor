@@ -16,12 +16,15 @@ def main(args):
     '''errorListener = GachaneitorErrorListener()
     parser.removeErrorListeners()
     parser.addErrorListener(errorListener)'''
-
     tree = parser.inicio()
-
+    
     listener = CustomGachaneitorListener()
     walker = ParseTreeWalker()
-    walker.walk(listener, tree)
+
+    try:
+        walker.walk(listener, tree)
+    except Exception as e:
+        print(e)
 
 
 def build_argparser():
