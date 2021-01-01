@@ -1,9 +1,8 @@
 import sys
 from argparse import ArgumentParser
-from antlr4 import *
+from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker
 from GachaneitorLexer import GachaneitorLexer
 from GachaneitorParser import GachaneitorParser
-from GachaneitorErrorListener import GachaneitorErrorListener
 from CustomGachaneitorListener import CustomGachaneitorListener
  
 def main(args):
@@ -16,8 +15,14 @@ def main(args):
     
     listener = CustomGachaneitorListener()
     walker = ParseTreeWalker()
-    walker.walk(listener, tree)
 
+    try:
+        walker.walk(listener, tree)
+    except Exception as e:
+        print(e)
+
+    recetas = listener.recetas
+    print(recetas[0])
 
 def build_argparser():
     argparser = ArgumentParser()

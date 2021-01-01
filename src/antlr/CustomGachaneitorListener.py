@@ -41,7 +41,7 @@ class GachaneitorConcreteException(Exception):
         return f'Error: {self.mensaje}. Linea {self.linea}, columna {self.columna}'  
 
 
-class IngredienteNoUsadosException(GachaneitorGeneralException):
+class IngredientesNoUsadosException(GachaneitorGeneralException):
 
     """
     Excepción porque se han introducido ingredientes que no se usan, por lo tanto la receta engaña al usuario de la plataforma
@@ -69,9 +69,9 @@ class CantidadIngredienteExcedidaException(GachaneitorGeneralException):
                         La cantidad original es {cantidad_original} mientras que la usada es {cantidad_usada}'''
         super().__init__(mensaje)
 
-class TiempoRecetaExcedidoException(GachaneitorGeneralException):
+class TiempoRecetaDistintoException(GachaneitorGeneralException):
     """
-    Excepción usada cuando el tiempo de la receta es menor a la suma de los tiempos parciales de los pasos hechos por Gachaneitor
+    Excepción usada cuando el tiempo de la receta no coincide con la suma de los tiempos parciales de los pasos hechos por Gachaneitor
 
     """
 
@@ -79,60 +79,64 @@ class TiempoRecetaExcedidoException(GachaneitorGeneralException):
         mensaje = "La suma de tiempos de los pasos no coincide con el tiempo total de la receta"
         super().__init__(mensaje)
 
-class IngredientesDistintaUnidadException(GachaneitorConcreteException):
+class IngredientesDistintaMagnitudException(GachaneitorConcreteException):
 
     def __init__(self, ingrediente, unidad1, unidad2, linea, columna):
-        mensaje = f"""El ingrediente {ingrediente}, repetido en la lista, esta en dos unidades diferentes que no se pueden sumar, {unidad1} y {unidad2},
-                    unifica estas unidades"""
+        mensaje = f"""El ingrediente '{ingrediente}', repetido en la lista, está en dos unidades diferentes que no comparten magnitud, es decir, no se pueden sumar {unidad1} y {unidad2}. Revisa estas unidades"""
         super().__init__(linea, columna, mensaje)
 
 
 class ConversorUnidades:
 
-    UNIDADES_MASA = ["kg", "g", "mg"]
-    UNIDADES_VOLUMEN = ["l", "ml"]
-    UNIDADES_UNIDAD = ["ud"]
-    UNIDADES_TIEMPO = ["h", "min", "seg"]
+    UNIDADES_MASA = ["mg", "g", "kg"]
+    UNIDADES_VOLUMEN = ["ml", "l"]
+    UNIDADES_TIEMPO = ["seg", "min", "h"]
 
     @classmethod
-    def estandarizarCantidad(cls, numero, unidad_cantidad):
+    def estandarizarCantidad(cls, cantidad_original, cantidad_nueva, unidad_original, unidad_nueva):
         '''
         Estandariza una unidad a su medida más granular.
         i.e, litros a mililitros o kg a miligramos
         '''
-        if unidad_cantidad in ConversorUnidades.UNIDADES_TIEMPO:
-            return cls.__estandarizarTiempo(numero, unidad_cantidad)
-        elif unidad_cantidad in ConversorUnidades.UNIDADES_MASA:
-            return cls.__estandarizarMasa(numero, unidad_cantidad)
-        elif unidad_cantidad in ConversorUnidades.UNIDADES_VOLUMEN:
-            return cls.__estandarizarVolumen(numero, unidad_cantidad)
-        else: #ud
-            return numero, "ud"
+
+        if unidad_original in ConversorUnidades.UNIDADES_MASA:
+            if unidad_nueva not in ConversorUnidades.UNIDADES_MASA:
+                raise Exception()
+            else:
+                return cls.__estandarizar(ConversorUnidades.UNIDADES_MASA, cantidad_original, cantidad_nueva, unidad_original, unidad_nueva)
+        elif unidad_original in ConversorUnidades.UNIDADES_VOLUMEN:
+            if unidad_nueva not in ConversorUnidades.UNIDADES_VOLUMEN:
+                raise Exception()
+            else:
+                return cls.__estandarizar(ConversorUnidades.UNIDADES_VOLUMEN, cantidad_original, cantidad_nueva, unidad_original, unidad_nueva) 
+        elif unidad_original == "ud":
+            if unidad_nueva != "ud":
+                raise Exception()
+            else: #ud
+                return cantidad_original+cantidad_nueva, "ud"
 
     @staticmethod
-    def __estandarizarTiempo(numero, unidad_tiempo):
+    def __estandarizar(lista_unidades, cantidad_original, cantidad_nueva, unidad_original, unidad_nueva):
+        diferencia = lista_unidades.index(unidad_original) - lista_unidades.index(unidad_nueva)
+        if diferencia >= 0:
+            unidad_menor = unidad_nueva
+            factor_conv = 1000 ** diferencia 
+            cantidad = cantidad_nueva + cantidad_original*factor_conv
+        else:
+            unidad_menor = unidad_original
+            factor_conv = 1000 ** abs(diferencia)
+            cantidad = cantidad_original + cantidad_nueva*factor_conv
+        return cantidad, unidad_menor
+    
+
+    @staticmethod
+    def estandarizarTiempo(numero, unidad_tiempo):
         num_estandarizado = numero
         if unidad_tiempo == "min":
             num_estandarizado = numero*60
         elif unidad_tiempo == "h":
             num_estandarizado = numero*3600
         return num_estandarizado, "seg"
-    
-    @staticmethod
-    def __estandarizarMasa(numero, unidad_masa):
-        num_estandarizado = numero
-        if unidad_masa == "g":
-            num_estandarizado = numero*1000
-        elif unidad_masa == "kg":
-            num_estandarizado =  numero*1000000
-        return num_estandarizado, "mg"
-
-    @staticmethod
-    def __estandarizarVolumen(numero, unidad_volumen):
-        num_estandarizado = numero
-        if unidad_volumen == "l":
-            num_estandarizado = numero * 1000
-        return num_estandarizado, "ml"
 
 
 class Receta:
@@ -145,7 +149,7 @@ class Receta:
         self.pasos = []
         self.suma_tiempos = 0
 
-    def get_receta_dict(self):
+    def get_dict(self):
         json_dict = {}
         json_dict["nombre"] = self.nombre
         json_dict["tiempo"] = self.tiempo
@@ -153,6 +157,9 @@ class Receta:
         json_dict["ingredientes"] = self.ingredientes
         json_dict["pasos"] = self.pasos
         return json_dict
+
+    def __str__(self):
+        return str(self.get_dict())
 
 
 class CustomGachaneitorListener(GachaneitorListener):
@@ -164,7 +171,7 @@ class CustomGachaneitorListener(GachaneitorListener):
     def convertJSONrecetas(self):
         json_recetas = []
         for receta in self.recetas:
-            json_recetas.append(receta.get_receta_dict())  
+            json_recetas.append(receta.get_dict())  
         return json.dumps(json_recetas, ensure_ascii=False)
     
     def writeJSONrecetas(self, ruta):
@@ -174,7 +181,6 @@ class CustomGachaneitorListener(GachaneitorListener):
 
     def exitInicio(self, ctx:GachaneitorParser.InicioContext):
         self.writeJSONrecetas("./salida.json")
-        print("JSON generado correctamente")
 
     def enterReceta(self, ctx:GachaneitorParser.RecetaContext):
         self.receta_actual = Receta()
@@ -186,7 +192,6 @@ class CustomGachaneitorListener(GachaneitorListener):
 
     def enterNombre(self, ctx:GachaneitorParser.InicioContext):
         self.receta_actual.nombre = str(ctx.IDENT_NOMBRE())
-        print(self.receta_actual.nombre)
         
     def enterDescripcion(self, ctx:GachaneitorParser.DescripcionContext):
         self.receta_actual.descripcion = str(ctx.CONTENIDO_DESCRIPCION())[1:-1]
@@ -253,18 +258,22 @@ class CustomGachaneitorListener(GachaneitorListener):
             nombre_ingrediente = str(ctx_nombre_ingrediente)
             cantidad_ingrediente = int(str(ingrediente.cantidad().NUMERO()))
             unidad_ingrediente = str(ingrediente.cantidad().UNIDAD_CANTIDAD())
-            cantidad_estandarizada, unidad_estandarizada = ConversorUnidades.estandarizarCantidad(cantidad_ingrediente, unidad_ingrediente)
-
+            linea = ctx_nombre_ingrediente.getSymbol().line
+            columna = ctx_nombre_ingrediente.getSymbol().column
+            
             if nombre_ingrediente in ingredientes_dict:
-                if ingredientes_dict[nombre_ingrediente]["unidad"] != unidad_estandarizada:
-                    linea = ctx_nombre_ingrediente.getSymbol().line
-                    columna = ctx_nombre_ingrediente.getSymbol().column
-                    raise IngredientesDistintaUnidadException(nombre_ingrediente, ingredientes_dict[nombre_ingrediente]["unidad"], unidad_ingrediente, linea, columna)
-                ingredientes_dict[nombre_ingrediente]["cantidad"] += cantidad_estandarizada
+                cantidad_ingrediente_original = ingredientes_dict[nombre_ingrediente]["cantidad"] 
+                unidad_ingrediente_original = ingredientes_dict[nombre_ingrediente]["unidad"]
+                try:
+                    cantidad_estandarizada, unidad_estandarizada = ConversorUnidades.estandarizarCantidad(cantidad_ingrediente_original, cantidad_ingrediente, unidad_ingrediente_original, unidad_ingrediente)
+                    ingredientes_dict[nombre_ingrediente]["cantidad"] = cantidad_estandarizada
+                    ingredientes_dict[nombre_ingrediente]["unidad"] = unidad_estandarizada
+                except Exception:
+                    raise IngredientesDistintaMagnitudException(nombre_ingrediente, unidad_ingrediente_original, unidad_ingrediente, linea, columna)                
             else:
                 ingredientes_dict[nombre_ingrediente] = {}
-                ingredientes_dict[nombre_ingrediente]["cantidad"] = cantidad_estandarizada
-                ingredientes_dict[nombre_ingrediente]["unidad"] = unidad_estandarizada
+                ingredientes_dict[nombre_ingrediente]["cantidad"] = cantidad_ingrediente
+                ingredientes_dict[nombre_ingrediente]["unidad"] = unidad_ingrediente
         return ingredientes_dict
 
     def anotar_ingredientes_usados(self, ingredientes_dict):
@@ -278,7 +287,7 @@ class CustomGachaneitorListener(GachaneitorListener):
         ingr_no_usados = [ingrediente for ingrediente in self.receta_actual.ingredientes_usados.keys()
                  if not self.receta_actual.ingredientes_usados[ingrediente]]
         if len(ingr_no_usados) > 0:
-            raise IngredienteNoUsadosException(ingr_no_usados)
+            raise IngredientesNoUsadosException(ingr_no_usados)
 
     def comprobar_cantidades(self, ingredientes_dict):
         '''
@@ -294,10 +303,10 @@ class CustomGachaneitorListener(GachaneitorListener):
         '''
         tiempo_total_estandarizado = self.obtener_tiempo_SI(self.receta_actual.tiempo["total"])
         if self.receta_actual.suma_tiempos != tiempo_total_estandarizado:
-            raise TiempoRecetaExcedidoException()
+            raise TiempoRecetaDistintoException()
 
     def obtener_tiempo_SI(self, tiempo):
-        return ConversorUnidades.estandarizarCantidad(tiempo["cantidad"], tiempo["unidad"])[0]
+        return ConversorUnidades.estandarizarTiempo(tiempo["cantidad"], tiempo["unidad"])[0]
 
 
     

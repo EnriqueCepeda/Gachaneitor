@@ -182,7 +182,7 @@ class CUP$parser$actions {
           case 0: // INICIO ::= RECETA 
             {
               Object RESULT =null;
-		Recetas recetas = new Recetas(); recetas.prueba(); 
+
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -205,7 +205,7 @@ class CUP$parser$actions {
           case 2: // INICIO ::= RECETA INICIO 
             {
               Object RESULT =null;
-
+		RESULT = new Recetas().prueba();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

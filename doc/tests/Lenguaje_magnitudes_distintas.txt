@@ -8,7 +8,8 @@ receta {
 
     ingredientes {
         "Calabaza": 2 ud; 
-        "Calabacín": 2 ud;
+        "Calabacín": 1 ud;
+        "Calabacín": 500 g;
     }
 
     pasos {

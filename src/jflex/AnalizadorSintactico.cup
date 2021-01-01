@@ -1,8 +1,9 @@
 /* ----------------------Seccion de declaraciones package e imports--------------------*/
 
 import java_cup.runtime.*;
-
 /* ----------------------Seccion componentes de codigo de usuario --------------------*/
+
+
 
 
 /* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
@@ -26,8 +27,8 @@ TEMPERATURA, VELOCIDAD;
 /* --------------Declaracion de la gramatica -----------*/
 
 INICIO ::= 
-    RECETA |
-    RECETA INICIO
+    RECETA {:Recetas recetas = new Recetas(); recetas.prueba(); :}
+    | RECETA INICIO
     ;
 
 RECETA ::= 

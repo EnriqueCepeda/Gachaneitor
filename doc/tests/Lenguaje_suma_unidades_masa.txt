@@ -8,13 +8,14 @@ receta {
 
     ingredientes {
         "Calabaza": 2 ud; 
-        "Calabacín": 2 ud;
+        "Calabacín": 500 g;
+        "Calabacín": 1 kg;
     }
 
     pasos {
-        - pelar "Calabacín": 2 ud; "Calabaza": 2 ud;
-        - trocear "Calabacín": 2 ud; "Calabaza": 2 ud;
-        - sofreir "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min temperatura 20ºC
-        - triturar "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min velocidad 02
+        - pelar "Calabacín": 1 ud; "Calabaza": 2 ud;
+        - trocear "Calabacín": 1 ud; "Calabaza": 2 ud;
+        - sofreir "Calabacín": 1 ud; "Calabaza": 2 ud; 10 min temperatura 20ºC
+        - triturar "Calabacín": 1 ud; "Calabaza": 2 ud; 10 min velocidad 02
     }
 }

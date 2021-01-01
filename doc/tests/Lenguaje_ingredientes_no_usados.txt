@@ -8,7 +8,13 @@ receta {
 
     ingredientes {
         "Calabaza": 2 ud; 
-        "Calabacín": 2 ud;
+        "Calabacín": 5 ud;
+        "Vasito de agua": 500 ml;
+        "Quesitos": 500 g;
+        "Leche": 200 ml;
+        "Mantequilla": 1 kg;
+        "Pimienta": 5 mg;
+        "Sal": 20 mg;
     }
 
     pasos {
