@@ -12,19 +12,10 @@ def main(args):
 
     stream = CommonTokenStream(lexer)
     parser = GachaneitorParser(stream)
-
-    '''errorListener = GachaneitorErrorListener()
-    parser.removeErrorListeners()
-    parser.addErrorListener(errorListener)'''
     tree = parser.inicio()
     
     listener = CustomGachaneitorListener()
     walker = ParseTreeWalker()
-
-    '''try:
-        walker.walk(listener, tree)
-    except Exception as e:
-        print(e)'''
     walker.walk(listener, tree)
 
 
