@@ -9,7 +9,7 @@ public class Cantidad{
     }
 
     public String toString(){
-        return "cantidad: "+this.cantidad+", unidad: "+this.unidad;
+        return "\"cantidad\": "+this.cantidad+", \"unidad\": \""+this.unidad+"\"";
     }
 
 }

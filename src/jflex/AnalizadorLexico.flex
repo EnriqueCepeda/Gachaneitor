@@ -136,7 +136,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 [1-9][:digit:]* {System.out.println("Token numero <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.numero, new Integer(yytext()));}
 0[1-9]* {System.out.println("Token digito_velocidad <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
-  return symbol(sym.digito_velocidad, new Integer(yytext()));}
+  return symbol(sym.digito_velocidad, new String(yytext()));}
 
 {unidad_cantidad} {System.out.println("Token unidad_cantidad <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.unidad_cantidad, new String(yytext()));}
@@ -175,7 +175,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
   \" {System.out.println("Caracter comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
      yybegin(YYINITIAL);return symbol(sym.comilla);}
   {ident} {System.out.println("Token ident <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
-    return symbol(sym.ident_nombre);}
+    return symbol(sym.ident_nombre, new String(yytext()));}
   <<EOF>> {/* Error  */ Utility.error(Utility.E_ENDIDENT,"", c_line, c_column); System.exit(1);}
   . {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}
 }

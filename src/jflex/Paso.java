@@ -18,7 +18,7 @@ public class Paso {
             str = str + ingredientes.get(i).toString()+ ", ";
         }
         str = str + ingredientes.get(ingredientes.size()-1).toString();
-        str = str + ", \"verbo\": "+this.verbo+", \"tipo_verbo\": "+this.tipoVerbo;
+        str = str + "}, \"verbo\": \""+this.verbo+"\", \"tipo_verbo\": \""+this.tipoVerbo+"\"";
         return str;
     }
     

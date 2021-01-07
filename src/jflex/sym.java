@@ -12,24 +12,24 @@ public class sym {
   public static final int tiempo = 15;
   public static final int descripcion = 13;
   public static final int numero = 2;
-  public static final int digito_velocidad = 3;
+  public static final int digito_velocidad = 11;
   public static final int receta = 12;
-  public static final int verbo_coc = 10;
-  public static final int verbo_mov = 9;
+  public static final int verbo_coc = 9;
+  public static final int verbo_mov = 8;
   public static final int pasos = 21;
   public static final int guion = 20;
   public static final int EOF = 0;
   public static final int error = 1;
   public static final int llave_abierta = 25;
   public static final int ingredientes = 22;
-  public static final int unidad_temp = 7;
+  public static final int unidad_temp = 6;
   public static final int velocidad = 24;
-  public static final int unidad_cantidad = 6;
-  public static final int verbo_per = 11;
-  public static final int unidad_tiempo = 8;
+  public static final int unidad_cantidad = 5;
+  public static final int verbo_per = 10;
+  public static final int unidad_tiempo = 7;
   public static final int temperatura = 23;
-  public static final int contenido_descripcion = 5;
-  public static final int ident_nombre = 4;
+  public static final int contenido_descripcion = 4;
+  public static final int ident_nombre = 3;
   public static final int dospuntos = 18;
   public static final int puntoycoma = 19;
   public static final int preparacion = 17;
@@ -38,7 +38,6 @@ public class sym {
   "EOF",
   "error",
   "numero",
-  "digito_velocidad",
   "ident_nombre",
   "contenido_descripcion",
   "unidad_cantidad",
@@ -47,6 +46,7 @@ public class sym {
   "verbo_mov",
   "verbo_coc",
   "verbo_per",
+  "digito_velocidad",
   "receta",
   "descripcion",
   "nombre",

@@ -4,29 +4,40 @@ import java_cup.runtime.*;
 
 import java.util.ArrayList;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 /* ----------------------Seccion componentes de codigo de usuario --------------------*/
 
 parser code{:
-    public static void escribir_receta(String text){
+    public static void escribir_receta(ArrayList<Receta> recetas){
+        String text = "[";
+        for (int i = 0; i< recetas.size()-1; i++){
+            text = text + recetas.get(i).toString() + ", ";
+        }
+        text = text + recetas.get(recetas.size()-1).toString()+"]";
+
         try{
-            PrintWriter buf = new PrintWriter(new FileWriter(new File("salida.json")));
-            buf.write(text);
-            buf.close();
+            OutputStream os = new FileOutputStream("salida.json");
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
+            pw.write(text);
+            pw.close();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+
+    
 :}
 
 
 /* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
 
-terminal Integer numero, digito_velocidad;
-terminal String ident_nombre, contenido_descripcion, unidad_cantidad, unidad_temp, unidad_tiempo, verbo_mov, verbo_coc, verbo_per;
+terminal Integer numero;
+terminal String ident_nombre, contenido_descripcion, unidad_cantidad, unidad_temp, unidad_tiempo, verbo_mov, verbo_coc, verbo_per, digito_velocidad;
 terminal receta, descripcion, nombre, tiempo, total, preparacion, dospuntos, puntoycoma, guion, pasos, ingredientes, temperatura, velocidad, llave_abierta, llave_cerrada, comilla;
 
 non terminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, LISTA_INGREDIENTES, INGREDIENTE, PASOS, LISTA_PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO, CANTIDAD, TEMPERATURA, VELOCIDAD;
@@ -39,8 +50,8 @@ non terminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, L
 /* --------------Declaracion de la gramatica -----------*/
 
 INICIO ::= 
-    RECETA:r {: escribir_receta(r.toString()); :}
-    | RECETA:r INICIO {:RESULT = null;:}
+    RECETA:r {: ArrayList<Receta> lista = new ArrayList<Receta>(); lista.add((Receta)r); escribir_receta(lista); RESULT=lista;:}
+    | RECETA:r INICIO:lr {:((ArrayList<Receta>)lr).add(0, (Receta)r); escribir_receta((ArrayList<Receta>)lr); RESULT=lr;:}
     ;
 
 RECETA ::= 
@@ -67,7 +78,7 @@ INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada 
 
 LISTA_INGREDIENTES ::= 
     INGREDIENTE:i puntoycoma {:ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); lista.add((Ingrediente)i); RESULT = lista;:}
-    | INGREDIENTE:i puntoycoma LISTA_INGREDIENTES:li {:((ArrayList<Ingrediente>)li).add((Ingrediente)i); RESULT = li;:}; 
+    | INGREDIENTE:i puntoycoma LISTA_INGREDIENTES:li {:((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;:}; 
 
 INGREDIENTE ::= comilla ident_nombre:in comilla dospuntos CANTIDAD:c {:RESULT = new Ingrediente(in, (Cantidad)c);:};
 
@@ -78,17 +89,17 @@ PASOS ::=
     
 LISTA_PASOS ::= 
     PASO:p {:ArrayList<Paso> lista = new ArrayList<Paso>(); lista.add((Paso)p); RESULT = lista;:}
-    | PASO:p LISTA_PASOS:lp {:((ArrayList<Paso>)lp).add((Paso)p); RESULT = lp;:}
+    | PASO:p LISTA_PASOS:lp {:((ArrayList<Paso>)lp).add(0, (Paso)p); RESULT = lp;:}
     ;
 
 PASO ::=
-    PASO_MOV:pm {:System.out.println(pm.toString()); RESULT = pm;:}
-    | PASO_COC:pc {: System.out.println(pc.toString());RESULT = pc;:}
-    | PASO_PER:pp {:System.out.println(pp.toString()); RESULT = pp;:}
+    PASO_MOV:pm {:RESULT = pm;:}
+    | PASO_COC:pc {:RESULT = pc;:}
+    | PASO_PER:pp {:RESULT = pp;:}
     ;
 
-PASO_MOV ::= guion verbo_mov:vm LISTA_INGREDIENTES:li TIEMPO VELOCIDAD:v {:RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Integer)v);:};
-PASO_COC ::= guion verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO TEMPERATURA:t {:RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t);:};
+PASO_MOV ::= guion verbo_mov:vm LISTA_INGREDIENTES:li TIEMPO:t VELOCIDAD:v {:RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Cantidad)t, (String)v);:};
+PASO_COC ::= guion verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO:t TEMPERATURA:temp {:RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t, (Cantidad)temp);:};
 PASO_PER ::= guion verbo_per:vp LISTA_INGREDIENTES:li {:RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:};
 
 CANTIDAD ::= numero:n unidad_cantidad:uc {: RESULT = new Cantidad(n, uc);:};

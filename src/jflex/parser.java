@@ -5,9 +5,11 @@
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -52,37 +54,37 @@ public class parser extends java_cup.runtime.lr_parser {
     "\000\107\000\004\016\005\001\002\000\006\002\001\016" +
     "\005\001\002\000\004\033\010\001\002\000\004\002\007" +
     "\001\002\000\004\002\000\001\002\000\006\020\012\035" +
-    "\013\001\002\000\006\007\022\017\021\001\002\000\004" +
-    "\035\016\001\002\000\004\006\014\001\002\000\004\035" +
-    "\015\001\002\000\006\007\ufffc\017\ufffc\001\002\000\004" +
-    "\006\017\001\002\000\004\035\020\001\002\000\006\007" +
-    "\ufffd\017\ufffd\001\002\000\004\007\110\001\002\000\004" +
+    "\013\001\002\000\006\006\022\017\021\001\002\000\004" +
+    "\035\016\001\002\000\004\005\014\001\002\000\004\035" +
+    "\015\001\002\000\006\006\ufffc\017\ufffc\001\002\000\004" +
+    "\005\017\001\002\000\004\035\020\001\002\000\006\006" +
+    "\ufffd\017\ufffd\001\002\000\004\006\110\001\002\000\004" +
     "\021\ufffa\001\002\000\004\021\025\001\002\000\004\030" +
     "\037\001\002\000\004\033\026\001\002\000\004\022\027" +
-    "\001\002\000\004\004\030\001\002\000\004\012\035\001" +
+    "\001\002\000\004\004\030\001\002\000\004\011\035\001" +
     "\002\000\004\023\032\001\002\000\004\004\030\001\002" +
     "\000\004\034\034\001\002\000\004\030\ufff9\001\002\000" +
     "\012\023\uffea\031\uffea\032\uffea\034\uffea\001\002\000\004" +
     "\027\056\001\002\000\004\033\040\001\002\000\004\035" +
-    "\042\001\002\000\004\034\054\001\002\000\004\006\046" +
+    "\042\001\002\000\004\034\054\001\002\000\004\005\046" +
     "\001\002\000\004\025\044\001\002\000\012\004\ufff7\026" +
     "\ufff7\034\ufff7\035\042\001\002\000\010\004\ufff6\026\ufff6" +
     "\034\ufff6\001\002\000\004\035\047\001\002\000\004\024" +
-    "\050\001\002\000\004\004\051\001\002\000\004\010\053" +
+    "\050\001\002\000\004\004\051\001\002\000\004\007\053" +
     "\001\002\000\004\025\ufff5\001\002\000\004\025\uffeb\001" +
     "\002\000\004\027\ufff8\001\002\000\004\034\107\001\002" +
     "\000\004\033\057\001\002\000\004\026\062\001\002\000" +
     "\006\026\ufff1\034\ufff1\001\002\000\004\034\106\001\002" +
-    "\000\010\013\067\014\070\015\071\001\002\000\006\026" +
+    "\000\010\012\067\013\070\014\071\001\002\000\006\026" +
     "\062\034\ufff3\001\002\000\006\026\ufff0\034\ufff0\001\002" +
     "\000\006\026\uffef\034\uffef\001\002\000\004\034\ufff2\001" +
     "\002\000\004\035\042\001\002\000\004\035\042\001\002" +
     "\000\004\035\042\001\002\000\006\026\uffec\034\uffec\001" +
     "\002\000\004\004\030\001\002\000\004\031\076\001\002" +
     "\000\006\026\uffed\034\uffed\001\002\000\004\004\077\001" +
-    "\002\000\004\011\100\001\002\000\006\026\uffe9\034\uffe9" +
+    "\002\000\004\010\100\001\002\000\006\026\uffe9\034\uffe9" +
     "\001\002\000\004\004\030\001\002\000\004\032\104\001" +
-    "\002\000\006\026\uffee\034\uffee\001\002\000\004\005\105" +
+    "\002\000\006\026\uffee\034\uffee\001\002\000\004\015\105" +
     "\001\002\000\006\026\uffe8\034\uffe8\001\002\000\004\034" +
     "\ufff4\001\002\000\006\002\ufffe\016\ufffe\001\002\000\004" +
     "\021\ufffb\001\002\000\004\002\uffff\001\002" });
@@ -159,15 +161,24 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
-    public static void escribir_receta(String text){
+    public static void escribir_receta(ArrayList<Receta> recetas){
+        String text = "[";
+        for (int i = 0; i< recetas.size()-1; i++){
+            text = text + recetas.get(i).toString() + ", ";
+        }
+        text = text + recetas.get(recetas.size()-1).toString()+"]";
+
         try{
-            PrintWriter buf = new PrintWriter(new FileWriter(new File("salida.json")));
-            buf.write(text);
-            buf.close();
+            OutputStream os = new FileOutputStream("salida.json");
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
+            pw.write(text);
+            pw.close();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+
+    
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -201,7 +212,7 @@ class CUP$parser$actions {
 		int rleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object r = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 escribir_receta(r.toString()); 
+		 ArrayList<Receta> lista = new ArrayList<Receta>(); lista.add((Receta)r); escribir_receta(lista); RESULT=lista;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -227,7 +238,10 @@ class CUP$parser$actions {
 		int rleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object r = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		RESULT = null;
+		int lrleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lrright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object lr = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		((ArrayList<Receta>)lr).add(0, (Receta)r); escribir_receta((ArrayList<Receta>)lr); RESULT=lr;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -353,7 +367,7 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		((ArrayList<Ingrediente>)li).add((Ingrediente)i); RESULT = li;
+		((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("LISTA_INGREDIENTES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -407,7 +421,7 @@ class CUP$parser$actions {
 		int lpleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int lpright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object lp = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		((ArrayList<Paso>)lp).add((Paso)p); RESULT = lp;
+		((ArrayList<Paso>)lp).add(0, (Paso)p); RESULT = lp;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("LISTA_PASOS",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -419,7 +433,7 @@ class CUP$parser$actions {
 		int pmleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int pmright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object pm = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		System.out.println(pm.toString()); RESULT = pm;
+		RESULT = pm;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PASO",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -431,7 +445,7 @@ class CUP$parser$actions {
 		int pcleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int pcright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object pc = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 System.out.println(pc.toString());RESULT = pc;
+		RESULT = pc;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PASO",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -443,7 +457,7 @@ class CUP$parser$actions {
 		int ppleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int ppright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object pp = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		System.out.println(pp.toString()); RESULT = pp;
+		RESULT = pp;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PASO",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -458,10 +472,13 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int tleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object v = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		System.out.println(vm); RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Integer)v);
+		RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Cantidad)t, (String)v);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PASO_MOV",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -476,10 +493,13 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int tleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int tright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object t = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t);
+		int tleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int templeft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int tempright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object temp = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t, (Cantidad)temp);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PASO_COC",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -509,7 +529,7 @@ class CUP$parser$actions {
 		int ucleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int ucright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String uc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		System.out.println(n); RESULT = new Cantidad(n, uc);
+		 RESULT = new Cantidad(n, uc);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CANTIDAD",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -550,7 +570,7 @@ class CUP$parser$actions {
               Object RESULT =null;
 		int dvleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int dvright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer dv = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		String dv = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		RESULT=dv;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VELOCIDAD",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

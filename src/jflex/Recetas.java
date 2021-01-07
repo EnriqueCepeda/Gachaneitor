@@ -4,7 +4,12 @@ public class Recetas {
 
     private ArrayList<Receta> recetas;
 
-    public Recetas() {
+    public Recetas(Receta receta) {
+        this.recetas = new ArrayList<Receta>();
+        this.recetas.add(receta);
+    }
+
+    public Recetas(Receta receta, ArrayList<Receta> recetas) {
         this.recetas = new ArrayList<Receta>();
     }
 

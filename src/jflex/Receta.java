@@ -59,8 +59,25 @@ public class Receta {
         this.suma_tiempos = suma_tiempos;
     }*/
 
+    public String ingredientesToString(){
+        String str = "";
+        for (int i = 0; i<this.ingredientes.size()-1; i++){
+            str = str + this.ingredientes.get(i).toString()+ ", ";
+        }
+        str = str + this.ingredientes.get(this.ingredientes.size()-1).toString();
+        return str; 
+    }
+
+    public String pasosToString(){
+        String str = "";
+        for (int i = 0; i<this.pasos.size()-1; i++){
+            str = str + "{"+this.pasos.get(i).toString()+ "}, ";
+        }
+        str = str + "{" +this.pasos.get(this.pasos.size()-1).toString()+"}";
+        return str;
+    }
+
     public String toString() {
-        //return "\"nombre\": "+this.nombre+", \"tiempo\": {"+this.tiempo.toString()+"}, \"descripcion\": "+this.descripcion+", \"ingredientes\": ["+ingredientes.toString()+"], \"pasos\": ["+this.pasos.toString()+"]";
-        return "";
+        return "{\"nombre\": \""+this.nombre+"\", \"tiempo\": {"+this.tiempo.toString()+"}, \"descripcion\": \""+this.descripcion+"\", \"ingredientes\": {"+ingredientesToString()+"}, \"pasos\": ["+pasosToString()+"]}";
     }
 }

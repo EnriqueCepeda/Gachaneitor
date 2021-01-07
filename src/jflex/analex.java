@@ -960,7 +960,7 @@ private Symbol symbol(int type,Object value){
           case 49: break;
           case 12: 
             { System.out.println("Token digito_velocidad <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
-  return symbol(sym.digito_velocidad, new Integer(yytext()));
+  return symbol(sym.digito_velocidad, new String(yytext()));
             } 
             // fall through
           case 50: break;
@@ -1003,7 +1003,7 @@ private Symbol symbol(int type,Object value){
           case 57: break;
           case 20: 
             { System.out.println("Token ident <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
-    return symbol(sym.ident_nombre);
+    return symbol(sym.ident_nombre, new String(yytext()));
             } 
             // fall through
           case 58: break;
