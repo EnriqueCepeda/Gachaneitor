@@ -28,11 +28,11 @@ TEMPERATURA, VELOCIDAD;
 
 INICIO ::= 
     RECETA {:Recetas recetas = new Recetas(); recetas.prueba(); :}
-    | RECETA INICIO
+    | RECETA INICIO 
     ;
 
 RECETA ::= 
-    receta llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada
+    receta llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada 
     ;
 
 
@@ -78,7 +78,7 @@ PASO_MOV ::= guion verbo_mov LISTA_INGREDIENTES TIEMPO VELOCIDAD;
 PASO_COC ::= guion verbo_coc LISTA_INGREDIENTES TIEMPO TEMPERATURA;
 PASO_PER ::= guion verbo_per LISTA_INGREDIENTES;
 
-CANTIDAD ::= numero unidad_cantidad;
+CANTIDAD ::= numero unidad_cantidad;{::}
 TIEMPO ::= numero unidad_tiempo;
 TEMPERATURA ::= temperatura numero unidad_temp;
 VELOCIDAD ::= velocidad digito_velocidad;

@@ -1,1 +1,97 @@
-[{"nombre": "Puré", "tiempo": {"total": {"cantidad": 120, "unidad": "min"}, "preparacion": {"cantidad": 5, "unidad": "min"}}, "descripcion": "Esta es una receta mu rica. Que rico un 10", "ingredientes": {"Calabaza": {"cantidad": 2, "unidad": "ud"}, "Calabacín": {"cantidad": 2, "unidad": "ud"}}, "pasos": [{"ingredientes": {"Calabacín": {"cantidad": 2, "unidad": "ud"}, "Calabaza": {"cantidad": 2, "unidad": "ud"}}, "verbo": "pelar", "tipo_verbo": "persona"}, {"ingredientes": {"Calabacín": {"cantidad": 2, "unidad": "ud"}, "Calabaza": {"cantidad": 2, "unidad": "ud"}}, "verbo": "trocear", "tipo_verbo": "persona"}, {"tiempo": {"cantidad": 3600, "unidad": "seg"}, "temperatura": {"cantidad": 20, "unidad": "ºC"}, "ingredientes": {"Calabacín": {"cantidad": 2, "unidad": "ud"}, "Calabaza": {"cantidad": 2, "unidad": "ud"}}, "verbo": "sofreir", "tipo_verbo": "cocinar"}, {"tiempo": {"cantidad": 60, "unidad": "min"}, "velocidad": "02", "ingredientes": {"Calabacín": {"cantidad": 2, "unidad": "ud"}, "Calabaza": {"cantidad": 2, "unidad": "ud"}}, "verbo": "triturar", "tipo_verbo": "mover"}]}]
+[
+    {
+        "nombre": "Puré",
+        "tiempo": {
+            "total": {
+                "cantidad": 120,
+                "unidad": "min"
+            },
+            "preparacion": {
+                "cantidad": 5,
+                "unidad": "min"
+            }
+        },
+        "descripcion": "Esta es una receta mu rica. Que rico un 10",
+        "ingredientes": {
+            "Calabaza": {
+                "cantidad": 2,
+                "unidad": "ud"
+            },
+            "Calabacín": {
+                "cantidad": 2,
+                "unidad": "ud"
+            }
+        },
+        "pasos": [
+            {
+                "ingredientes": {
+                    "Calabacín": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    },
+                    "Calabaza": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    }
+                },
+                "verbo": "pelar",
+                "tipo_verbo": "persona"
+            },
+            {
+                "ingredientes": {
+                    "Calabacín": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    },
+                    "Calabaza": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    }
+                },
+                "verbo": "trocear",
+                "tipo_verbo": "persona"
+            },
+            {
+                "tiempo": {
+                    "cantidad": 3600,
+                    "unidad": "seg"
+                },
+                "temperatura": {
+                    "cantidad": 20,
+                    "unidad": "ºC"
+                },
+                "ingredientes": {
+                    "Calabacín": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    },
+                    "Calabaza": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    }
+                },
+                "verbo": "sofreir",
+                "tipo_verbo": "cocinar"
+            },
+            {
+                "tiempo": {
+                    "cantidad": 60,
+                    "unidad": "min"
+                },
+                "velocidad": "02",
+                "ingredientes": {
+                    "Calabacín": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    },
+                    "Calabaza": {
+                        "cantidad": 2,
+                        "unidad": "ud"
+                    }
+                },
+                "verbo": "triturar",
+                "tipo_verbo": "mover"
+            }
+        ]
+    }
+]
