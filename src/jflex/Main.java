@@ -47,7 +47,7 @@ class Main {
       } catch (Exception e) {
          System.out.println(" Analisis INCORRECTO !!");
       } finally {
-         System.out.println("Fin del AnÃ¡lisis ");
+         System.out.println("Fin del Análisis ");
       }
    }
 

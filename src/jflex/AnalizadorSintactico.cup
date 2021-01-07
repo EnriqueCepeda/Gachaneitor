@@ -1,23 +1,35 @@
 /* ----------------------Seccion de declaraciones package e imports--------------------*/
 
 import java_cup.runtime.*;
+
+import java.util.ArrayList;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 /* ----------------------Seccion componentes de codigo de usuario --------------------*/
 
-
+parser code{:
+    public static void escribir_receta(String text){
+        try{
+            PrintWriter buf = new PrintWriter(new FileWriter(new File("salida.json")));
+            buf.write(text);
+            buf.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+:}
 
 
 /* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
 
 terminal Integer numero, digito_velocidad;
-terminal String ident_nombre, contenido_descripcion, unidad_cantidad, unidad_temp, unidad_tiempo,
-verbo_mov, verbo_coc, verbo_per;
-terminal receta, descripcion, nombre, tiempo, total, preparacion, dospuntos, puntoycoma, guion, pasos,
-ingredientes, temperatura, velocidad, llave_abierta, llave_cerrada, comilla;
+terminal String ident_nombre, contenido_descripcion, unidad_cantidad, unidad_temp, unidad_tiempo, verbo_mov, verbo_coc, verbo_per;
+terminal receta, descripcion, nombre, tiempo, total, preparacion, dospuntos, puntoycoma, guion, pasos, ingredientes, temperatura, velocidad, llave_abierta, llave_cerrada, comilla;
 
-non terminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, LISTA_INGREDIENTES,
-INGREDIENTE, PASOS, LISTA_PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO, CANTIDAD,
-TEMPERATURA, VELOCIDAD;
-
+non terminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, LISTA_INGREDIENTES, INGREDIENTE, PASOS, LISTA_PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO, CANTIDAD, TEMPERATURA, VELOCIDAD;
 
 
 /* -------------Declaracion de precedencias -----------*/
@@ -27,59 +39,60 @@ TEMPERATURA, VELOCIDAD;
 /* --------------Declaracion de la gramatica -----------*/
 
 INICIO ::= 
-    RECETA {:Recetas recetas = new Recetas(); recetas.prueba(); :}
-    | RECETA INICIO 
+    RECETA:r {: escribir_receta(r.toString()); :}
+    | RECETA:r INICIO {:RESULT = null;:}
     ;
 
 RECETA ::= 
-    receta llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada 
+    receta llave_abierta NOMBRE:n DESCRIPCION:d TIEMPO_RECETA:tr INGREDIENTES:i PASOS:p llave_cerrada {:RESULT = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);:}
     ;
 
 
 NOMBRE ::= 
-    nombre comilla ident_nombre comilla |
-    comilla ident_nombre comilla  
+    nombre comilla ident_nombre:n comilla {:RESULT=n;:}
+    | comilla ident_nombre:n comilla {:RESULT=n;:}
     ;
 
 DESCRIPCION ::= 
-    descripcion contenido_descripcion |
-    contenido_descripcion
+    descripcion contenido_descripcion:cn {:RESULT=cn;:}
+    | contenido_descripcion:cn {:RESULT=cn;:}
     ;
 
 TIEMPO_RECETA ::=
-    tiempo llave_abierta total TIEMPO preparacion TIEMPO llave_cerrada
+    tiempo llave_abierta total TIEMPO:tt preparacion TIEMPO:tp llave_cerrada {:RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:}
     ;
 
 
-INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES llave_cerrada;
+INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada {:RESULT = li;:};
 
-LISTA_INGREDIENTES ::= INGREDIENTE puntoycoma | 
-                        INGREDIENTE puntoycoma LISTA_INGREDIENTES; 
+LISTA_INGREDIENTES ::= 
+    INGREDIENTE:i puntoycoma {:ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); lista.add((Ingrediente)i); RESULT = lista;:}
+    | INGREDIENTE:i puntoycoma LISTA_INGREDIENTES:li {:((ArrayList<Ingrediente>)li).add((Ingrediente)i); RESULT = li;:}; 
 
-INGREDIENTE ::= comilla ident_nombre comilla dospuntos CANTIDAD;
+INGREDIENTE ::= comilla ident_nombre:in comilla dospuntos CANTIDAD:c {:RESULT = new Ingrediente(in, (Cantidad)c);:};
 
 
 PASOS ::=
-    pasos llave_abierta LISTA_PASOS llave_cerrada
+    pasos llave_abierta LISTA_PASOS:lp llave_cerrada {:RESULT = lp;:}
     ;
     
 LISTA_PASOS ::= 
-    PASO |
-    PASO LISTA_PASOS
+    PASO:p {:ArrayList<Paso> lista = new ArrayList<Paso>(); lista.add((Paso)p); RESULT = lista;:}
+    | PASO:p LISTA_PASOS:lp {:((ArrayList<Paso>)lp).add((Paso)p); RESULT = lp;:}
     ;
 
 PASO ::=
-    PASO_MOV |
-    PASO_COC |
-    PASO_PER
+    PASO_MOV:pm {:System.out.println(pm.toString()); RESULT = pm;:}
+    | PASO_COC:pc {: System.out.println(pc.toString());RESULT = pc;:}
+    | PASO_PER:pp {:System.out.println(pp.toString()); RESULT = pp;:}
     ;
 
-PASO_MOV ::= guion verbo_mov LISTA_INGREDIENTES TIEMPO VELOCIDAD;
-PASO_COC ::= guion verbo_coc LISTA_INGREDIENTES TIEMPO TEMPERATURA;
-PASO_PER ::= guion verbo_per LISTA_INGREDIENTES;
+PASO_MOV ::= guion verbo_mov:vm LISTA_INGREDIENTES:li TIEMPO VELOCIDAD:v {:RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Integer)v);:};
+PASO_COC ::= guion verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO TEMPERATURA:t {:RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t);:};
+PASO_PER ::= guion verbo_per:vp LISTA_INGREDIENTES:li {:RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:};
 
-CANTIDAD ::= numero unidad_cantidad;{::}
-TIEMPO ::= numero unidad_tiempo;
-TEMPERATURA ::= temperatura numero unidad_temp;
-VELOCIDAD ::= velocidad digito_velocidad;
+CANTIDAD ::= numero:n unidad_cantidad:uc {: RESULT = new Cantidad(n, uc);:};
+TIEMPO ::= numero:n unidad_tiempo:uc {:RESULT = new Cantidad(n, uc);:};
+TEMPERATURA ::= temperatura numero:n unidad_temp:uc {:RESULT = new Cantidad(n, uc);:};
+VELOCIDAD ::= velocidad digito_velocidad:dv {:RESULT=dv;:};
 

@@ -1,27 +1,31 @@
-import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Recetas {
 
-    private ArrayList<HashMap> recetas;
+    private ArrayList<Receta> recetas;
 
     public Recetas() {
-        this.recetas = new ArrayList<HashMap>();
+        this.recetas = new ArrayList<Receta>();
     }
 
-    public Recetas(ArrayList<HashMap> recetas) {
+    public Recetas(ArrayList<Receta> recetas) {
         this.recetas = recetas;
     }
 
-    public ArrayList<HashMap> getRecetas() {
+    public ArrayList<Receta> getRecetas() {
         return this.recetas;
     }
 
-    public void setRecetas(ArrayList<HashMap> recetas) {
+    public void setRecetas(ArrayList<Receta> recetas) {
         this.recetas = recetas;
     }
 
-    public void prueba() {
-        System.out.println("Hello world!");
+    public String toString() {
+        String str = "[";
+        for (int i = 0; i< recetas.size(); i++){
+            str = str + recetas.get(i).toString()+", ";
+        }
+        str = str + recetas.get(recetas.size()-1).toString() + "]";
+        return str;
     }
 }
