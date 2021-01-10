@@ -161,6 +161,9 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
+
+    public ConversorUnidades cu = new ConversorUnidades();
+
     public static void escribir_receta(ArrayList<Receta> recetas){
         String text = "[";
         for (int i = 0; i< recetas.size()-1; i++){
@@ -340,7 +343,7 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		RESULT = li;
+		li = ComprobadorSemantica.comprobarIngredientes((ArrayList<Ingrediente>)li); RESULT = li;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INGREDIENTES",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -544,7 +547,7 @@ class CUP$parser$actions {
 		int ucleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int ucright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String uc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = new Cantidad(n, uc);
+		 RESULT = new Cantidad(n, uc);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("TIEMPO",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

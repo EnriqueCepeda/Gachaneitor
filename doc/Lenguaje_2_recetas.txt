@@ -19,7 +19,7 @@ receta {
     }
 }
 receta {
-    nombre "Patatas Fritas"
+    nombre "Patatas fritas"
     descripcion [Ñam. Para 2 personas.]
     tiempo {
         total 10 min 

@@ -123,7 +123,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 
 {blanco} | {nl} | {tab}  {}
 
-\[  {System.out.println("Caracter '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+\[  {System.out.println("Token '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     yybegin(DESCRIPCION);}
 
 {verbo_mov} {System.out.println("Token verbo_mov <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
@@ -145,7 +145,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 {unidad_temperatura} {System.out.println("Token unidad_temperatura <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.unidad_temp, new String(yytext()));}
 
-\" {c_line=yyline+1; c_column=yycolumn+1; System.out.println("Caracter comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+\" {c_line=yyline+1; c_column=yycolumn+1; System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
    yybegin(IDENTIFICADOR); return symbol(sym.comilla);} 
 
 \/\*  {c_line=yyline+1; c_column=yycolumn+1; System.out.println("Inicio comentario encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(COMENTARIO);} 
@@ -157,7 +157,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 }/* fin YYinitial */
 
 <DESCRIPCION> {
-  \] {System.out.println("Caracter ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
+  \] {System.out.println("Token ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
   {cadena}  {System.out.println("Token contenido_descripcion <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.contenido_descripcion, new String(yytext()));}
   <<EOF>> {/* Error */ Utility.error(Utility.E_STARTDESC,"", c_line, c_column); System.exit(1);}
@@ -172,7 +172,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 }
 
 <IDENTIFICADOR> {
-  \" {System.out.println("Caracter comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  \" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
      yybegin(YYINITIAL);return symbol(sym.comilla);}
   {ident} {System.out.println("Token ident <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     return symbol(sym.ident_nombre, new String(yytext()));}

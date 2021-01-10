@@ -947,7 +947,7 @@ private Symbol symbol(int type,Object value){
             // fall through
           case 47: break;
           case 10: 
-            { System.out.println("Caracter '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+            { System.out.println("Token '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     yybegin(DESCRIPCION);
             } 
             // fall through
@@ -965,7 +965,7 @@ private Symbol symbol(int type,Object value){
             // fall through
           case 50: break;
           case 13: 
-            { c_line=yyline+1; c_column=yycolumn+1; System.out.println("Caracter comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+            { c_line=yyline+1; c_column=yycolumn+1; System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
    yybegin(IDENTIFICADOR); return symbol(sym.comilla);
             } 
             // fall through
@@ -997,7 +997,7 @@ private Symbol symbol(int type,Object value){
             // fall through
           case 56: break;
           case 19: 
-            { System.out.println("Caracter ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);
+            { System.out.println("Token ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);
             } 
             // fall through
           case 57: break;
@@ -1008,7 +1008,7 @@ private Symbol symbol(int type,Object value){
             // fall through
           case 58: break;
           case 21: 
-            { System.out.println("Caracter comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+            { System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
      yybegin(YYINITIAL);return symbol(sym.comilla);
             } 
             // fall through

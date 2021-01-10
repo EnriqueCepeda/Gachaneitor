@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 /* ----------------------Seccion componentes de codigo de usuario --------------------*/
 
 parser code{:
+
+    public ConversorUnidades cu = new ConversorUnidades();
+
     public static void escribir_receta(ArrayList<Receta> recetas){
         String text = "[";
         for (int i = 0; i< recetas.size()-1; i++){
@@ -73,15 +76,13 @@ TIEMPO_RECETA ::=
     tiempo llave_abierta total TIEMPO:tt preparacion TIEMPO:tp llave_cerrada {:RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:}
     ;
 
-
-INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada {:RESULT = li;:};
+INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada {:li = ComprobadorSemantica.comprobarIngredientes((ArrayList<Ingrediente>)li); RESULT = li;:};
 
 LISTA_INGREDIENTES ::= 
     INGREDIENTE:i puntoycoma {:ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); lista.add((Ingrediente)i); RESULT = lista;:}
     | INGREDIENTE:i puntoycoma LISTA_INGREDIENTES:li {:((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;:}; 
 
 INGREDIENTE ::= comilla ident_nombre:in comilla dospuntos CANTIDAD:c {:RESULT = new Ingrediente(in, (Cantidad)c);:};
-
 
 PASOS ::=
     pasos llave_abierta LISTA_PASOS:lp llave_cerrada {:RESULT = lp;:}
@@ -103,7 +104,7 @@ PASO_COC ::= guion verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO:t TEMPERATURA:temp 
 PASO_PER ::= guion verbo_per:vp LISTA_INGREDIENTES:li {:RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:};
 
 CANTIDAD ::= numero:n unidad_cantidad:uc {: RESULT = new Cantidad(n, uc);:};
-TIEMPO ::= numero:n unidad_tiempo:uc {:RESULT = new Cantidad(n, uc);:};
+TIEMPO ::= numero:n unidad_tiempo:uc {: RESULT = new Cantidad(n, uc);:};
 TEMPERATURA ::= temperatura numero:n unidad_temp:uc {:RESULT = new Cantidad(n, uc);:};
 VELOCIDAD ::= velocidad digito_velocidad:dv {:RESULT=dv;:};
 

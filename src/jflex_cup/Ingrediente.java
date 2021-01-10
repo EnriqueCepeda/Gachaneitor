@@ -19,6 +19,10 @@ public class Ingrediente {
         return cantidad;
     }
 
+    public void setCantidad(Cantidad cantidad){
+        this.cantidad = cantidad;
+    }
+
     public String toString(){
         return "\""+this.nombre+"\": {"+this.cantidad.toString()+"}";
     }

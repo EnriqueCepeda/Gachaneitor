@@ -8,6 +8,14 @@ public class Cantidad{
         this.unidad = unidad;
     }
 
+    public int getCantidad(){
+        return this.cantidad;
+    }
+
+    public String getUnidad(){
+        return this.unidad;
+    }
+
     public String toString(){
         return "\"cantidad\": "+this.cantidad+", \"unidad\": \""+this.unidad+"\"";
     }
