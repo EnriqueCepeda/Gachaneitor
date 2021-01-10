@@ -33,8 +33,8 @@ COMILLA : '"';
 NUMERO : [1-9][0-9]*;
 DIGITO_VELOCIDAD : '0'[1-9]; 
 
-IDENT_NOMBRE : [A-Z]([a-z] | ' ' | TILDES | 'ñ' | 'Á')*; 
-CADENA : ([A-Z] | [a-z] | [0-9] | OTROS_CARACTERES | TILDES | 'ñ'| 'Á')+;
+IDENT_NOMBRE : [A-Z]([a-z] | ' ' | TILDES | 'ñ' | 'Ñ' | 'Á')*; 
+CADENA : ([A-Z] | [a-z] | [0-9] | '-' | OTROS_CARACTERES | TILDES | 'ñ' | 'Ñ' | 'Á')+;
 
 TILDES : 'á' | 'é' | 'í' | 'ó' | 'ú' | 'É' | 'Í' | 'Ó' | 'Ú';
 
