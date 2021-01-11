@@ -5,14 +5,6 @@ import java.util.Set;
 
 class IngredienteNoUsadoException extends Exception{
 
-    public IngredienteNoUsadoException(String mensaje){
-        super(mensaje);
-    }
-
-    public IngredienteNoUsadoException(){
-        super("Un ingrediente declarado no ha sido usado en la receta.");
-    }
-
     public IngredienteNoUsadoException(ArrayList<String> ingredientes){
         super("Los ingredientes "+ingredientes+" no han sido usados en la receta.");
     }
@@ -20,25 +12,13 @@ class IngredienteNoUsadoException extends Exception{
 
 class TiempoRecetaDistintoException extends Exception{
 
-    public TiempoRecetaDistintoException(String mensaje){
-        super(mensaje);
-    }
-
-    public TiempoRecetaDistintoException(){
-        super("La suma de tiempos de los pasos no coincide con el tiempo total de la receta");
+    public TiempoRecetaDistintoException(int tiempoTotal, int sumaPasos){
+        super("La suma de tiempos de los pasos ("+sumaPasos+") no coincide con el tiempo total ("+tiempoTotal+") de la receta");
     }
 }
 
 
 class CantidadIngredienteExcedidaException extends Exception{
-
-    public CantidadIngredienteExcedidaException(String mensaje){
-        super(mensaje);
-    }
-
-    public CantidadIngredienteExcedidaException(){
-        super("La cantidad usada supera a la declarada inicialmente para un ingrediente");
-    }
 
     public CantidadIngredienteExcedidaException(Cantidad cantidadUsada, Cantidad cantidadDeclarada, Ingrediente ingrediente){
         super("La cantidad usada ("+cantidadUsada.getCantidad()+" "+cantidadUsada.getUnidad()+") supera a la declarada ("+cantidadDeclarada.getCantidad()+" "+cantidadDeclarada.getUnidad()+") inicialmente para el ingrediente "+ingrediente.getNombre());
@@ -46,12 +26,9 @@ class CantidadIngredienteExcedidaException extends Exception{
 }
 
 class IngredientesDistintaMagnitudException extends Exception {
-    public IngredientesDistintaMagnitudException(String mensaje){
-        super(mensaje);
-    }
 
     public IngredientesDistintaMagnitudException(){
-        super("Un ingrediente, repetido en la lista, está en dos unidades diferentes que no comparten magnitud, es decir, no se pueden sumar.");
+        super();
     }
 
     public IngredientesDistintaMagnitudException(String unidad1, String unidad2, Ingrediente ingrediente){
@@ -60,13 +37,6 @@ class IngredientesDistintaMagnitudException extends Exception {
 }
 
 class UsoUnidadesDistintasException extends Exception{
-    public UsoUnidadesDistintasException(String mensaje){
-        super(mensaje);
-    }
-
-    public UsoUnidadesDistintasException(){
-        super("Se han usado unidades distintas en la declaración y en el uso de un ingrediente.");
-    }
 
     public UsoUnidadesDistintasException(Cantidad cantidadUsada, Cantidad cantidadDeclarada, String nombreIngrediente){
         super("La unidad usada ("+cantidadUsada.getUnidad()+") no coincide con la declarada ("+cantidadDeclarada.getUnidad()+") en el ingrediente "+nombreIngrediente);
@@ -118,5 +88,66 @@ public class ComprobadorSemantica{
         }
         return ingredientesUsados;
     }
+
+    public static void comprobarReceta(Receta receta) throws CantidadIngredienteExcedidaException, TiempoRecetaDistintoException, UsoUnidadesDistintasException, IngredienteNoUsadoException, IngredientesDistintaMagnitudException{
+        comprobarTiemposTotalesParciales(receta.getTiempo(), receta.getPasos());
+        comprobarIngredientesUsados(receta.getIngredientes(), receta.getPasos());
+        comprobarCantidadesUsadas(receta.getIngredientes(), receta.getPasos());
+    }
+
+    
+    public static void comprobarTiemposTotalesParciales(Tiempo tiempo, ArrayList<Paso> pasos) throws TiempoRecetaDistintoException{
+        int tiempoTotalEstandarizado = ConversorUnidades.estandarizarTiempo(tiempo.getTotal()).getCantidad();
+        int sumaTiemposParciales = 0; 
+        for (Paso paso: pasos){
+            if (paso instanceof Paso_mov){
+                sumaTiemposParciales += ConversorUnidades.estandarizarTiempo(((Paso_mov)paso).getTiempo()).getCantidad();
+            }else if (paso instanceof Paso_coc){
+                sumaTiemposParciales += ConversorUnidades.estandarizarTiempo(((Paso_coc)paso).getTiempo()).getCantidad();
+            }
+        }
+        if (tiempoTotalEstandarizado != sumaTiemposParciales){
+            throw new TiempoRecetaDistintoException(tiempoTotalEstandarizado, sumaTiemposParciales);
+        }
+    }
+
+    public static void comprobarIngredientesUsados(ArrayList<Ingrediente> ingredientes, ArrayList<Paso> pasos) throws IngredienteNoUsadoException, IngredientesDistintaMagnitudException{
+        HashMap<String, Cantidad> ingredientesUsados = ComprobadorSemantica.anotarIngredientesUsados(pasos);
+        ArrayList<String> ingredientesNoUsados = new ArrayList<String>();
+        for (Ingrediente ingrediente: ingredientes){
+            if (ingredientesUsados.get(ingrediente.getNombre())==null){
+                ingredientesNoUsados.add(ingrediente.getNombre());
+            }
+        }
+        if (! ingredientesNoUsados.isEmpty())
+            throw new IngredienteNoUsadoException(ingredientesNoUsados);
+    }
+
+    public static void comprobarCantidadesUsadas(ArrayList<Ingrediente> ingredientes, ArrayList<Paso> pasos) throws CantidadIngredienteExcedidaException, UsoUnidadesDistintasException, IngredientesDistintaMagnitudException{
+        HashMap<String, Cantidad> ingredientesUsados = ComprobadorSemantica.anotarIngredientesUsados(pasos);
+        HashMap<String, Cantidad> ingredientesDeclarados = ingredientesArrayListToHashMap(ingredientes);
+        for (Paso paso: pasos){
+            ArrayList<Ingrediente> ingredientesPaso = paso.getIngredientes();
+            for (Ingrediente ingrediente: ingredientesPaso){
+                Cantidad cantidadEstandarizadaUsada = ConversorUnidades.estandarizarUnidadMenor(ingredientesUsados.get(ingrediente.getNombre()));
+                Cantidad cantidadEstandarizadaDeclarada = ConversorUnidades.estandarizarUnidadMenor(ingredientesDeclarados.get(ingrediente.getNombre()));
+                if (!cantidadEstandarizadaUsada.getUnidad().equals(cantidadEstandarizadaDeclarada.getUnidad())) {
+                    throw new UsoUnidadesDistintasException(ingredientesUsados.get(ingrediente.getNombre()), ingredientesDeclarados.get(ingrediente.getNombre()), ingrediente.getNombre());
+                }
+                if (cantidadEstandarizadaUsada.getCantidad() > cantidadEstandarizadaDeclarada.getCantidad()){
+                    throw new CantidadIngredienteExcedidaException(ingredientesUsados.get(ingrediente.getNombre()),ingredientesDeclarados.get(ingrediente.getNombre()), ingrediente);
+                }
+            }
+        }
+    }
+
+    public static HashMap<String, Cantidad> ingredientesArrayListToHashMap(ArrayList<Ingrediente> ingredientesAL){
+        HashMap<String, Cantidad> ingredientesHM = new HashMap<String, Cantidad>();
+        for (Ingrediente ingrediente: ingredientesAL){
+            ingredientesHM.put(ingrediente.getNombre(), ingrediente.getCantidad());
+        }
+        return ingredientesHM;
+    }
+    
 
 }

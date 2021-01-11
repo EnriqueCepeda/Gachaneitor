@@ -179,7 +179,7 @@ public class parser extends java_cup.runtime.lr_parser {
         }
     }
 
-    /*public void report_error(String message, Object info) {
+    public void report_error(String message, Object info) {
 
         StringBuffer m = new StringBuffer("Error");
 
@@ -199,7 +199,7 @@ public class parser extends java_cup.runtime.lr_parser {
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         System.exit(1);
-    }*/
+    }
 
     
 
@@ -235,7 +235,8 @@ class CUP$parser$actions {
 		int rleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object r = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 ArrayList<Receta> lista = new ArrayList<Receta>(); lista.add((Receta)r); escribir_receta(lista); RESULT=lista;
+		 ArrayList<Receta> lista = new ArrayList<Receta>(); 
+                lista.add((Receta)r); escribir_receta(lista); RESULT=lista;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -264,7 +265,8 @@ class CUP$parser$actions {
 		int lrleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int lrright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object lr = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		((ArrayList<Receta>)lr).add(0, (Receta)r); escribir_receta((ArrayList<Receta>)lr); RESULT=lr;
+		((ArrayList<Receta>)lr).add(0, (Receta)r);
+                             escribir_receta((ArrayList<Receta>)lr); RESULT=lr;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -288,7 +290,10 @@ class CUP$parser$actions {
 		int pleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		RESULT = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
+		
+            Receta receta = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
+            ComprobadorSemantica.comprobarReceta(receta);
+            RESULT=receta;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("RECETA",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -363,7 +368,9 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li); RESULT = li;
+		
+        li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li);
+        RESULT = li;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INGREDIENTES",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -375,7 +382,8 @@ class CUP$parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object i = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); lista.add((Ingrediente)i); RESULT = lista;
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); 
+                                lista.add((Ingrediente)i); RESULT = lista;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("LISTA_INGREDIENTES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
