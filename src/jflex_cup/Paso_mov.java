@@ -11,8 +11,12 @@ public class Paso_mov extends Paso{
         this.velocidad = velocidad;
     }
 
+    public Cantidad getTiempo(){
+        return this.tiempo;
+    }
+
     public String toString(){
-        return super.toString()+", \"tiempo\": {"+this.tiempo.toString()+"}, \"velocidad\": \""+velocidad.toString()+"\"";
+        return super.toString()+", \"tiempo\": {"+this.tiempo+"}, \"velocidad\": \""+this.velocidad+"\"";
     }
 
 }

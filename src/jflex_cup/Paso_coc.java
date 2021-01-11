@@ -11,8 +11,12 @@ public class Paso_coc extends Paso{
         this.temperatura = temperatura;
     }
 
+    public Cantidad getTiempo(){
+        return this.tiempo;
+    }
+
     public String toString(){
-        return super.toString()+", \"tiempo\": {"+this.tiempo.toString()+"}, \"temperatura\": {"+this.temperatura.toString()+"}";
+        return super.toString()+", \"tiempo\": {"+this.tiempo+"}, \"temperatura\": {"+this.temperatura+"}";
     }
 
 }

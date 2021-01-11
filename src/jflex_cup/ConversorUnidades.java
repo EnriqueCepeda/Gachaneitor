@@ -12,23 +12,23 @@ public class ConversorUnidades {
      * Estandariza una unidad a su medida más granular. por ejemplo, litros a
      * mililitros o kg a miligramos
      */
-    public static Cantidad estandarizarCantidad(Cantidad cantidadOriginal, Cantidad cantidadNueva) throws Exception {
+    public static Cantidad estandarizarCantidad(Cantidad cantidadOriginal, Cantidad cantidadNueva) throws IngredientesDistintaMagnitudException {
         
         if (UNIDADES_MASA.contains(cantidadOriginal.getUnidad())) {
             if (!UNIDADES_MASA.contains(cantidadNueva.getUnidad())) {
-                throw new Exception("Las cantidades del ingrediente no son de la misma magnitud.");
+                throw new IngredientesDistintaMagnitudException();
             } else {
                 return estandarizar(UNIDADES_MASA, cantidadOriginal, cantidadNueva);
             }
         } else if (UNIDADES_VOLUMEN.contains(cantidadOriginal.getUnidad())) {
             if (!UNIDADES_VOLUMEN.contains(cantidadNueva.getUnidad())) {
-                throw new Exception("Las cantidades del ingrediente no son de la misma magnitud.");
+                throw new IngredientesDistintaMagnitudException();
             } else {
                 return estandarizar(UNIDADES_VOLUMEN, cantidadOriginal, cantidadNueva);
             }
-        } else if (cantidadOriginal.getUnidad() == "ud") {
-            if (cantidadNueva.getUnidad() != "ud") {
-                throw new Exception("Las cantidades del ingrediente no son de la misma magnitud.");
+        } else if (cantidadOriginal.getUnidad().equals("ud")) {
+            if (!cantidadNueva.getUnidad().equals("ud")) {
+                throw new IngredientesDistintaMagnitudException();
             } else {
                 return new Cantidad((cantidadOriginal.getCantidad() + cantidadNueva.getCantidad()), "ud");
             }
@@ -50,23 +50,27 @@ public class ConversorUnidades {
             factorConv = (int)Math.pow(1000,Math.abs(diferencia));
             cantidad = cantidadOriginal.getCantidad() + (cantidadNueva.getCantidad() * factorConv);
         }
-        System.out.println("diferencia: "+diferencia);
-        System.out.println("Factor de conv: "+factorConv);
         return new Cantidad(cantidad, unidadMenor);
+    }
+
+    public static Cantidad estandarizarUnidadMenor(Cantidad cantidad){
+        if (UNIDADES_MASA.contains(cantidad.getUnidad())) {
+            return estandarizar(UNIDADES_MASA, cantidad, new Cantidad(0, "mg"));
+        } else if (UNIDADES_VOLUMEN.contains(cantidad.getUnidad())){
+            return estandarizar(UNIDADES_VOLUMEN, cantidad, new Cantidad(0, "ml"));
+        }else{ //ud
+            return cantidad;
+        }
     }
 
     public static Cantidad estandarizarTiempo(Cantidad tiempo) {
         int num_estandarizado = tiempo.getCantidad();
-        if (tiempo.getUnidad() == "min") {
+        if (tiempo.getUnidad().equals("min")) {
             num_estandarizado *= 60;
-        } else if (tiempo.getUnidad() == "h") {
+        } else if (tiempo.getUnidad().equals("h")) {
             num_estandarizado *= 3600;
         }
         return new Cantidad(num_estandarizado, "seg");
-    }
-
-    public static void prueba(){
-        System.out.println("Holaaaaaaaaaaaaaaaaa Enrique me estresas");
     }
 
 }

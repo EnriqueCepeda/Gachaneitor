@@ -17,7 +17,7 @@ public class Tiempo {
     }
     
     public String toString(){
-        return "\"total\": {"+this.total.toString()+"}, \"preparacion\": {"+this.preparacion.toString()+"}";
+        return "\"total\": {"+this.total+"}, \"preparacion\": {"+this.preparacion+"}";
     }
     
 }

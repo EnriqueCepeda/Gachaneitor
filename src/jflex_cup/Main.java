@@ -43,10 +43,11 @@ class Main {
             parse_tree = parser_obj.debug_parse();
          else
             parse_tree = parser_obj.parse();
-         System.out.println(" Todo OK mis panas!!");
+         System.out.println("Análisis Correcto :D");
       } catch (Exception e) {
-         e.printStackTrace();
-         System.out.println(" Analisis INCORRECTO !!");
+         //e.printStackTrace();
+         System.out.println(e.getMessage());
+         System.out.println("Análisis INCORRECTO !!");
       } finally {
          System.out.println("Fin del Análisis ");
       }

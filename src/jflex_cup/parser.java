@@ -162,8 +162,6 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
-    public ConversorUnidades cu = new ConversorUnidades();
-
     public static void escribir_receta(ArrayList<Receta> recetas){
         String text = "[";
         for (int i = 0; i< recetas.size()-1; i++){
@@ -180,6 +178,28 @@ public class parser extends java_cup.runtime.lr_parser {
             e.printStackTrace();
         }
     }
+
+    /*public void report_error(String message, Object info) {
+
+        StringBuffer m = new StringBuffer("Error");
+
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+            if (s.left >= 0) {                
+                m.append(" en la linea "+(s.left+1));   
+                if (s.right >= 0)                    
+                    m.append(", columna "+(s.right+1));
+            }
+        }
+        m.append(" : "+message);
+        System.err.println(m);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }*/
 
     
 
@@ -343,7 +363,7 @@ class CUP$parser$actions {
 		int lileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int liright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object li = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		li = ComprobadorSemantica.comprobarIngredientes((ArrayList<Ingrediente>)li); RESULT = li;
+		li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li); RESULT = li;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INGREDIENTES",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

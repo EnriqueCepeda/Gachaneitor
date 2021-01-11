@@ -24,7 +24,7 @@ public class Ingrediente {
     }
 
     public String toString(){
-        return "\""+this.nombre+"\": {"+this.cantidad.toString()+"}";
+        return "\""+this.nombre+"\": {"+this.cantidad+"}";
     }
 
 }

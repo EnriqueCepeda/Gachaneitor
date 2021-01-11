@@ -12,12 +12,16 @@ public class Paso {
         this.ingredientes = ingredientes;
     }
 
+    public ArrayList<Ingrediente> getIngredientes(){
+        return this.ingredientes;
+    }
+
     public String toString(){
         String str = "\"ingredientes\": {";
         for (int i = 0; i<ingredientes.size()-1; i++){
-            str = str + ingredientes.get(i).toString()+ ", ";
+            str = str + ingredientes.get(i)+ ", ";
         }
-        str = str + ingredientes.get(ingredientes.size()-1).toString();
+        str = str + ingredientes.get(ingredientes.size()-1);
         str = str + "}, \"verbo\": \""+this.verbo+"\", \"tipo_verbo\": \""+this.tipoVerbo+"\"";
         return str;
     }
