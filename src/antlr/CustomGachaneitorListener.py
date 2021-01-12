@@ -1,6 +1,5 @@
 from GachaneitorListener import GachaneitorListener
 from GachaneitorParser import GachaneitorParser
-from antlr4.error.Errors import FailedPredicateException
 import json
 import sys
 
@@ -18,7 +17,7 @@ class GachaneitorGeneralException(Exception):
         super().__init__(self.mensaje)
 
     def __str__(self):
-        return f'Error: {self.mensaje}.'  
+        return f'{self.mensaje}.'  
   
 class GachaneitorConcreteException(Exception):
 
@@ -179,16 +178,13 @@ class CustomGachaneitorListener(GachaneitorListener):
         with open(ruta, "w", encoding='utf-8') as file:
             file.write(json_recetas)
 
-    def exitInicio(self, ctx:GachaneitorParser.InicioContext):
-        self.writeJSONrecetas("./salida.json")
-
     def enterReceta(self, ctx:GachaneitorParser.RecetaContext):
         self.receta_actual = Receta()
 
     def exitReceta(self, ctx:GachaneitorParser.RecetaContext):
         self.comprobar_tiempos()
         self.comprobar_ingredientes_usados()
-        self.recetas.append(self.receta_actual)
+        self.recetas.append(self.receta_actual.get_dict())
 
     def enterNombre(self, ctx:GachaneitorParser.InicioContext):
         self.receta_actual.nombre = str(ctx.IDENT_NOMBRE())

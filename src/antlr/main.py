@@ -1,16 +1,36 @@
 import sys
 from argparse import ArgumentParser
-from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker
+from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker, InputStream
 from GachaneitorLexer import GachaneitorLexer
 from GachaneitorParser import GachaneitorParser
+from GachaneitorErrorListener import GachaneitorErrorListener
 from CustomGachaneitorListener import CustomGachaneitorListener
  
+def web_main(text):
+    input_stream = InputStream(text)
+    lexer = GachaneitorLexer(input_stream)
+    stream = CommonTokenStream(lexer)
+    parser = GachaneitorParser(stream)
+
+    parser.removeErrorListeners()
+    parser.addErrorListener(GachaneitorErrorListener())
+    tree = parser.inicio()
+
+    listener = CustomGachaneitorListener()
+    walker = ParseTreeWalker()
+
+    walker.walk(listener, tree)
+    recetas = listener.recetas
+    return recetas
+
 def main(args):
     input_stream = FileStream(args.input_file, encoding="utf-8")
     lexer = GachaneitorLexer(input_stream)
-
     stream = CommonTokenStream(lexer)
     parser = GachaneitorParser(stream)
+
+    parser.removeErrorListeners()
+    parser.addErrorListener(GachaneitorErrorListner())
     tree = parser.inicio()
     
     listener = CustomGachaneitorListener()
@@ -22,7 +42,7 @@ def main(args):
         print(e)
 
     recetas = listener.recetas
-    print(recetas[0])
+    return recetas
 
 def build_argparser():
     argparser = ArgumentParser()
