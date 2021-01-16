@@ -1,11 +1,11 @@
 INICIO ::= RECETA {RECETA}
 RECETA ::= receta '{' NOMBRE DESCRIPCION TIEMPO_RECETA DEF_INGREDIENTES PASOS '}'
-NOMBRE ::= [nombre] '"' CADENA '"'
-DESCRIPCION ::= [descripcion] '[' CADENA ']'
+NOMBRE ::= [nombre] '"' IDENT_NOMBRE '"'
+DESCRIPCION ::= [descripcion] CONTENIDO_DESCRIPCION
 TIEMPO_RECETA ::= tiempo '{' total TIEMPO preparacion TIEMPO '}' 
 
 DEF_INGREDIENTES ::= ingredientes '{' INGREDIENTES '}'
-INGREDIENTES ::= INGREDIENTE {; INGREDIENTE}
+INGREDIENTES ::= INGREDIENTE ';' {INGREDIENTE ';'}
 INGREDIENTE ::= IDENT_NOMBRES ':' CANTIDAD
 
 PASOS ::= pasos '{' PASO {PASO} '}'
@@ -19,21 +19,22 @@ VERBO_COC ::= cocinar al vapor | escalfar | hervir | guisar | sofreir
 VERBO_PER ::= pelar| trocear | moler
 
 CANTIDAD ::= NUMERO UNIDAD_CANTIDAD
-TIEMPO ::= tiempo NUMERO UNIDAD_TIEMPO
+TIEMPO ::= NUMERO UNIDAD_TIEMPO
 TEMPERATURA ::= temperatura NUMERO UNIDAD_TEMP
 VELOCIDAD ::= velocidad DIGITO_VELOCIDAD
 
 UNIDAD_CANTIDAD ::= mg | g | kg | ml | l  | ud
 UNIDAD_TEMP ::= ºC | ºF
 UNIDAD_TIEMPO ::= h | min | seg
-IDENT_NOMBRES ::= MAYUS {MINUS | “ “ }
+IDENT_NOMBRES ::= '"' MAYUS {MINUS | “ “ } '"'
 
 MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | Ñ | O | P | Q | R | S | T | U | V | W | X | Y | Z
 MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z 
 DIGITO_INICIAL ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
-DIGITO_VELOCIDAD ::=  DIGITO_INICIAL | 10
+DIGITO_VELOCIDAD ::=  0 | DIGITO_INICIAL 
 NUMERO ::= DIGITO_INICIAL { DIGITO_INICIAL | 0 }
-COMENTARIO ::= /* {CADENA | ESPACIOS} */
+CONTENIDO_DESCRIPCION ::= '[' CADENA ']'
+COMENTARIO ::= /* CADENA */
 TABS ::= \r | \t | \n | \r\n
 OTROS_CARACTERES ::= , | ')' | '(' | '{' | '}' | - | _
 CADENA ::= {MAYUS | MINUS | NUMERO | TABS | ‘ ‘ | OTROS_CARACTERES}

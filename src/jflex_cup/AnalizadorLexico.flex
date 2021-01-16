@@ -75,7 +75,7 @@ private Symbol symbol(int type,Object value){
 nl = [\n | \r | \t \r\n]
 blanco = " "
 tab = \t
-verbo_mov = licuar | triturar | moler | batir | dejar reposar | amasar | mezclar
+verbo_mov = licuar | triturar | batir | dejar reposar | amasar | mezclar
 verbo_coc = "cocinar al vapor" | escalfar | hervir | guisar | sofreir
 verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
