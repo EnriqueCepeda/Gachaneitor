@@ -16,7 +16,7 @@ receta{
 	pasos{
 		- pelar "Platano":  2 ud; 
 		- trocear "Fresas": 250 g; "Platano":  2 ud;  
-		- mezclar "Fresas": 250 g; "Platano":  2 ud; "Leche": 250 ml; "Nata líquida para montar": 200 ml; 1 min velocidad 03
+		- mezclar "Fresas": 250 g; "Platano":  2 ud; "Leche": 250 ml; "Nata líquida para montar": 200 ml; 2 min velocidad 03
 		- licuar "Fresas": 250 g; "Platano":  2 ud; "Leche": 250 ml; "Nata líquida para montar": 200 ml; 3 min velocidad 09 /*Para un mejor resultado dejar enfriar en el frigorífico o congelador 30min*/
 	}	
 }

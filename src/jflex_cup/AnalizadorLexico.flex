@@ -81,7 +81,7 @@ verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
 unidad_tiempo = h | min | seg
 unidad_temperatura = ºC | ºF
-cadena = ([:jletterdigit:] | {nl} | {blanco} | \. )+
+cadena = ([:jletterdigit:] | {nl} | {blanco} | \. | \, )+
 ident = ( [:jletter:] | {blanco} )+
 
 

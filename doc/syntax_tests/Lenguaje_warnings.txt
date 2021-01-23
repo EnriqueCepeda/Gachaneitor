@@ -6,34 +6,18 @@
         preparacion 5 min /* No hace falta comprobar, porque son verbos de persona */
     }
 
-    ingredientes 
-        "Calabaza": 2 ud
-        "Calabacín" 2 ud
+    {
+        "Calabaza": 2 ud; 
+        "Calabacín": 2 ud;
+    }
 
-    pasos 
-        - pelar "Calabacín": 2 ud "Calabaza" 2 ud;
-        trocear "Calabacín" 2 ud; "Calabaza" 1 ud
-        sofreir "Calabacín" 2 ud "Calabaza" 2 ud; 10 min 20ºC
-        - triturar "Calabacín" 2 ud; "Calabaza": 2 ud 10 min 02
-    
+    {
+        - pelar "Calabacín": 2 ud; "Calabaza": 2 ud; 
+        - trocear "Calabacín": 2 ud "Calabaza" 2 ud
+        - sofreir "Calabacín" 2 ud; "Calabaza": 2 ud; 10 min temperatura 20ºC
+        - triturar "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min velocidad 02
+    }
 }
-receta 
-    "Patatas fritas"
-    [Ñam. Para 2 personas.]
-    tiempo {
-        total 10 min 
-        preparacion 5 min 
-    }
-
-    ingredientes 
-        "Patata": 5 ud
-
-    pasos {
-        pelar "Patata": 5 ud
-        - trocear "Patata" 5 ud 
-        sofreir "Patata": 5 ud; 10 min 80ºC
-    }
-
     
 
     

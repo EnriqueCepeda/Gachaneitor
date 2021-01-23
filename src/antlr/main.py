@@ -30,7 +30,7 @@ def main(args):
     parser = GachaneitorParser(stream)
 
     parser.removeErrorListeners()
-    parser.addErrorListener(GachaneitorErrorListner())
+    parser.addErrorListener(GachaneitorErrorListener())
     tree = parser.inicio()
     
     listener = CustomGachaneitorListener()
@@ -60,4 +60,5 @@ def build_argparser():
  
 if __name__ == '__main__':
     parser = build_argparser()
-    main(parser.parse_args())
+    print(main(parser.parse_args()))
+    
