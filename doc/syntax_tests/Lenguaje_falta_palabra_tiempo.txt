@@ -1,0 +1,20 @@
+receta {
+    nombre "Puré"
+    descripcion [Esta es una receta mu rica. Que rico un 10]
+    {
+        total 20 min /* Comprobar con suma de tiempos parciales (Opcional) */
+        preparacion 5 min /* No hace falta comprobar, porque son verbos de persona */
+    }
+
+    ingredientes {
+        "Calabaza": 2 ud; 
+        "Calabacín": 2 ud;
+    }
+
+    pasos {
+        - pelar "Calabacín": 2 ud; "Calabaza": 2 ud;
+        - trocear "Calabacín": 2 ud; "Calabaza": 2 ud;
+        - sofreir "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min temperatura 20ºC
+        - triturar "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min velocidad 02
+    }
+}

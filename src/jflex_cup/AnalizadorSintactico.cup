@@ -31,28 +31,40 @@ parser code{:
         }
     }
 
-    public void report_error(String message, Object info) {
-
-        StringBuffer m = new StringBuffer("Error");
-
-        if (info instanceof java_cup.runtime.Symbol) {
-            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
-
-            if (s.left >= 0) {                
-                m.append(" en la linea "+(s.left+1));   
-                if (s.right >= 0)                    
-                    m.append(", columna "+(s.right+1));
-            }
+    public void syntax_error(String str, int linea, int columna, String mensaje_adicional, boolean fatal){
+        
+        StringBuffer m = new StringBuffer("");
+        if (fatal){
+            m.append("Error fatal: ");
+        }else{
+            m.append("Warning: ");
         }
-        m.append(" : "+message);
+        
+        if (!mensaje_adicional.equals(""))
+            m.append(mensaje_adicional);
+
+        //m.append(" en el símbolo "+str);
+        
+        if (linea >= 0) {                
+            m.append(" en línea "+String.valueOf(linea+1));   
+            if (columna >= 0)                    
+                m.append(" y columna "+String.valueOf(columna+1));
+        }
+
+        //m.append("\n");
         System.err.println(m);
     }
 
-    public void report_fatal_error(String message, Object info) {
-        report_error(message, info);
-        System.exit(1);
+    public void report_syntax_error(Object s, int linea, int columna, String mensaje_adicional, boolean fatal){
+        if (!(s instanceof String)){
+            String str = String.valueOf(s);
+            syntax_error(str, linea, columna, mensaje_adicional, fatal);
+        }else{
+            syntax_error((String)s, linea, columna, mensaje_adicional, fatal);
+        }
+        if (fatal)
+            System.exit(1);
     }
-
     
 :}
 
@@ -80,11 +92,22 @@ INICIO ::=
     ;
 
 RECETA ::= 
-    receta llave_abierta NOMBRE:n DESCRIPCION:d TIEMPO_RECETA:tr INGREDIENTES:i PASOS:p llave_cerrada {:
-            Receta receta = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
+    receta llave_abierta NOMBRE:n DESCRIPCION:d TIEMPO_RECETA:tr INGREDIENTES:i PASOS:p llave_cerrada 
+        {:Receta receta = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
             ComprobadorSemantica.comprobarReceta(receta);
             RESULT=receta;:}
-    ;
+    | llave_abierta:la
+        {:report_syntax_error(String.valueOf(la), laleft, laright, "Falta la palabra receta", false);:} 
+         NOMBRE:n DESCRIPCION:d TIEMPO_RECETA:tr INGREDIENTES:i PASOS:p llave_cerrada 
+         {:Receta receta = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
+            ComprobadorSemantica.comprobarReceta(receta);
+            RESULT=receta;:}
+    | receta NOMBRE:n
+        {:report_syntax_error(String.valueOf(n), nleft, nright, "Faltan las llaves en la receta", false);:}
+         DESCRIPCION:d TIEMPO_RECETA:tr INGREDIENTES:i PASOS:p 
+        {:Receta receta = new Receta((String)n, (String)d, (Tiempo)tr, (ArrayList<Ingrediente>)i, (ArrayList<Paso>)p);
+            ComprobadorSemantica.comprobarReceta(receta);
+            RESULT=receta;:};
 
 
 NOMBRE ::= 
@@ -99,24 +122,56 @@ DESCRIPCION ::=
 
 TIEMPO_RECETA ::=
     tiempo llave_abierta total TIEMPO:tt preparacion TIEMPO:tp llave_cerrada 
-                {:RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:};
+        {:RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:}
+    | llave_abierta:la total TIEMPO:tt preparacion TIEMPO:tp llave_cerrada 
+        {: report_syntax_error(String.valueOf(la), laleft, laright, "Falta la palabra tiempo", false);
+            RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:}
+    | tiempo total:t
+        {:report_syntax_error(String.valueOf(t), tleft, tright, "Faltan las llaves en el tiempo", false);:}
+        TIEMPO:tt preparacion TIEMPO:tp
+        {:RESULT = new Tiempo((Cantidad)tt, (Cantidad)tp);:};
 
-INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada {:
-        li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li);
-        RESULT = li;:};
+INGREDIENTES ::= ingredientes llave_abierta LISTA_INGREDIENTES:li llave_cerrada 
+                    {:li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li);
+                        RESULT = li;:}
+    | llave_abierta:la LISTA_INGREDIENTES:li llave_cerrada
+        {:report_syntax_error(String.valueOf(la), laleft, laright, "Falta la palabra ingredientes", false);
+            li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li);
+            RESULT = li;:}
+    | ingredientes LISTA_INGREDIENTES:li
+        {:report_syntax_error(String.valueOf(li), lileft, liright, "Faltan las llaves en los ingredientes", false);
+            li = ComprobadorSemantica.comprobarDefinicionIngredientes((ArrayList<Ingrediente>)li);
+            RESULT = li;:};
 
 LISTA_INGREDIENTES ::= 
     INGREDIENTE:i puntoycoma {:ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); 
                                 lista.add((Ingrediente)i); RESULT = lista;:}
     | INGREDIENTE:i puntoycoma LISTA_INGREDIENTES:li 
-                            {:((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;:}; 
+                            {:((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;:}
+    | INGREDIENTE:i 
+                {:report_syntax_error(String.valueOf(i), ileft, iright, "Falta el punto y coma en el ingrediente", false);
+                    ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>(); 
+                    lista.add((Ingrediente)i); RESULT = lista;:}
+    | INGREDIENTE:i LISTA_INGREDIENTES:li
+                {:report_syntax_error(String.valueOf(li), lileft, liright, "Falta el punto y coma en el ingrediente", false);
+                    ((ArrayList<Ingrediente>)li).add(0, (Ingrediente)i); RESULT = li;:}; 
 
 INGREDIENTE ::= comilla ident_nombre:in comilla dospuntos CANTIDAD:c 
-                        {:RESULT = new Ingrediente(in, (Cantidad)c);:};
+                    {:RESULT = new Ingrediente(in, (Cantidad)c);:}
+                | comilla ident_nombre:in comilla CANTIDAD:c
+                    {:report_syntax_error(String.valueOf(in), inleft, inright, "Faltan los dos puntos en el ingrediente", false);
+                        RESULT = new Ingrediente(in, (Cantidad)c);:};
 
 PASOS ::=
-    pasos llave_abierta LISTA_PASOS:lp llave_cerrada {:RESULT = lp;:}
-    ;
+    pasos llave_abierta LISTA_PASOS:lp llave_cerrada 
+        {:RESULT = lp;:}
+    | llave_abierta:la 
+            {:report_syntax_error(String.valueOf(la), laleft, laright, "Falta la palabra pasos", false);:} 
+        LISTA_PASOS:lp llave_cerrada 
+            {:RESULT = lp;:}
+    | pasos LISTA_PASOS:lp
+        {:report_syntax_error(String.valueOf(lp), lpleft, lpright, "Faltan las llaves en los pasos", false);
+            RESULT = lp;:};
     
 LISTA_PASOS ::= 
     PASO:p {:ArrayList<Paso> lista = new ArrayList<Paso>(); lista.add((Paso)p); RESULT = lista;:}
@@ -130,14 +185,48 @@ PASO ::=
     ;
 
 PASO_MOV ::= guion verbo_mov:vm LISTA_INGREDIENTES:li TIEMPO:t VELOCIDAD:v 
-                {:RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Cantidad)t, (String)v);:};
+                {:RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Cantidad)t, (String)v);:}
+            | verbo_mov:vm LISTA_INGREDIENTES:li TIEMPO:t VELOCIDAD:v
+                {:report_syntax_error(String.valueOf(vm), vmleft, vmright, "Falta el guión en el paso", false);
+                    RESULT = new Paso_mov(vm, "mover", (ArrayList<Ingrediente>)li, (Cantidad)t, (String)v);:}
+            | guion LISTA_INGREDIENTES:li TIEMPO:t VELOCIDAD:v
+                {:report_syntax_error(String.valueOf(li), lileft, liright, "Falta el verbo en el paso", true);:};
 PASO_COC ::= guion verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO:t TEMPERATURA:temp
-                {:RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t, (Cantidad)temp);:};
+                {:RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t, (Cantidad)temp);:}
+            | verbo_coc:vc LISTA_INGREDIENTES:li TIEMPO:t TEMPERATURA:temp
+                {:report_syntax_error(String.valueOf(vc), vcleft, vcright, "Falta el guión en el paso", false);
+                    RESULT = new Paso_coc(vc, "cocinar", (ArrayList<Ingrediente>)li, (Cantidad)t, (Cantidad)temp);:}
+            | guion LISTA_INGREDIENTES:li TIEMPO:t TEMPERATURA:temp
+                {:report_syntax_error(String.valueOf(li), lileft, liright, "Falta el verbo en el paso", true);:};
 PASO_PER ::= guion verbo_per:vp LISTA_INGREDIENTES:li 
-                {:RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:};
+                {:RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:}
+            | verbo_per:vp LISTA_INGREDIENTES:li 
+                {:report_syntax_error(String.valueOf(vp), vpleft, vpright, "Falta el guión en el paso", false);
+                    RESULT = new Paso_per(vp, "persona", (ArrayList<Ingrediente>)li);:}
+            | guion LISTA_INGREDIENTES:li
+                {:report_syntax_error(String.valueOf(li), lileft, liright, "Falta el verbo en el paso", true);:};
 
-CANTIDAD ::= numero:n unidad_cantidad:uc {: RESULT = new Cantidad(n, uc);:};
-TIEMPO ::= numero:n unidad_tiempo:uc {: RESULT = new Cantidad(n, uc);:};
-TEMPERATURA ::= temperatura numero:n unidad_temp:uc {:RESULT = new Cantidad(n, uc);:};
-VELOCIDAD ::= velocidad digito_velocidad:dv {:RESULT=dv;:};
+CANTIDAD ::= numero:n unidad_cantidad:uc {:RESULT = new Cantidad(n, uc);:}
+            | unidad_cantidad:uc
+                {:report_syntax_error(String.valueOf(uc), ucleft, ucright, "Falta el número en la cantidad", true);:}
+            | numero:n
+                 {:report_syntax_error(String.valueOf(n), nleft, nright, "Falta la unidad de la cantidad en la cantidad",  true);:};
+TIEMPO ::= numero:n unidad_tiempo:ut {: RESULT = new Cantidad(n, ut);:}
+            | numero:n
+                 {:report_syntax_error(String.valueOf(n), nleft, nright, "Falta unidad de tiempo en el tiempo", true);:}
+            | unidad_tiempo:ut
+                 {:report_syntax_error(String.valueOf(ut), utleft, utright, "Falta número en el tiempo", true);:};
+
+TEMPERATURA ::= temperatura numero:n unidad_temp:ut {:RESULT = new Cantidad(n, ut);:}
+            | numero:n unidad_temp:ut 
+                {:report_syntax_error(String.valueOf(n), nleft, nright, "Falta la palabra temperatura", false); 
+                    RESULT = new Cantidad(n, ut);:}
+            | numero:n
+                 {:report_syntax_error(String.valueOf(n), nleft, nright, "Falta unidad de temperatura en la temperatura", true);:}
+            | unidad_temp:ut
+                 {:report_syntax_error(String.valueOf(ut), utleft, utright, "Falta número en la temperatura", true);:};           
+
+VELOCIDAD ::= velocidad digito_velocidad:dv {:RESULT=dv;:}
+            | digito_velocidad:dv {:report_syntax_error(String.valueOf(dv), dvleft, dvright, "Falta la palabra velocidad", false);
+                                    RESULT=dv;:};
 

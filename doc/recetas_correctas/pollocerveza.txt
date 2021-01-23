@@ -1,0 +1,27 @@
+receta{
+	nombre "Pollo a la cerveza"
+	descripcion [Guiso de pollo con un toque amargo de la cerveza contrarrestado con un toque dulce por la miel y la mostaza]
+	tiempo{
+		total 50 min
+		preparacion 10 min
+	}
+	
+	ingredientes{
+		"Pollo": 1 kg; 
+		"Zanahoria":  4 ud; 
+		"Cebolla": 2 ud;
+		"Pimiento verde": 1 ud;
+		"Pimiento rojo": 1 ud;	
+		"Sal": 10 g;
+		"Aceite": 30 ml;
+		"Miel": 15 g;
+		"Mostaza" : 15 g;
+	}
+	
+	pasos{
+		- trocear "Pollo": 1 kg; "Zanahoria":  4 ud; "Cebolla": 2 ud; "Pimiento verde": 1 ud; "Pimiento rojo": 1 ud; 
+		- sofreir "Aceite": 30ml; "Zanahoria":  4 ud; "Cebolla": 2 ud; "Pimiento verde": 1 ud; "Pimiento rojo": 1 ud; "Sal": 10g; 10 min temperatura 100 ºC;
+		- guisar "Pollo": 1 kg; "Aceite": 30ml; "Zanahoria":  4 ud; "Cebolla": 2 ud; "Pimiento verde": 1 ud; "Pimiento rojo": 1 ud; "Miel": 15 g; "Mostaza" : 15 g; 40min temperatura 100 ºC /*Este es el pasos
+		en el que puede añadir otras especias al gusto"
+	}	
+}

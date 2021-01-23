@@ -1,0 +1,26 @@
+receta{
+	nombre "Guacamole"
+	descripcion [Guacamole rapido y sencillo, receta tradicional. Perfecto como entrante acompañado de totopos]
+	tiempo{
+		total 5 min
+		preparacion 5 min
+	}
+	
+	ingredientes{
+		"Aguacate": 3 ud; 
+		"Zumo de limón":  10 g; 
+		"Tomate maduro": 1 ud;
+		"Cebolla": 70 g;	
+		"Sal": 1 g;
+		"Aceite": 10 ml;
+	}
+	
+	pasos{
+		- trocear "Cebolla": 70 g; "Tomate maduro": 1 ud; 
+		- triturar "Cebolla": 70 g; "Tomate maduro": 1 ud; 1 min velocidad 07
+		- pelar "Aguacate": 3 ud;
+		- mezclar "Cebolla": 70 g; "Tomate maduro": 1 ud; "Aguacate": 3 ud; "Zumo de limón": 10 g; "Sal": 1 g; "Aceite": 10 ml; 4 min velocidad 03
+	}	
+}
+
+
