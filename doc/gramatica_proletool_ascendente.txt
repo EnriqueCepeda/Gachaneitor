@@ -1,6 +1,6 @@
-grammar gachaneitor_lr1
+grammar gachaneitor_lalr1
 {
-    analysis    LR1;
+    analysis    LALR1;
     nonterminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, LISTA_INGREDIENTES,
     INGREDIENTE, PASOS, LISTA_PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO, CANTIDAD,
     TEMPERATURA, VELOCIDAD;
