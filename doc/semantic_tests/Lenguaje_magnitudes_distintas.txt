@@ -8,8 +8,9 @@ receta {
 
     ingredientes {
         "Calabaza": 2 ud; 
-        "Calabacín": 1 ud;
+        "Calabacín": 1 ud; 
         "Calabacín": 500 g;
+        /* El calabacín se ha declarado en gramos y en unidades */
     }
 
     pasos {

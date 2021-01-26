@@ -7,7 +7,7 @@ receta {
     }
 
     ingredientes {
-        "Calabaza" 2 ud; 
+        "Calabaza" /*aquí*/ 2 ud; 
         "Calabacín": 2 ud;
     }
 

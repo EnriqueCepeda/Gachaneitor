@@ -16,5 +16,6 @@ receta {
         - trocear "Calabacín": 5 ud; "Calabaza": 2 ud;
         - sofreir "Calabacín": 5 ud; "Calabaza": 2 ud; 20 min temperatura 20ºC
         - triturar "Calabacín": 5 ud; "Calabaza": 2 ud; 10 min velocidad 02
+        /* la suma de los tiempos parciales de los dos últimos pasos se compara con el total, que es el tiempo que tarda la máquina en hacer todo*/
     }
 }

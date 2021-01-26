@@ -29,12 +29,11 @@ UNIDAD_TIEMPO ::= h | min | seg
 IDENT_NOMBRES ::= '"' MAYUS {MINUS | " " } '"'
 
 MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | Ñ | O | P | Q | R | S | T | U | V | W | X | Y | Z | Á | É | Í | Ó | Ú
-MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z | á | é | | í | ó | ú 
+MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | ñ | o | p | q | r | s | t | u | v | w | x | y | z | á | é | í | ó | ú 
 DIGITO_INICIAL ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
 DIGITO_VELOCIDAD ::=  0 | DIGITO_INICIAL 
 NUMERO ::= DIGITO_INICIAL { DIGITO_INICIAL | 0 }
 CONTENIDO_DESCRIPCION ::= '[' CADENA ']'
 COMENTARIO ::= /* CADENA */
-TABS ::= \r | \t | \n | \r\n
 OTROS_CARACTERES ::= , | ')' | '(' | '{' | '}' | - | _
-CADENA ::= {MAYUS | MINUS | NUMERO | TABS | "  " | OTROS_CARACTERES}
+CADENA ::= {MAYUS | MINUS | NUMERO  | "  " | OTROS_CARACTERES}

@@ -12,7 +12,7 @@ receta {
     }
 
     pasos {
-        - pelar "Calabacín": ud; "Calabaza": 2 ud; 
+        - pelar "Calabacín": /*aquí*/ ud; "Calabaza": 2 ud; 
         - trocear "Calabacín": 2 ud; "Calabaza": 2 ud;
         - sofreir "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min temperatura 20ºC
         - triturar "Calabacín": 2 ud; "Calabaza": 2 ud; 10 min velocidad 02

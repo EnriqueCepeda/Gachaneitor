@@ -69,7 +69,7 @@ private Symbol symbol(int type,Object value){
 %} /* Fin Declaraciones */
 
 
-/* Declaraciones de macros NL(nueva linea) BLANCO(espacio en blanco) y TAB(tabulador) */
+/* Declaraciones de macros */
 
 
 nl = [\n | \r | \t \r\n]
@@ -81,16 +81,16 @@ verbo_per = pelar | moler | trocear
 unidad_cantidad = mg | g | kg | ml | l | ud
 unidad_tiempo = h | min | seg
 unidad_temperatura = ºC | ºF
-cadena = ([:jletterdigit:] | {nl} | {blanco} | \. | \, )+
+cadena = ([:jletterdigit:] | {blanco} | \. | \, )+
 ident = ( [:jletter:] | {blanco} )+
 
 
 %%
 /* ------------------------Seccion de reglas y acciones ----------------------*/
 <YYINITIAL> {
-\{ {System.out.println("Token { encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+\{ {System.out.println("Token llave_abierta encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.llave_abierta);}
-\} {System.out.println("Token } encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+\} {System.out.println("Token llave_cerrada encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
   return symbol(sym.llave_cerrada);}
 
 receta {System.out.println("Token receta encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
@@ -105,11 +105,11 @@ total {System.out.println("Token total encontrado en linea: " + (yyline+1) + " c
   return symbol(sym.total);}
 preparacion {System.out.println("Token preparacion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.preparacion);}
-: {System.out.println("Token ':' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+: {System.out.println("Token dospuntos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.dospuntos);}
-; {System.out.println("Token ';' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+; {System.out.println("Token puntoycoma encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.puntoycoma);}
-- {System.out.println("Token '-' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+- {System.out.println("Token guion encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.guion);}
 pasos {System.out.println("Token pasos encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.pasos);}
@@ -123,7 +123,7 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 
 {blanco} | {nl} | {tab}  {}
 
-\[  {System.out.println("Token '[' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+\[  {System.out.println("Corchete abierto encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     yybegin(DESCRIPCION);}
 
 {verbo_mov} {System.out.println("Token verbo_mov <"+yytext()+"> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
@@ -157,8 +157,8 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 }/* fin YYinitial */
 
 <DESCRIPCION> {
-  \] {System.out.println("Token ']' encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
-  {cadena}  {System.out.println("Token contenido_descripcion <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
+  \] {System.out.println("Corchete cerrado encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); yybegin(YYINITIAL);}
+  {cadena}  {System.out.println("Token contenido_descripcion <[" +yytext()+ "]> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1)); 
   return symbol(sym.contenido_descripcion, new String(yytext()));}
   <<EOF>> {/* Error */ Utility.error(Utility.E_STARTDESC,"", c_line, c_column); System.exit(1);}
   . {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}
@@ -172,9 +172,9 @@ velocidad {System.out.println("Token velocidad encontrado en linea: " + (yyline+
 }
 
 <IDENTIFICADOR> {
-  \" {System.out.println("Token comilla <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  \" {System.out.println("Token comilla encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
      yybegin(YYINITIAL);return symbol(sym.comilla);}
-  {ident} {System.out.println("Token ident <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
+  {ident} {System.out.println("Token ident_nombre <" +yytext()+ "> encontrado en linea: " + (yyline+1) + " columna: " + (yycolumn+1));
     return symbol(sym.ident_nombre, new String(yytext()));}
   <<EOF>> {/* Error  */ Utility.error(Utility.E_ENDIDENT,"", c_line, c_column); System.exit(1);}
   . {/* Error */ Utility.error(Utility.E_UNMATCHED, yytext(), (yyline+1), (yycolumn+1)); System.exit(1);}

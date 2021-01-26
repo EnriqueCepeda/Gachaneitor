@@ -10,6 +10,7 @@ receta {
         "Calabaza": 2 ud; 
         "Calabacín": 500 g;
         "Calabacín": 1 kg;
+        /* Las cantidades se suman y el resultado es 1500g de calabacín */
     }
 
     pasos {

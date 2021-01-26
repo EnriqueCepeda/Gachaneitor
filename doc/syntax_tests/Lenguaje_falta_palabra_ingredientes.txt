@@ -6,7 +6,7 @@ receta {
         preparacion 5 min /* No hace falta comprobar, porque son verbos de persona */
     }
 
-    {
+    /*aquí*/ {
         "Calabaza": 2 ud; 
         "Calabacín": 2 ud;
     }

@@ -21,7 +21,7 @@ Tras haber instalado los requisitos y tener el entorno virtual preparado, situá
 
     antlr4 -Dlanguage=Python3 -encoding utf-8 Gachaneitor.g4
 
-Esto genera los distintos archivos del procesador de lenguajes(Lexer, Parser, Listener, ... /* completar */). Después, para hacer uso del procesador, escriba en la terminal: 
+Esto genera los distintos archivos del procesador de lenguajes(Lexer, Parser, Listener,... ). Después, para hacer uso del procesador, escriba en la terminal: 
 
     python3 main.py -i <ruta_del_archivo_txt>
 

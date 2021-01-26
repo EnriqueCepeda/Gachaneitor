@@ -1,6 +1,7 @@
 grammar gachaneitor_ll1
 {
     analysis    LL1;
+    
     nonterminal INICIO, RECETA, NOMBRE, DESCRIPCION, TIEMPO_RECETA, INGREDIENTES, LISTA_INGREDIENTES,
     INGREDIENTE, PASOS, LISTA_PASOS, PASO, PASO_MOV, PASO_COC, PASO_PER, TIEMPO, CANTIDAD,
     TEMPERATURA, VELOCIDAD;
@@ -16,7 +17,8 @@ grammar gachaneitor_ll1
         ;
 
     RECETA := 
-        receta llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada
+        receta llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada |
+        llave_abierta NOMBRE DESCRIPCION TIEMPO_RECETA INGREDIENTES PASOS llave_cerrada
         ;
 
 
@@ -31,20 +33,31 @@ grammar gachaneitor_ll1
         ;
 
     TIEMPO_RECETA :=
-        tiempo llave_abierta total TIEMPO preparacion TIEMPO llave_cerrada
+        tiempo llave_abierta total TIEMPO preparacion TIEMPO llave_cerrada |
+        llave_abierta total TIEMPO preparacion TIEMPO llave_cerrada
+        ;
+
+    INGREDIENTES := 
+        ingredientes llave_abierta LISTA_INGREDIENTES llave_cerrada |
+        llave_abierta LISTA_INGREDIENTES llave_cerrada
+        ;
+
+    LISTA_INGREDIENTES := 
+        INGREDIENTE |
+        INGREDIENTE puntoycoma | 
+        INGREDIENTE LISTA_INGREDIENTES |
+        INGREDIENTE puntoycoma LISTA_INGREDIENTES
+        ; 
+
+    INGREDIENTE := 
+        comilla ident_nombre comilla dospuntos CANTIDAD |
+        comilla ident_nombre comilla CANTIDAD
         ;
 
 
-    INGREDIENTES := ingredientes llave_abierta LISTA_INGREDIENTES llave_cerrada;
-
-    LISTA_INGREDIENTES := INGREDIENTE puntoycoma | 
-                            INGREDIENTE puntoycoma LISTA_INGREDIENTES; 
-
-    INGREDIENTE := comilla ident_nombre comilla dospuntos CANTIDAD;
-
-
     PASOS :=
-        pasos llave_abierta LISTA_PASOS llave_cerrada
+        pasos llave_abierta LISTA_PASOS llave_cerrada |
+        llave_abierta LISTA_PASOS llave_cerrada
         ;
         
     LISTA_PASOS := 
