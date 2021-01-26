@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        FileInputStream fis = new FileInputStream("input/Lenguaje.txt");
+        FileInputStream fis = new FileInputStream("../../doc/Lenguaje.txt");
         CharStream charStream = new ANTLRInputStream(fis);
         GachaneitorLexer lexer = new GachaneitorLexer(charStream);
         GachaneitorParser parser = new GachaneitorParser(new CommonTokenStream(lexer));

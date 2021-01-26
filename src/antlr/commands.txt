@@ -1,5 +1,5 @@
 antlr4 Gachaneitor.g4
-javac *.java
+javac -encoding utf-8 *.java
 
 grun Gachaneitor inicio -tokens ../../doc/Lenguaje.txt
 grun Gachaneitor inicio -tree ../../doc/Lenguaje.txt

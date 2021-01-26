@@ -19,13 +19,15 @@ Procesador del GachaLanguage con análisis sintáctico ascendente hecho con JFle
         * Paso_mov.java
         * Tiempo.java
         * Ingrediente.java
-* *TestSemantica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores semánticos.
-* *TestSintactica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores sintácticos.
+* *TestSemantica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores y casuísticas relacionadas con su semántica.
+* *TestSintactica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores y casuísticas relacionadas con su sintáctica.
 
 
 ## Requisitos
 
-Para poder ejecutar el procesador de lenguajes, es necesario tener instalado tanto Java como los archivos .jar de JFlex y CUP en el sistema. 
+Para poder ejecutar el procesador de lenguajes, es necesario tener instalado tanto Java 1.8 como los archivos .jar de JFlex y CUP en el sistema.
+
+Además, para los tests es necesario tanto JUnit como Hamcrest Core y un .jar extra para manipular y trabajar con strings en formato JSON. Todos ellos están incluidos en la carpeta *jar* y se deben añadir al CLASSPATH del sistema.
 
 
 ## Ejecución
@@ -54,7 +56,8 @@ La salida del procesador se guarda en el archivo *salida.json*.
 
 
 ## Tests
-Para ejecutar los tests sintácticos y semánticos, hay que bajado el .jar de JUnit y añadirlo la variable de entorno CLASSPATH del sistema. Después de eso, situándonos en la carpeta actual, ejecutamos:
+Para ejecutar los tests sintácticos y semánticos, hay que bajar los 3 jars y añadirlos a la variable de entorno CLASSPATH del sistema. Después de eso, situándonos en esta carpeta, *src/jflex_cup*, con la versión del 1.8 del compilador e intérprete ejecutamos los siguientes comandos:
 
+    javac -encoding utf-8 *.java
     java junit.textui.TestRunner TestSemantica
     java junit.textui.TestRunner TestSintactica
