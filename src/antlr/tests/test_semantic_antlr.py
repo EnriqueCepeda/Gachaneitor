@@ -2,7 +2,7 @@ import unittest
 from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker
 from GachaneitorLexer import GachaneitorLexer
 from GachaneitorParser import GachaneitorParser
-from CustomGachaneitorListener import CustomGachaneitorListener, CantidadIngredienteExcedidaException, IngredientesDistintaMagnitudException, TiempoRecetaDistintoException, IngredientesNoUsadosException
+from CustomGachaneitorListener import CustomGachaneitorListener, CantidadIngredienteExcedidaException, IngredientesDistintaMagnitudException, TiempoRecetaDistintoException, IngredientesNoUsadosException, UnidadesUsoDistintasException
 
 
 
@@ -16,7 +16,7 @@ class TestSemantica(unittest.TestCase):
         '''
             Utiliza dos ingredientes en una lista de ingredientes con magnitudes distintas, por lo tanto suelta excepción
         '''
-        input_file = "../../doc/tests/Lenguaje_magnitudes_distintas.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_magnitudes_distintas.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -34,7 +34,7 @@ class TestSemantica(unittest.TestCase):
         '''
             La suma de los tiempos parciales de los pasos hecho por gachaneitor es distinta que la declarada inicialmente en la receta en la parte "total"
         '''
-        input_file = "../../doc/tests/Lenguaje_tiempo_total_distinto_parcial.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_tiempo_total_distinto_parcial.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -52,7 +52,7 @@ class TestSemantica(unittest.TestCase):
         '''
             Se han declarado ingredientes que finalmente no se han usado en los pasos
         '''
-        input_file = "../../doc/tests/Lenguaje_ingredientes_no_usados.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_ingredientes_no_usados.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -70,7 +70,7 @@ class TestSemantica(unittest.TestCase):
         '''
             En los pasos se usan cantidades mayores a las declaradas en la parte de definición de ingredientes
         '''
-        input_file = "../../doc/tests/Lenguaje_cantidades_mayores_a_las_declaradas.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_cantidades_mayores_a_las_declaradas.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -88,7 +88,7 @@ class TestSemantica(unittest.TestCase):
         '''
             Comprobación que la suma de unidades distintas de masa se hace correctamente
         '''
-        input_file = "../../doc/tests/Lenguaje_suma_unidades_masa.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_suma_unidades_masa.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -102,15 +102,15 @@ class TestSemantica(unittest.TestCase):
 
         receta_dict = listener.recetas[0]
 
-        self.assertEqual(receta_dict.ingredientes["Calabacín"]["cantidad"], 1500)
-        self.assertEqual(receta_dict.ingredientes["Calabacín"]["unidad"], "g")
+        self.assertEqual(receta_dict["ingredientes"]["Calabacín"]["cantidad"], 1500)
+        self.assertEqual(receta_dict["ingredientes"]["Calabacín"]["unidad"], "g")
 
 
     def test_suma_unidades_tiempo(self):
         '''
             Comprobación que la suma de unidades del tiempo de distintos pasos se hace correctamente
         '''
-        input_file = "../../doc/tests/Lenguaje_suma_unidades_tiempo.txt"
+        input_file = "../../doc/semantic_tests/Lenguaje_suma_unidades_tiempo.txt"
         input_stream = FileStream(input_file, encoding="utf-8")
         lexer = GachaneitorLexer(input_stream)
         stream = CommonTokenStream(lexer)
@@ -124,4 +124,22 @@ class TestSemantica(unittest.TestCase):
 
         receta_dict = listener.recetas[0]
 
-        self.assertEqual(receta_dict.suma_tiempos, 7200)
+        self.assertEqual(receta_dict['tiempo']['total']['cantidad'], 120)
+        self.assertEqual(receta_dict['tiempo']['total']['unidad'], "min")
+
+    def test_unidades_uso_distintas(self):
+        '''
+            La magnitud de la unidad usada es distinta a la declarada
+        '''
+        input_file = "../../doc/semantic_tests/Lenguaje_unidades_uso_distintas.txt"
+        input_stream = FileStream(input_file, encoding="utf-8")
+        lexer = GachaneitorLexer(input_stream)
+        stream = CommonTokenStream(lexer)
+        parser = GachaneitorParser(stream)
+        tree = parser.inicio()
+
+        listener = CustomGachaneitorListener()
+        walker = ParseTreeWalker()
+        
+        with self.assertRaises(UnidadesUsoDistintasException):
+            walker.walk(listener, tree)

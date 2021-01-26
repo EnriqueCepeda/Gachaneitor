@@ -271,7 +271,7 @@ public class parser extends java_cup.runtime.lr_parser {
         System.err.println(m);
     }
 
-    public void report_syntax_error(Object s, int linea, int columna, String mensaje_adicional, boolean fatal){
+    public void report_syntax_error(Object s, int linea, int columna, String mensaje_adicional, boolean fatal) throws Exception{
         if (!(s instanceof String)){
             String str = String.valueOf(s);
             syntax_error(str, linea, columna, mensaje_adicional, fatal);
@@ -279,7 +279,8 @@ public class parser extends java_cup.runtime.lr_parser {
             syntax_error((String)s, linea, columna, mensaje_adicional, fatal);
         }
         if (fatal)
-            System.exit(1);
+            //System.exit(1);
+            throw new Exception();
     }
     
 

@@ -5,7 +5,7 @@ Procesador del GachaLanguage con análisis sintáctico ascendente hecho con JFle
 ## Archivos
 
 * *AnalizadorLexico.flex*: Archivo con la especificación de los tokens del *GachaLanguage*.
-* *AnalizadorSintactico.cup*: Archivo que coge los tokens reconocidos de JFlex 
+* *AnalizadorSintactico.cup*: Archivo que coge los tokens reconocidos de JFlex y define la gramática utilizada por el procesador de lenguajes para reconocer el *GachaLanguage*.
 * Clases necesarias para el análisis semántico:
     * ComprobadorSemantica.java
     * ConversorUnidades.java
@@ -19,11 +19,13 @@ Procesador del GachaLanguage con análisis sintáctico ascendente hecho con JFle
         * Paso_mov.java
         * Tiempo.java
         * Ingrediente.java
+* *TestSemantica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores semánticos.
+* *TestSintactica.java*: Clase con tests unitarios con distintos casos de cadenas del lenguaje GachaLanguage con errores sintácticos.
 
 
 ## Requisitos
 
-Para poder ejecutar el procesador de lenguajes, es necesario tener instalado tanto Java como JFlex y CUP en el sistema. 
+Para poder ejecutar el procesador de lenguajes, es necesario tener instalado tanto Java como los archivos .jar de JFlex y CUP en el sistema. 
 
 
 ## Ejecución
@@ -36,9 +38,9 @@ Después de generar el analizador léxico, procedemos a hacer lo mismo con el an
 
     java  java_cup.Main AnalizadorSintactico.cup
 
-Aquí se creará el *sym.java* y el *parser.java*. ya tenemos todas las clases .java generadas, por lo que procedemos a compilarlas: 
+Aquí se creará el *sym.java* y el *parser.java*. Ya tenemos todas las clases .java necesarias, por lo que procedemos a compilarlas: 
 
-    javac *.java 
+    javac -encoding utf8 *.java  
 
 Después, para hacer uso del procesador, escriba en la terminal: 
 
@@ -52,4 +54,7 @@ La salida del procesador se guarda en el archivo *salida.json*.
 
 
 ## Tests
-Para ejecutar los tests sintácticos y semánticos 
+Para ejecutar los tests sintácticos y semánticos, hay que bajado el .jar de JUnit y añadirlo la variable de entorno CLASSPATH del sistema. Después de eso, situándonos en la carpeta actual, ejecutamos:
+
+    java junit.textui.TestRunner TestSemantica
+    java junit.textui.TestRunner TestSintactica

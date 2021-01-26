@@ -2,26 +2,26 @@ import java.io.*;
 import java.io.FileInputStream;
 import java_cup.runtime.Symbol;
 
-class Main {
+public class Main {
 
    static boolean do_debug_parse = false;
 
-   private static Reader AbrirLector(String args[]) {
+   public static Reader AbrirLector(String args[]) {
       Reader lector = null;
 
       if (args.length > 0) {
          try {
             lector = new InputStreamReader(new FileInputStream(args[0]), "UTF8");
          } catch (IOException exc) {
-            System.err.println("imposible abrir archivo '" + args[0] + "'");
-            System.err.println("causa: " + exc.getMessage());
+            System.err.println("Imposible abrir archivo '" + args[0] + "'");
+            System.err.println("Causa: " + exc.getMessage());
             System.exit(1);
          }
 
-         System.out.println("leyendo archivo '" + args[0] + "'");
+         System.out.println("Leyendo archivo '" + args[0] + "'");
       } else {
          lector = new InputStreamReader(System.in);
-         System.out.println("leyendo entrada estándard (terminar con ctrl-d)");
+         System.out.println("Leyendo entrada estándar (terminar con ctrl-d)");
       }
 
       return lector;
@@ -47,7 +47,7 @@ class Main {
       } catch (Exception e) {
          //e.printStackTrace();
          System.out.println(e.getMessage());
-         System.out.println("Análisis INCORRECTO !!");
+         System.out.println("Análisis INCORRECTO!!");
       } finally {
          System.out.println("Fin del Análisis ");
       }

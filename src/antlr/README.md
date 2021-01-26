@@ -30,6 +30,7 @@ El JSON que se genera como salida del procesador aparecerá en la terminal.
 
 ## Tests
 
-Se ha añadido un script con tests unitarios que ejecuta cada uno de los casos de uso. Para ejecutar los tests automáticamente, escriba en una terminal:
+Se ha añadido un script con tests unitarios que ejecuta cada uno de los casos de uso. Para ejecutar los tests automáticamente, en la carpeta actual escriba en una terminal:
 
-    /*completar*/
+    python3 -m unittest discover tests
+    

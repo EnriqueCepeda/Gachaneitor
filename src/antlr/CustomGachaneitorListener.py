@@ -84,6 +84,11 @@ class IngredientesDistintaMagnitudException(GachaneitorConcreteException):
         mensaje = f"""El ingrediente '{ingrediente}', repetido en la lista, está en dos unidades diferentes que no comparten magnitud, es decir, no se pueden sumar {unidad1} y {unidad2}. Revisa estas unidades"""
         super().__init__(linea, columna, mensaje)
 
+class UnidadesUsoDistintasException(GachaneitorGeneralException):
+
+    def __init__(self, ingrediente):
+        mensaje = f"""El ingrediente {ingrediente} se ha intentado usar en otra magnitud distinta a la declarada. """
+        super().__init__(mensaje)    
 
 class ConversorUnidades:
 
@@ -137,6 +142,14 @@ class ConversorUnidades:
             num_estandarizado = numero*3600
         return num_estandarizado, "seg"
 
+    @classmethod
+    def estandarizarUnidadMenor(cls, cantidad, unidad):
+        if unidad in ConversorUnidades.UNIDADES_MASA:
+            return cls.__estandarizar(ConversorUnidades.UNIDADES_MASA, cantidad, 0, unidad, "mg")
+        elif unidad in ConversorUnidades.UNIDADES_VOLUMEN:
+            return cls.__estandarizar(ConversorUnidades.UNIDADES_VOLUMEN, cantidad, 0, unidad, "ml")
+        else:
+            return cantidad, unidad
 
 class Receta:
     def __init__(self):
@@ -290,8 +303,13 @@ class CustomGachaneitorListener(GachaneitorListener):
         Comprueba que la cantidad de los ingredientes usada en un paso no supera la total de la receta
         '''
         for ingrediente, valor in ingredientes_dict.items():
-            if valor["cantidad"] > self.receta_actual.ingredientes[ingrediente]["cantidad"]:
-                raise CantidadIngredienteExcedidaException(ingrediente, self.receta_actual.ingredientes[ingrediente]["cantidad"], valor["cantidad"])
+            cantidad_paso, unidad_menor_paso = ConversorUnidades.estandarizarUnidadMenor(valor["cantidad"], valor["unidad"])
+            cantidad_original, unidad_menor_original = ConversorUnidades.estandarizarUnidadMenor(self.receta_actual.ingredientes[ingrediente]["cantidad"], self.receta_actual.ingredientes[ingrediente]["unidad"])
+            if unidad_menor_paso != unidad_menor_original:
+                raise UnidadesUsoDistintasException(ingrediente)
+            if cantidad_paso > cantidad_original:
+                raise CantidadIngredienteExcedidaException(ingrediente, cantidad_original, cantidad_paso)
+
 
     def comprobar_tiempos(self):
         '''
