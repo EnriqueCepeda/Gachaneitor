@@ -56,7 +56,7 @@ La salida del procesador se guarda en el archivo *salida.json*.
 
 
 ## Tests
-Para ejecutar los tests sintácticos y semánticos, hay que bajar los 3 jars y añadirlos a la variable de entorno CLASSPATH del sistema. Después de eso, situándonos en esta carpeta, *src/jflex_cup*, con la versión del 1.8 del compilador e intérprete ejecutamos los siguientes comandos:
+Para ejecutar los tests sintácticos y semánticos, hay que bajar los 3 jars y añadirlos a la variable de entorno CLASSPATH del sistema. Después de eso, situándonos en esta carpeta, *src/pl_cup*, con la versión del 1.8 del compilador e intérprete ejecutamos los siguientes comandos:
 
     javac -encoding utf-8 *.java
     java junit.textui.TestRunner TestSemantica

@@ -5,7 +5,7 @@ Práctica final de la asignatura de Procesadores de Lenguajes
 Curso 2020/2021
 
 ## Ejecución
-La información detallada de cómo ejecutar cada práctica se encuentra en los README de las carpetas *src/antlr/* y *src/jflex_cup/*.
+La información detallada de cómo ejecutar cada práctica se encuentra en los README de las carpetas *src/pl_antlr/* y *src/pl_cup/*.
 
 ## Documentación del proyecto
 La documentación de la práctica se encuentra almacenada en un PDF de la carpeta *doc*. 
