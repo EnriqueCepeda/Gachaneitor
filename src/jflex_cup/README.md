@@ -48,7 +48,7 @@ Después, para hacer uso del procesador, escriba en la terminal:
 
     java -cp <ruta_del_archivo_java-cup-11b-runtime.jar> Main <ruta_del_archivo_con_recetas>
 
-ó directamente si tenemos el .jar en el classpath:
+O directamente si tenemos el .jar en el classpath:
 
     java Main <ruta_del_archivo_con_recetas>
 
